@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumMaster.Identity", "ScrumMaster.Identity.csproj", "{94650AB5-99F2-4B23-8FE8-E02E60E1F4C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumMaster.Identity.Infrastructure", "..\ScrumMaster.Identity.DataAccess\ScrumMaster.Identity.Infrastructure.csproj", "{BFAF7A4C-6DD0-4F07-9C2D-0F2161376ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumMaster.Identity.Core", "..\ScrumMaster.Identity.Core\ScrumMaster.Identity.Core.csproj", "{46B63442-E648-4976-AD5B-149D51FA920C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94650AB5-99F2-4B23-8FE8-E02E60E1F4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94650AB5-99F2-4B23-8FE8-E02E60E1F4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94650AB5-99F2-4B23-8FE8-E02E60E1F4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94650AB5-99F2-4B23-8FE8-E02E60E1F4C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFAF7A4C-6DD0-4F07-9C2D-0F2161376ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAF7A4C-6DD0-4F07-9C2D-0F2161376ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAF7A4C-6DD0-4F07-9C2D-0F2161376ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAF7A4C-6DD0-4F07-9C2D-0F2161376ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B63442-E648-4976-AD5B-149D51FA920C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B63442-E648-4976-AD5B-149D51FA920C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B63442-E648-4976-AD5B-149D51FA920C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B63442-E648-4976-AD5B-149D51FA920C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
