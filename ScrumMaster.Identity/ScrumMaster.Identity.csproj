@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.2" />
@@ -16,9 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScrumMaster.Core\ScrumMaster.Identity.Core.csproj" />
     <ProjectReference Include="..\ScrumMaster.Identity.Core\ScrumMaster.Identity.Core.csproj" />
-    <ProjectReference Include="..\ScrumMaster.Identity.DataAccess\ScrumMaster.Identity.Infrastructure.csproj" />
+    <ProjectReference Include="..\ScrumMaster.Identity.Infrastructure\ScrumMaster.Identity.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
