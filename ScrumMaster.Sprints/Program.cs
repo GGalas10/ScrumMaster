@@ -1,7 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using ScrumMaster.Sprints.Infrastructure.DataAccess;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<SprintDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbConection")));
 
 var app = builder.Build();
 

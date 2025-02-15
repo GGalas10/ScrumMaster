@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ScrumMaster.Sprints.Infrastructure.Commands;
 
 namespace ScrumMaster.Sprints.Infrastructure.Contracts
 {
-    internal interface ISprintService
+    public interface ISprintService
     {
+        Task<Guid> CreateNewSprintAsync(CreateSprintCommand command);
+        Task
     }
 }

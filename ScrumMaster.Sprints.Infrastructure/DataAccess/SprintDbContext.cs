@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using ScrumMaster.Sprints.Core.Models;
 
 namespace ScrumMaster.Sprints.Infrastructure.DataAccess
 {
-    internal class SprintDbContext
+    public class SprintDbContext : DbContext
     {
+        public SprintDbContext(DbContextOptions<SprintDbContext> options) : base(options) { }
+        DbSet<Sprint> Sprints { get; set; } 
     }
 }
