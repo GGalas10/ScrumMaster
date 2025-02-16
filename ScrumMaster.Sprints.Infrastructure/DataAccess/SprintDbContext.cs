@@ -3,9 +3,10 @@ using ScrumMaster.Sprints.Core.Models;
 
 namespace ScrumMaster.Sprints.Infrastructure.DataAccess
 {
-    public class SprintDbContext : DbContext
+    public class SprintDbContext : DbContext, ISprintDbContext
     {
         public SprintDbContext(DbContextOptions<SprintDbContext> options) : base(options) { }
-        DbSet<Sprint> Sprints { get; set; } 
+        public DbSet<Sprint> Sprints { get; set; }
+
     }
 }
