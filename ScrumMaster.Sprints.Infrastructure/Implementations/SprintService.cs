@@ -51,14 +51,10 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public Task<SprintDTO> GetSprintByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<SprintDTO> GetSprintByIdAsync(Guid id)
+        => SprintDTO.GetFromModel(await _context.Sprints.FirstOrDefaultAsync(x=>x.Id == id));
 
-        public Task<List<SprintDTO>> GetAllUserSprintsAsync(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<SprintDTO>> GetAllUserSprintsAsync(Guid userId)
+        => await _context.Sprints.Where(x=>x.CreatedUserId == userId).Select(x=> SprintDTO.GetFromModel(x)).ToListAsync();
     }
 }

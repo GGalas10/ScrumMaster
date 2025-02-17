@@ -11,6 +11,8 @@ namespace ScrumMaster.Sprints.Infrastructure.DTO
         public DateTime sprintEndAt { get;set; }
         public static SprintDTO GetFromModel(Sprint model)
         {
+            if (model == null)
+                return null;
             return new SprintDTO()
             {
                 sprintId = model.Id,
