@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ScrumMaster.Sprints.Core.Models;
 using ScrumMaster.Sprints.Infrastructure.Commands;
 using ScrumMaster.Sprints.Infrastructure.Contracts;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
 using ScrumMaster.Sprints.Infrastructure.DTO;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ScrumMaster.Sprints.Infrastructure.Implementations
 {

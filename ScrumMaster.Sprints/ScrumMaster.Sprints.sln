@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumMaster.Sprints.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumMaster.Sprints.Infrastructure", "..\ScrumMaster.Sprints.Infrastructure\ScrumMaster.Sprints.Infrastructure.csproj", "{77C5880D-9662-4BCB-B21F-E759437BF61C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumMaster.Sprints.Infrastructure.Tests", "..\ScrumMaster.Sprints.Infrastructure.Tests\ScrumMaster.Sprints.Infrastructure.Tests.csproj", "{44DE29A7-9FA5-40DD-A82B-22F30C29A8C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{77C5880D-9662-4BCB-B21F-E759437BF61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77C5880D-9662-4BCB-B21F-E759437BF61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77C5880D-9662-4BCB-B21F-E759437BF61C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44DE29A7-9FA5-40DD-A82B-22F30C29A8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44DE29A7-9FA5-40DD-A82B-22F30C29A8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44DE29A7-9FA5-40DD-A82B-22F30C29A8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44DE29A7-9FA5-40DD-A82B-22F30C29A8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
