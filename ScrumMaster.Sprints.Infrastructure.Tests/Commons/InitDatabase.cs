@@ -10,6 +10,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.Commons
         {
             List<Sprint> sprints = new List<Sprint>()
             {
+                new Sprint(){Id = Guid.Parse("00000000-0000-0000-0000-000000000002"),CreatedBy = "TestCreatedBy",CreatedUserId = Guid.Parse("00000000-0000-0000-0000-000000000001"),Name = "TestName",StartDate = DateTime.Now.AddDays(-10),EndDate = DateTime.Now.AddDays(10)},
             };
             var sprintsDbSet = GenericDbSet.GetDbSet(sprints);
             var _context = new Mock<ISprintDbContext>();
