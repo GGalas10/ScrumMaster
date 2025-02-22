@@ -2,7 +2,7 @@
 
 namespace ScrumMaster.Tasks.Core.Models
 {
-    class TaskModel
+    public class TaskModel
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
