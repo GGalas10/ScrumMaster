@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ScrumMaster.Tasks.Infrastructure.Commands;
 
 namespace ScrumMaster.Tasks.Infrastructure.Contracts
 {
     public interface ITaskService
     {
+        Task<Guid> CreateTask(CreateTaskCommand command);
     }
 }

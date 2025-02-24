@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using ScrumMaster.Tasks.Core.Models;
 
 namespace ScrumMaster.Tasks.Infrastructure.DataAccess
 {
-    public class TaskDbContext : ITaskDbContext
+    public class TaskDbContext : DbContext, ITaskDbContext
     {
+        public TaskDbContext(DbContextOptions options):base(options){}
+        public DbSet<TaskModel> Tasks { get; set; }
     }
 }

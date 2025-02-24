@@ -42,16 +42,16 @@ namespace ScrumMaster.Tasks.Core.Models
         public void ChangeSprint(Guid sprintId)
         {
             if (sprintId == Guid.Empty)
-                throw new Exception("UserId_Cannot_Be_Empty");
+                throw new Exception("SprintId_Cannot_Be_Empty");
             SprintId = sprintId;
         }
         public bool UpdateTask(string newTitle,string newDescription,StatusEnum newStatus,Guid sprintId,Guid assignedUser)
         {
             bool anyChanges = false;
-            anyChanges = UpdateTitle(newTitle);
-            anyChanges = UpdateDescription(newDescription);
-            anyChanges = UpdateAssignedUser(assignedUser);
-            anyChanges = UpdateSprint(sprintId);
+            anyChanges = UpdateTitle(newTitle) ? true : anyChanges;
+            anyChanges = UpdateDescription(newDescription) ? true : anyChanges;
+            anyChanges = UpdateAssignedUser(assignedUser) ? true : anyChanges;
+            anyChanges = UpdateSprint(sprintId) ? true : anyChanges;
             if(Status != newStatus)
             {
                 anyChanges = true;
