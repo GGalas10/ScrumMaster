@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure.Contracts;
 using ScrumMaster.Identity.Infrastructure.DTO;
@@ -11,9 +12,9 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
     public class JwtHandler : IJwtHandler
     {
         private readonly JwtSettings _jwtSettings;
-        public JwtHandler(JwtSettings jwtSettings)
+        public JwtHandler(IOptions<JwtSettings> jwtSettings)
         {
-            _jwtSettings = jwtSettings;
+            _jwtSettings = jwtSettings.Value;
         }
         public string CreateToken(AppUser user)
         {

@@ -6,8 +6,6 @@ namespace ScrumMaster.Identity.Infrastructure.DataAccess
 {
     public class UserDbContext : IdentityDbContext<AppUser>
     {
-        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
-        {
-        }
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
     }
 }

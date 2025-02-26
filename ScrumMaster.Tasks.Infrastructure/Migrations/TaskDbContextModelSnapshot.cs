@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ScrumMaster.Sprints.Infrastructure.DataAccess;
+using ScrumMaster.Tasks.Infrastructure.DataAccess;
 
 #nullable disable
 
-namespace ScrumMaster.Sprints.Infrastructure.Migrations
+namespace ScrumMaster.Tasks.Infrastructure.Migrations
 {
-    [DbContext(typeof(SprintDbContext))]
-    partial class SprintDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(TaskDbContext))]
+    partial class TaskDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,32 +22,32 @@ namespace ScrumMaster.Sprints.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ScrumMaster.Sprints.Core.Models.Sprint", b =>
+            modelBuilder.Entity("ScrumMaster.Tasks.Core.Models.TaskModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("CreatedUserId")
+                    b.Property<Guid>("AssignedUserId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<Guid>("SprintId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sprints");
+                    b.ToTable("Tasks");
                 });
 #pragma warning restore 612, 618
         }

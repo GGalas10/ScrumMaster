@@ -10,17 +10,15 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("UserDbConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddInfrastructureLayer();
+    options.UseNpgsql(builder.Configuration.GetConnectionString("UserDbConnection")));
+
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<UserDbContext>();
 builder.Services.AddControllersWithViews();
-
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
 
@@ -38,6 +36,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 builder.Services.Configure<JwtSettings>(jwtSettings);
+builder.Services.AddInfrastructureLayer();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
