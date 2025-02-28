@@ -18,6 +18,8 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
         }
         public string CreateToken(AppUser user)
         {
+            if (user == null)
+                throw new Exception("User_Cannot_Be_Null");
             var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id),
