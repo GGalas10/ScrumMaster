@@ -31,23 +31,23 @@ This project is **a full microservices-based system**, designed for **small to m
 
 # 📌 Struktura projektu ScrumMaster
 
-Projekt oparty na architekturze mikroserwisowej, podzielony na kilka głównych modułów:
+The project is based on a microservices architecture, divided into several main modules:
 
-## 📂 Mikroserwis Identity (zarządzanie użytkownikami)
-- `ScrumMaster.Identity` – Główna aplikacja serwisu Identity
-- `ScrumMaster.Identity.Core` – Logika biznesowa i modele domenowe
-- `ScrumMaster.Identity.Infrastructure` – Warstwa dostępu do danych, integracje z bazą danych
-- `ScrumMaster.Identity.Tests` – Testy jednostkowe i integracyjne dla Identity
+ScrumMaster
+│
+├── ScrumMaster.Identity
+│   ├── ScrumMaster.Identity.Core
+│   ├── ScrumMaster.Identity.Infrastructure
+│   ├── ScrumMaster.Identity.Tests
+│
+├── ScrumMaster.Sprints
+│   ├── ScrumMaster.Sprints.Core
+│   ├── ScrumMaster.Sprints.Infrastructure
+│   ├── ScrumMaster.Sprints.Infrastructure.Tests
+│
+├── ScrumMaster.Tasks
+│   ├── ScrumMaster.Tasks.Core
+│   ├── ScrumMaster.Tasks.Infrastructure
+│   ├── ScrumMaster.Tasks.Tests
 
-## 📂 Mikroserwis Sprints (zarządzanie sprintami)
-- `ScrumMaster.Sprints` – Główna aplikacja serwisu Sprints
-- `ScrumMaster.Sprints.Core` – Logika biznesowa sprintów
-- `ScrumMaster.Sprints.Infrastructure` – Warstwa dostępu do danych dla Sprintów
-
-## 📂 Mikroserwis Tasks (zarządzanie zadaniami)
-- `ScrumMaster.Tasks.Core` – Logika biznesowa zarządzania zadaniami
-- `ScrumMaster.Tasks.Infrastructure` – Warstwa dostępu do danych dla zadań
-
-Każdy mikroserwis zawiera swoją własną warstwę Core (logika biznesowa) i Infrastructure (obsługa bazy danych, integracje).
-
-📌 **Projekt jest w trakcie rozwoju – kolejne funkcjonalności wkrótce!**
+📌 **The project is under development - more features coming soon!**
