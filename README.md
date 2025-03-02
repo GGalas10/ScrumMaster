@@ -27,4 +27,27 @@ This project is **a full microservices-based system**, designed for **small to m
 - **Authentication:** JWT, OAuth2  
 - **Communication:** REST API, gRPC, WebSockets  
 - **Infrastructure:** Azure Cloud (optional), Docker, Kubernetes  
-- **Testing:** xUnit, Moq, Playwright  
+- **Testing:** xUnit, Moq, Playwright
+
+# 📌 Struktura projektu ScrumMaster
+
+The project is based on a microservices architecture, divided into several main modules:
+```
+ScrumMaster
+│
+├── ScrumMaster.Identity
+│   ├── ScrumMaster.Identity.Core
+│   ├── ScrumMaster.Identity.Infrastructure
+│   ├── ScrumMaster.Identity.Tests
+│
+├── ScrumMaster.Sprints
+│   ├── ScrumMaster.Sprints.Core
+│   ├── ScrumMaster.Sprints.Infrastructure
+│   ├── ScrumMaster.Sprints.Infrastructure.Tests
+│
+├── ScrumMaster.Tasks
+│   ├── ScrumMaster.Tasks.Core
+│   ├── ScrumMaster.Tasks.Infrastructure
+│   ├── ScrumMaster.Tasks.Tests
+```
+📌 **The project is under development - more features coming soon!**
