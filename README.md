@@ -32,7 +32,7 @@ This project is **a full microservices-based system**, designed for **small to m
 # 📌 Struktura projektu ScrumMaster
 
 The project is based on a microservices architecture, divided into several main modules:
-
+```
 ScrumMaster
 │
 ├── ScrumMaster.Identity
@@ -49,5 +49,5 @@ ScrumMaster
 │   ├── ScrumMaster.Tasks.Core
 │   ├── ScrumMaster.Tasks.Infrastructure
 │   ├── ScrumMaster.Tasks.Tests
-
+```
 📌 **The project is under development - more features coming soon!**
