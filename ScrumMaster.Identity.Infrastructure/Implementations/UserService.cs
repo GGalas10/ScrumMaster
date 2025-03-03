@@ -19,6 +19,20 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             if (command == null)
                 throw new Exception("Command_Is_Null");
 
+            if (string.IsNullOrWhiteSpace(command.email))
+                throw new Exception("Email_Cannot_Be_Null");
+
+            if (string.IsNullOrWhiteSpace(command.password))
+                throw new Exception("Password_Cannot_Be_Null");
+
+            var checkEmail = await _userManager.FindByEmailAsync(command.email);
+            if (checkEmail != null)
+                throw new Exception("User_Email_Already_Exist");
+
+            var checkName = await _userManager.FindByNameAsync($"{command.firstName} {command.lastName}");
+            if (checkName != null)
+                throw new Exception("User_Name_Already_Exist");
+
             var newUser = new AppUser()
             {
                 Email = command.email,
@@ -26,9 +40,10 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
                 FirstName = command.firstName ,
                 LastName = command.lastName ,
             };
+
             var result = await _userManager.CreateAsync(newUser, command.password);
             if (!result.Succeeded)
-                throw new Exception("Cannot register User");
+                throw new Exception("Cannot_Register_User");
 
 
             var user = await _userManager.FindByEmailAsync(command.email);
