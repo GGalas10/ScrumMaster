@@ -7,7 +7,12 @@ namespace ScrumMaster.Identity.Controllers
     public class AuthController :Controller
     {
         private readonly IUserService _userService;
-        [HttpPost]
+        public AuthController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        [HttpPost("/Register")]
         public async Task<IActionResult> RegisterUser([FromBody]RegisterUserCommand command)
         {
             try
@@ -20,7 +25,7 @@ namespace ScrumMaster.Identity.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPost("/Login")]
         public async Task<IActionResult> LoginUser([FromBody]LoginUserCommand command)
         {
             try

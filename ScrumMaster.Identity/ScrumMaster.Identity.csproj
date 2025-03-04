@@ -21,5 +21,8 @@
     <ProjectReference Include="..\ScrumMaster.Identity.Core\ScrumMaster.Identity.Core.csproj" />
     <ProjectReference Include="..\ScrumMaster.Identity.Infrastructure\ScrumMaster.Identity.Infrastructure.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="ScrumMaster.Identity.Tests" />
+	</ItemGroup>
 
 </Project>

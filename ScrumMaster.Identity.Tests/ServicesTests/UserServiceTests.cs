@@ -184,6 +184,87 @@ namespace ScrumMaster.Identity.Tests.ServicesTests
             //Assert
             Assert.False(string.IsNullOrWhiteSpace(result));
         }
+        [Fact]
+        public async void LoginUser_WhenCommandIsNull_Should_ThrowException()
+        {
+            //Arrange
+            var userList = MockUserManager.GetUsersList();
+            IJwtHandler jwtHandler = new JwtHandler(generalOptions);
+            var manager = MockUserManager.GetUserManager(userList);
+            var service = new UserService(manager.Object, jwtHandler);
+            var command = new LoginUserCommand() { };
+            //Act
+            try
+            {
+                await service.LoginUser(null);
+            }
+
+            //Assert
+            catch(Exception ex)
+            {
+                Assert.Equal("Command_Is_Null", ex.Message);
+            }
+        }
+        [Fact]
+        public async void LoginUser_WhenUserDoesNotExist_Should_ThrowException()
+        {
+            //Arrange
+            var userList = MockUserManager.GetUsersList();
+            userList.Add(new AppUser() { Email = "Test" });
+            IJwtHandler jwtHandler = new JwtHandler(generalOptions);
+            var manager = MockUserManager.GetUserManager(userList);
+            var service = new UserService(manager.Object, jwtHandler);
+            var command = new LoginUserCommand() {email="TestEmail",password="Test" };
+            //Act
+            try
+            {
+                await service.LoginUser(command);
+            }
+
+            //Assert
+            catch(Exception ex)
+            {
+                Assert.Equal("Wrong_Credentials", ex.Message);
+            }
+        }
+        [Fact]
+        public async void LoginUser_WhenPasswordIsIncorect_Should_ThrowException()
+        {
+            //Arrange
+            var userList = MockUserManager.GetUsersList();
+            userList.Add(new AppUser() { Email = "Test" });
+            IJwtHandler jwtHandler = new JwtHandler(generalOptions);
+            var manager = MockUserManager.GetUserManager(userList);
+            var service = new UserService(manager.Object, jwtHandler);
+            var command = new LoginUserCommand() {email="Test",password="Test" };
+            //Act
+            try
+            {
+                await service.LoginUser(command);
+            }
+
+            //Assert
+            catch(Exception ex)
+            {
+                Assert.Equal("Wrong_Credentials", ex.Message);
+            }
+        }
+        [Fact]
+        public async void LoginUser_WhenCommandIsCorrect_Should_ReturnToken()
+        {
+            //Arrange
+            var userList = MockUserManager.GetUsersList();
+            userList.Add(new AppUser() { Email = "Test",UserName = "Test Name" });
+            IJwtHandler jwtHandler = new JwtHandler(generalOptions);
+            var manager = MockUserManager.GetUserManager(userList);
+            var service = new UserService(manager.Object, jwtHandler);
+            var command = new LoginUserCommand() {email="Test",password="Test" };
+            //Act
+            var result = await service.LoginUser(command);
+
+            //Assert
+            Assert.False(string.IsNullOrWhiteSpace(result));
+        }
 
     }
 }

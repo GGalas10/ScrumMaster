@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ScrumMaster.Identity.Core.Models;
@@ -33,6 +34,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 10;
+});
 
 builder.Services.AddAuthorization();
 builder.Services.Configure<JwtSettings>(jwtSettings);
@@ -67,3 +72,4 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 app.Run();
+public partial class Program { }

@@ -36,16 +36,21 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             var newUser = new AppUser()
             {
                 Email = command.email,
-                UserName = $"{command.firstName} {command.lastName}",
+                UserName = $"{command.firstName}{command.lastName}",
                 FirstName = command.firstName ,
                 LastName = command.lastName ,
             };
 
             var result = await _userManager.CreateAsync(newUser, command.password);
             if (!result.Succeeded)
-                throw new Exception("Cannot_Register_User");
-
-
+            {
+                var errors = "";
+                foreach (var error in result.Errors)
+                {
+                    errors += $"{error.Code}\n";
+                }
+                throw new Exception(errors);
+            }
             var user = await _userManager.FindByEmailAsync(command.email);
             if (user == null)
                 throw new Exception("Something_Wrong");
@@ -64,10 +69,10 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
 
             var user = await _userManager.FindByEmailAsync(command.email);
             if (user == null)
-                throw new Exception("Something_Wrong");
+                throw new Exception("Wrong_Credentials");
 
             var isLoged = await _userManager.CheckPasswordAsync(user, command.password);
-            if (isLoged)
+            if (!isLoged)
                 throw new Exception("Wrong_Credentials");
 
             return _jwtHandler.CreateToken(user);
