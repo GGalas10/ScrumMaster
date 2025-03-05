@@ -9,10 +9,11 @@ using ScrumMaster.Identity.Infrastructure.DTO;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var isTesting = builder.Environment.EnvironmentName == "Testing";
 // Add services to the container.
-builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("UserDbConnection")));
+if (!isTesting)
+    builder.Services.AddDbContext<UserDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("UserDbConnection")));
 
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

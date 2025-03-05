@@ -29,7 +29,7 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             if (checkEmail != null)
                 throw new Exception("User_Email_Already_Exist");
 
-            var checkName = await _userManager.FindByNameAsync($"{command.firstName} {command.lastName}");
+            var checkName = await _userManager.FindByNameAsync($"{command.firstName}{command.lastName}");
             if (checkName != null)
                 throw new Exception("User_Name_Already_Exist");
 
