@@ -3,32 +3,90 @@
     public class Sprint
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string CreatedBy { get; set; }
-        public Guid CreatedUserId { get; set; }
-        public bool UpdateSprint(Sprint sprint)
+        public string Name { get; private set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
+        public string CreatedBy { get; private set; }
+        public Guid CreatedUserId { get; private set; }
+        private Sprint() { }
+        public Sprint(string name,DateTime startDate, DateTime endDate, string createdBy, Guid createdUserId)
+        {
+            Id = Guid.NewGuid();
+            SetName(name);
+            SetSprintDate(startDate,endDate);
+            SetCreatedBy(createdBy);
+            SetCreatedUserId(createdUserId);
+        }
+        public void SetName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new Exception("Name_Cannot_Be_Empty_Or_Null");
+            Name = name;
+        }
+        public void SetSprintDate(DateTime startDate, DateTime endDate)
+        {
+            if (DateOnly.FromDateTime(startDate) > DateOnly.FromDateTime(endDate))
+                throw new Exception("StartDate_Cannot_Be_After_EndDate");
+            if (DateOnly.FromDateTime(startDate) == DateOnly.FromDateTime(endDate))
+                throw new Exception("StartDate_Cannot_Be_The_Same_As_EndDate");
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+        public void SetCreatedBy(string createdBy)
+        {
+            if (string.IsNullOrEmpty(createdBy))
+                throw new Exception("CreatedBy_Cannot_Be_Null_Or_Empty");
+            CreatedBy = createdBy;
+        }
+        public void SetCreatedUserId(Guid createdUserId)
+        {
+            if (createdUserId == Guid.Empty)
+                throw new Exception("CreatedUserId_Cannot_Be_Empty");
+            CreatedUserId = createdUserId;
+        }
+        public bool UpdateSprint(string name, string createdBy, DateTime startDate, DateTime endDate)
         {
             var AnyChange = false;
-            if (!string.IsNullOrWhiteSpace(sprint.Name) && Name != sprint.Name)
+            if (!string.IsNullOrWhiteSpace(name) && Name != name)
             {
-                Name = sprint.Name;
+                Name = name;
                 AnyChange = true;
             }
-            if(!string.IsNullOrWhiteSpace(sprint.CreatedBy) && CreatedBy != sprint.CreatedBy)
+            if(!string.IsNullOrWhiteSpace(createdBy) && CreatedBy != createdBy)
             {
-                CreatedBy = sprint.CreatedBy;
+                CreatedBy = createdBy;
                 AnyChange = true;
             }
-            if (sprint.StartDate != StartDate)
+            if (startDate != StartDate && startDate != DateTime.MinValue)
             {
-                StartDate = sprint.StartDate;
+                if (endDate != EndDate && endDate != DateTime.MinValue)
+                {
+                    if (startDate >= endDate)
+                        throw new Exception("StartDate_Cannot_Be_The_Same_Or_After_As_EndDate");
+                }
+                else
+                {
+                    if (startDate >= EndDate)
+                        throw new Exception("StartDate_Cannot_Be_The_Same_Or_After_As_EndDate");
+                }
+                
+                StartDate = startDate;
+
                 AnyChange = true;
             }
-            if (sprint.EndDate != EndDate)
+            if (endDate != EndDate && endDate != DateTime.MinValue)
             {
-                EndDate = sprint.EndDate;
+                if (startDate != StartDate && StartDate != DateTime.MinValue)
+                {
+                    if (startDate >= endDate)
+                        throw new Exception("EndDate_Cannot_Be_The_Same_Or_Befor_As_StartDate");
+                }
+                else
+                {
+                    if (StartDate >= endDate)
+                        throw new Exception("EndDate_Cannot_Be_The_Same_Or_After_As_StartDate");
+                }
+                EndDate = endDate;
                 AnyChange = true;
             }           
             return AnyChange;            

@@ -33,7 +33,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
             if (oldSprint == null)
                 throw new Exception("Cannot_Find_Sprint_In_Database");
 
-            if (oldSprint.UpdateSprint(UpdateSprintCommand.GetModelFromCommand(command)))
+            if (oldSprint.UpdateSprint(command.SprintName, command.CreateBy, command.StartAt, command.EndAt))
                 await _context.SaveChangesAsync();
             else
                 throw new Exception("There_are_no_changes_for_sprint");

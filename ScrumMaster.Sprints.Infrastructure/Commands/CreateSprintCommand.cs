@@ -11,15 +11,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Commands
         public Guid CreatedUserId { get; set; }
         public static Sprint GetModelFromCommand(CreateSprintCommand command)
         {
-            return new Sprint()
-            {
-                Id = Guid.NewGuid(),
-                Name = command.Name,
-                StartDate = command.StartDate,
-                EndDate = command.EndDate,
-                CreatedBy = command.CreatedBy,
-                CreatedUserId = command.CreatedUserId,
-            };
+            return new Sprint(command.Name,command.StartDate,command.EndDate,command.CreatedBy,command.CreatedUserId){};
         }
     }
 }

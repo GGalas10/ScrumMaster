@@ -1,6 +1,4 @@
-﻿using ScrumMaster.Sprints.Core.Models;
-
-namespace ScrumMaster.Sprints.Infrastructure.Commands
+﻿namespace ScrumMaster.Sprints.Infrastructure.Commands
 {
     public class UpdateSprintCommand
     {
@@ -9,16 +7,5 @@ namespace ScrumMaster.Sprints.Infrastructure.Commands
         public DateTime StartAt { get; set; }
         public DateTime EndAt { get; set; }
         public string CreateBy { get; set; }
-        public static Sprint GetModelFromCommand(UpdateSprintCommand command)
-        {
-            return new Sprint()
-            {
-                Id = Guid.NewGuid(),
-                Name = command.SprintName,
-                StartDate = command.StartAt,
-                EndDate = command.EndAt,
-                CreatedBy = command.CreateBy
-            };
-        }
     }
 }
