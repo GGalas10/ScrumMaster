@@ -13,11 +13,12 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
         {
             _context = sprintDbContext;
         }
-        public async Task<Guid> CreateNewSprintAsync(CreateSprintCommand command)
+        public async Task<Guid> CreateNewSprintAsync(CreateSprintCommand command, Guid userId, string userFullName)
         {
             if (command == null)
                 throw new Exception("Command_Cannot_Be_Null");
-
+            command.CreatedUserId = userId;
+            command.CreatedBy = userFullName;
             var newSprint = CreateSprintCommand.GetModelFromCommand(command);
             _context.Sprints.Add(newSprint);
             await _context.SaveChangesAsync();

@@ -5,7 +5,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Contracts
 {
     public interface ISprintService
     {
-        Task<Guid> CreateNewSprintAsync(CreateSprintCommand command);
+        Task<Guid> CreateNewSprintAsync(CreateSprintCommand command, Guid userId, string userFullName);
         Task UpdateSprintAsync(UpdateSprintCommand command);
         Task DeleteSprintAsync(Guid id);
         Task<SprintDTO> GetSprintByIdAsync(Guid id);

@@ -24,5 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ScrumMaster.Sprints.Infrastructure\ScrumMaster.Sprints.Infrastructure.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<InternalsVisibleTo Include="ScrumMaster.Sprints.Tests" />
+	</ItemGroup>
 </Project>

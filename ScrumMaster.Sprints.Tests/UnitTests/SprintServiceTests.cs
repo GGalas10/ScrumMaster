@@ -3,7 +3,7 @@ using ScrumMaster.Sprints.Infrastructure.Commands;
 using ScrumMaster.Sprints.Infrastructure.Implementations;
 using ScrumMaster.Sprints.Infrastructure.Tests.Commons;
 
-namespace ScrumMaster.Sprints.Infrastructure.Tests
+namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
 {
     public class SprintServiceTests
     {
@@ -17,7 +17,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests
             //Act
             try
             {
-                var result = await service.CreateNewSprintAsync(null);
+                var result = await service.CreateNewSprintAsync(null,Guid.NewGuid(),"Test");
             }
 
             //Assert
@@ -33,14 +33,14 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests
             var dbContext = InitDatabase.InitialDatabase();
             var service = new SprintService(dbContext);
 
-            var result = await service.CreateNewSprintAsync(new Commands.CreateSprintCommand()
+            var result = await service.CreateNewSprintAsync(new CreateSprintCommand()
             {
                 CreatedBy = "test",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(1),
                 CreatedUserId = Guid.NewGuid(),
                 Name = "test",
-            });
+            },Guid.NewGuid(),"Test");
 
             Assert.Equal(2, dbContext.Sprints.Count());
         }

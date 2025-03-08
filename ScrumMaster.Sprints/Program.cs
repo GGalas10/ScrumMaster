@@ -2,18 +2,26 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
+using ScrumMaster.Sprints.Infrastructure;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+var isTesting = builder.Environment.EnvironmentName == "Testing";
 // Add services to the container.
+if (!isTesting)
+    builder.Services.AddDbContext<SprintDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConection")));
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<SprintDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConection")));
 
-var app = builder.Build();
+
+
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
-
+SymmetricSecurityKey key;
+if (isTesting)
+    key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("s+Qr8+VhSWEHHuwyqwP0kNvtg3HCSEX25A3MP1iENH4="));
+else
+    key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -22,10 +30,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = key,
             ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero
+            ClockSkew = TimeSpan.Zero,
+            ValidateAudience = false,
+            ValidateIssuer = !isTesting
         };
     });
+
 builder.Services.AddAuthorization();
+builder.Services.AddInfratstructure();
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -48,3 +61,4 @@ app.MapControllerRoute(
 
 
 app.Run();
+public partial class Program { }

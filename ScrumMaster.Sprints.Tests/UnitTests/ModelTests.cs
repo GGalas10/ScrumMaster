@@ -1,6 +1,6 @@
 ﻿using ScrumMaster.Sprints.Core.Models;
 
-namespace ScrumMaster.Sprints.Infrastructure.Tests
+namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
 {
     public class ModelTests
     {

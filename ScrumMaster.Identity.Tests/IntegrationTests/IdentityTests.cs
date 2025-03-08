@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ScrumMaster.Identity.Infrastructure.Commands;
 using ScrumMaster.Identity.Infrastructure.DataAccess;
 using ScrumMaster.Identity.Tests.Common;
