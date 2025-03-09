@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using Microsoft.IdentityModel.Tokens;
 using ScrumMaster.Sprints.Infrastructure.Commands;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
+using ScrumMaster.Sprints.Infrastructure.DTO;
 using ScrumMaster.Sprints.Infrastructure.Tests.Commons;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
@@ -89,9 +88,8 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.IntegrationTests
             //Assert
             Assert.Contains("Command_Cannot_Be_Null", result);
         }
-
         [Fact]
-        public async Task UpdateSprint_WhenUpdatedSprintDoesnNotExist_Should_BadRequestWithMessage()
+        public async Task UpdateSprint_WhenUpdatedSprintDoesnNotExist_Should_ReturnBadRequestWithMessage()
         {
             //Arrange
             ClearDb();
@@ -104,6 +102,76 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.IntegrationTests
             var result = await response.Content.ReadAsStringAsync();
             //Assert
             Assert.Contains("Cannot_Find_Sprint_In_Database", result);
+        }
+
+        [Fact]
+        public async Task UpdateSprint_WhenCommandHasnNoChanges_Should_ReturnBadRequestWithMessage()
+        {
+            //Arrange
+            ClearDb();
+            var token = CreateToken();
+            var client = _factory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var command = new CreateSprintCommand() { Name = "TestSprint", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(10) };
+            var response = await client.PostAsync("/Sprint/CreateSprint", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
+            var newSprintId = JsonSerializer.Deserialize<Guid>(await response.Content.ReadAsStringAsync());
+            var updateCommand = new UpdateSprintCommand() { SprintId = newSprintId };
+
+            //Act
+            var responseUpdate = await client.PutAsync("/Sprint/UpdateSprint", new StringContent(JsonSerializer.Serialize(updateCommand), Encoding.UTF8, "application/json"));
+            var result = await responseUpdate.Content.ReadAsStringAsync();
+            //Assert
+            Assert.Contains("There_are_no_changes_for_sprint", result);
+        }
+
+        [Fact]
+        public async Task UpdateSprint_WhenCommandChangeName_Should_ChangeName()
+        {
+            //Arrange
+            ClearDb();
+            var token = CreateToken();
+            var client = _factory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var command = new CreateSprintCommand() { Name = "TestSprint", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(10) };
+            var response = await client.PostAsync("/Sprint/CreateSprint", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
+            var newSprintId = JsonSerializer.Deserialize<Guid>(await response.Content.ReadAsStringAsync());
+            var updateCommand = new UpdateSprintCommand() { SprintId = newSprintId,SprintName = "NewSprintTest2" };
+            await client.PutAsync("/Sprint/UpdateSprint", new StringContent(JsonSerializer.Serialize(updateCommand), Encoding.UTF8, "application/json"));
+            var sprint = await client.GetAsync($"/Sprint/GetSprintById?sprintId={newSprintId}");
+            //Act
+            var updatedSprint = JsonSerializer.Deserialize<SprintDTO>(await sprint.Content.ReadAsStringAsync());
+            //Assert
+            Assert.Equal("NewSprintTest2", updateCommand.SprintName);
+        }
+        [Fact]
+        public async Task DeleteSprint_WhenDeleteSprintDoesnNotExist_Should_ReturnBadRequestWithMessage()
+        {
+            //Arrange
+            ClearDb();
+            var token = CreateToken();
+            var client = _factory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //Act
+            var deleted = await client.DeleteAsync($"/Sprint/DeleteSprint?sprintId={Guid.Empty}");
+            //Assert
+            Assert.Contains("Cannot_Find_Sprint_In_Database",await deleted.Content.ReadAsStringAsync());
+        }
+        [Fact]
+        public async Task DeleteSprint_WhenSprintExist_Should_DeleteSprint()
+        {
+            //Arrange
+            ClearDb();
+            var token = CreateToken();
+            var client = _factory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var command = new CreateSprintCommand() { Name = "TestSprint", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(10) };
+            var response = await client.PostAsync("/Sprint/CreateSprint", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
+            var newSprintId = JsonSerializer.Deserialize<Guid>(await response.Content.ReadAsStringAsync());
+            //Act
+            var deleted = await client.DeleteAsync($"/Sprint/DeleteSprint?sprintId={newSprintId}");
+            var result = await client.GetAsync($"/Sprint/GetSprintById?sprintId={newSprintId}");
+            //Assert
+            Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
         }
         private void ClearDb()
         {
