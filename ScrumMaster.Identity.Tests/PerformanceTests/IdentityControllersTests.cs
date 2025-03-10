@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NBomber.Contracts.Stats;
 using NBomber.CSharp;
-using NBomber.Http.CSharp;
 using ScrumMaster.Identity.Infrastructure.Commands;
 using ScrumMaster.Identity.Infrastructure.DataAccess;
 using ScrumMaster.Identity.Tests.Common;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 
