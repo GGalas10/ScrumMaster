@@ -19,7 +19,7 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
         {
             if (command == null)
                 throw new BadRequestException("Command_Cannot_Be_Null");
-            var newTask = new TaskModel(command.title, command.description, command.assignedUserId, command.sprintId);
+            var newTask = new TaskModel(command.title, command.description, command.sprintId);
             _context.Tasks.Add(newTask);
             await _context.SaveChangesAsync();
             return newTask.Id;
@@ -32,9 +32,9 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
             if (oldTask == null)
                 throw new BadRequestException("Cannot_Find_Task_To_Update");
             var anyChanges = oldTask.UpdateTask(command.title, command.description, command.status, command.sprintId, command.assignedUserId);
-            if (anyChanges)
-                await _context.SaveChangesAsync();
-            throw new BadRequestException("Any_Changes_To_Change");
+            if (!anyChanges)
+                throw new BadRequestException("Any_Changes_To_Change");
+            await _context.SaveChangesAsync();
         }
         public async Task DeleteTask(Guid taskId)
         {

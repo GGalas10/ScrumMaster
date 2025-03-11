@@ -11,12 +11,11 @@ namespace ScrumMaster.Tasks.Core.Models
         public Guid AssignedUserId { get; set; }
         public Guid SprintId { get; set; }
         private TaskModel() { }
-        public TaskModel(string title, string description, Guid assignedUser, Guid sprintId)
+        public TaskModel(string title, string description, Guid sprintId)
         {
 
             SetTitle(title);
             SetDescription(description);
-            ChangeAssignedUser(assignedUser);
             ChangeSprint(sprintId);
             Status = StatusEnum.New;
             Id = Guid.NewGuid();
