@@ -1,0 +1,26 @@
+
+services:
+  identity-service:
+    build:
+      context: ./ScrumMaster.Identity
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+
+  sprints-service:
+    build:
+      context: ./ScrumMaster.Sprints
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  tasks-service:
+    build:
+      context: ./ScrumMaster.Tasks
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
