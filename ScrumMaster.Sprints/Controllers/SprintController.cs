@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScrumMaster.Sprints.Infrastructure.Commands;
 using ScrumMaster.Sprints.Infrastructure.Contracts;
 
@@ -11,6 +12,13 @@ namespace ScrumMaster.Sprints.Controllers
         public SprintController(ISprintService sprintService)
         {
             _sprintService = sprintService;
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> CheckSprintExist([FromQuery]Guid sprintId)
+        {
+            var result = await _sprintService.CheckSprintExist(sprintId);
+            return Ok(result);
         }
         [HttpGet]
         public async Task<IActionResult> GetSprintById([FromQuery] Guid sprintId)

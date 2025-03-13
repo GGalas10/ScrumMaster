@@ -173,6 +173,37 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.IntegrationTests
             //Assert
             Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
         }
+        [Fact]
+        public async Task CheckSprintExist_WhenSprintDoesnNotExist_Should_ReturnFalse()
+        {
+            //Arrange
+            ClearDb();
+            var token = CreateToken();
+            var client = _factory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //Act
+            var result = await client.GetAsync($"/Sprint/CheckSprintExist?sprintId={Guid.Empty}");
+            var isExist = JsonSerializer.Deserialize<bool>(await result.Content.ReadAsStringAsync());
+            //Assert
+            Assert.False(isExist);
+        }
+        [Fact]
+        public async Task CheckSprintExist_WhenSprintExist_Should_ReturnTrue()
+        {
+            //Arrange
+            ClearDb();
+            var token = CreateToken();
+            var client = _factory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var command = new CreateSprintCommand() { Name = "TestSprint", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(10) };
+            var response = await client.PostAsync("/Sprint/CreateSprint", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
+            var newSprintId = JsonSerializer.Deserialize<Guid>(await response.Content.ReadAsStringAsync());
+            //Act
+            var result = await client.GetAsync($"/Sprint/CheckSprintExist?sprintId={newSprintId}");
+            var isExist = JsonSerializer.Deserialize<bool>(await result.Content.ReadAsStringAsync());
+            //Assert
+            Assert.True(isExist);
+        }
         private void ClearDb()
         {
             _dbContext.Database.EnsureDeleted();

@@ -55,5 +55,8 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
 
         public async Task<List<SprintDTO>> GetAllUserSprintsAsync(Guid userId)
         => await _context.Sprints.Where(x=>x.CreatedUserId == userId).Select(x=> SprintDTO.GetFromModel(x)).ToListAsync();
+
+        public async Task<bool> CheckSprintExist(Guid sprintId)
+            => await _context.Sprints.AnyAsync(x=>x.Id==sprintId);
     }
 }

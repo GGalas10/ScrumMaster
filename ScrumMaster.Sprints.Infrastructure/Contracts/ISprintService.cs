@@ -10,5 +10,6 @@ namespace ScrumMaster.Sprints.Infrastructure.Contracts
         Task DeleteSprintAsync(Guid id);
         Task<SprintDTO> GetSprintByIdAsync(Guid id);
         Task<List<SprintDTO>> GetAllUserSprintsAsync(Guid userId);
+        Task<bool> CheckSprintExist(Guid sprintId);
     }
 }
