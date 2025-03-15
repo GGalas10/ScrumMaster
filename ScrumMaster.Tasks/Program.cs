@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using ScrumMaster.Tasks.Infrastructure.DataAccess;
 using ScrumMaster.Tasks.Middleware;
 using System.Text;
+using ScrumMaster.Tasks.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = false,
         };
     });
-
+builder.Services.AddInfrastructureLayer();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

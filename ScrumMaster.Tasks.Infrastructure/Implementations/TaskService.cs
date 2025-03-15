@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using ScrumMaster.Tasks.Core.Models;
 using ScrumMaster.Tasks.Infrastructure.Commands;
 using ScrumMaster.Tasks.Infrastructure.Contracts;
@@ -6,7 +7,6 @@ using ScrumMaster.Tasks.Infrastructure.DataAccess;
 using ScrumMaster.Tasks.Infrastructure.DTOs;
 using ScrumMaster.Tasks.Infrastructure.Exceptions;
 using System.Text.Json;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ScrumMaster.Tasks.Infrastructure.Implementations
 {
@@ -14,10 +14,12 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
     {
         private readonly ITaskDbContext _context;
         private readonly HttpClient _httpClient;
-        public TaskService(ITaskDbContext context, HttpClient httpClient)
+        private readonly string _sprintBaseApi;
+        public TaskService(ITaskDbContext context,IConfiguration config)
         {
             _context = context;
-            _httpClient = httpClient;
+            _httpClient = new HttpClient();
+            _sprintBaseApi = config.GetSection("API")["Sprint"];
         }
         public async Task<Guid> CreateTask(CreateTaskCommand command)
         {
@@ -67,7 +69,7 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
         }
         private async Task CheckSprintExist(Guid sprintId)
         {
-            var result = await _httpClient.GetAsync($"/Sprint/CheckSprintExist?sprintId={sprintId}");
+            var result = await _httpClient.GetAsync($"{_sprintBaseApi}/Sprint/CheckSprintExist?sprintId={sprintId}");
             if (result.IsSuccessStatusCode)
             {
                 var sprintExist = JsonSerializer.Deserialize<bool>(await result.Content.ReadAsStringAsync());
