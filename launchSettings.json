@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "ScrumMaster.UI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "composeLaunchAction": "LaunchBrowser",
+      "launchUrl": "http://localhost:4300",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

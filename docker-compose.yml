@@ -24,3 +24,20 @@ services:
       - "2303:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+
+  scrum-master-ui:
+    build:
+      context: ./scrum-master-ui
+      dockerfile: dockerfile.dev
+    volumes:
+      - ./scrum-master-ui:/app
+      - /app/node_modules
+    ports:
+      - "4300:4200" 
+    depends_on:
+      - identity-service
+      - sprints-service
+      - tasks-service
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm start
