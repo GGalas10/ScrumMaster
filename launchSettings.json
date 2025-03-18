@@ -1,14 +1,11 @@
 {
   "profiles": {
     "ScrumMaster.UI": {
-      "commandName": "Project",
+      "commandName": "DockerCompose",
       "launchBrowser": true,
-      "composeLaunchAction": "LaunchBrowser",
-      "launchUrl": "http://localhost:4300",
-      "applicationUrl": "http://localhost:5000",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      "composeLaunchAction": "scrum-master-ui",
+      "launchUrl": "http://localhost:2304",
+      "applicationUrl": "http://localhost:5000"
     }
   }
 }

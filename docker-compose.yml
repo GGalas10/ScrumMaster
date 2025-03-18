@@ -33,7 +33,7 @@ services:
       - ./scrum-master-ui:/app
       - /app/node_modules
     ports:
-      - "4300:4200" 
+      - "2304:4200" 
     depends_on:
       - identity-service
       - sprints-service
