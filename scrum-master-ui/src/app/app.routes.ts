@@ -6,6 +6,6 @@ import { HomeComponent } from './features/home/home.component';
 export const routes: Routes = 
     [
         {path: '', component: HomeComponent},
-        {path: 'Register', component: RegisterComponent},
-        {path: 'Login', component: LoginComponent}
+        {path: 'Login', component: LoginComponent},
+        {path: 'Register', component: RegisterComponent}
     ];
