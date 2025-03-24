@@ -10,17 +10,17 @@ import { LoginCommand } from '../../../Core/Models/UsersInterfaces';
   standalone: true,
   providers: [AuthService]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   constructor(private authService:AuthService){}
-  ngOnInit(): void {
-    console.log("Test");
-  }
   onSubmit(){
     let command:LoginCommand = {email:"Test",password:"Test"};
-    console.log(command);
     this.authService.LoginUser(command).subscribe({
       next: result => console.log(result),
-      error: err => console.log(err),
+      error: err => {
+        if(err.error.includes("Wrong_Credentials")){
+          alert("Podano błedne dane logowania")
+        }
+      },
     });
   }
 }

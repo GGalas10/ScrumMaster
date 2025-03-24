@@ -43,6 +43,12 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddAuthorization();
 builder.Services.Configure<JwtSettings>(jwtSettings);
 builder.Services.AddInfrastructureLayer();
+builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
+{
+    policy.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .WithHeaders("ScrumMaster", "Content-Type");
+}));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,7 +62,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseRouting();
 
