@@ -1,9 +1,10 @@
 <section class="MainSection">
-    <div class="SubSection">
-        <label>E-mail</label>
-        <input type="email" name="email" id="email">
-        <label>Password</label>
-        <input type="password" name="password" id="password">
-        <button type="submit" (click)="onSubmit()">Zaloguj</button>
-    </div>
+    <h1>Logowanie</h1>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="SubSection">
+            <label>E-mail</label>
+            <input type="email" name="email" id="email" formControlName="email" placeholder="Email">
+            <label>Password</label>
+            <input type="password" name="password" id="password" formControlName="password" placeholder="Hasło">
+            <button type="submit" class="SubmitButton">Zaloguj</button>
+        </form>
 </section>
