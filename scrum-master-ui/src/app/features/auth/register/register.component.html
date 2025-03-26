@@ -1,12 +1,16 @@
 <section class="MainSection">
-    <div class="SubSection">
-        <label>First Name</label>
-        <input type="text" name="firstName" id="firstName">
-        <label>Last Name</label>
-        <input type="text" name="lastName" id="lastName">
-        <label>E-mail</label>
-        <input type="email" name="email" id="email">
-        <label>Password</label>
-        <input type="password" name="password" id="password">
-    </div>
+    <form class="SubSection">
+        <label>{{ 'Auth.firstName' | translate}}:</label>
+        <input type="text" placeholder="{{ 'Auth.firstName' | translate}}">
+        <label>{{ 'Auth.lastName' | translate}}:</label>
+        <input type="text" placeholder="{{ 'Auth.lastName' | translate}}">
+        <label>{{ 'Auth.email' | translate}}:</label>
+        <input type="email" placeholder="{{ 'Auth.email' | translate}}">
+        <label>{{ 'Auth.password' | translate}}:</label>
+        <input type="password" placeholder="{{ 'Auth.password' | translate}}">
+        <label>{{ 'Auth.confirmPassword' | translate}}:</label>
+        <input type="password" placeholder="{{ 'Auth.confirmPassword' | translate}}">
+        <button type="submit" class="SubmitButton">{{ 'Auth.register' | translate}}</button>
+        <a href="/Login" class="SubmitButton">{{ 'Auth.login' | translate}}</a>
+    </form>
 </section>

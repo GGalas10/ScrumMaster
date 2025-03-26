@@ -1,0 +1,12 @@
+{
+    "Auth": 
+    {
+        "email" : "Email",
+        "password" : "Hasło",
+        "confirmPassword" : "Powtórz hasło",
+        "firstName" : "Imię",
+        "lastName" : "Nazwisko",
+        "login" : "Zaloguj",
+        "register" : "Zarejestruj"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "Auth": 
+    {
+        "email" : "Email",
+        "password" : "Password",
+        "confirmPassword" : "Confirm password",
+        "firstName" : "First name",
+        "lastName" : "Last name",
+        "login" : "Login",
+        "register" : "Register"
+    }
+}

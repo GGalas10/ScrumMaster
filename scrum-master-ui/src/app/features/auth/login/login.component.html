@@ -1,10 +1,11 @@
 <section class="MainSection">
     <h1>Logowanie</h1>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="SubSection">
-            <label>E-mail</label>
-            <input type="email" name="email" id="email" formControlName="email" placeholder="Email">
-            <label>Password</label>
-            <input type="password" name="password" id="password" formControlName="password" placeholder="Hasło">
-            <button type="submit" class="SubmitButton">Zaloguj</button>
+            <label>{{ 'Auth.email' | translate}}:</label>
+            <input type="email" name="email" id="email" formControlName="email" placeholder="{{ 'Auth.email' | translate}}">
+            <label>{{ 'Auth.password' | translate}}:</label>
+            <input type="password" name="password" id="password" formControlName="password" placeholder="{{ 'Auth.password' | translate}}">
+            <button type="submit" class="SubmitButton">{{ 'Auth.login' | translate}}</button>
+            <a href="/Register" class="SubmitButton">{{ 'Auth.register' | translate}}</a>
         </form>
 </section>

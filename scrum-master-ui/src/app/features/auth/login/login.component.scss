@@ -1,3 +1,4 @@
+@use 'variables' as *;
 .MainSection{
     width: 400px;
     margin: 100px auto;
@@ -30,6 +31,9 @@ input{
     font-size: 1rem;
     text-align: center;
     border-radius: 15px;
+    background-color: $font-color;
+    color: $background-color;
+    padding: 5px 6px;
 }
 h1{
     text-align: center;

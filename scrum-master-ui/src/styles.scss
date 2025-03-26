@@ -1,5 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
-$font-color:#212121;
+@use 'variables' as *;
 p,label {
+    color: $font-color;
+}
+a{
+    text-decoration: none;
+}
+a:visited{
     color: $font-color;
 }
