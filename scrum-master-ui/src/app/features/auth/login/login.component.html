@@ -6,6 +6,6 @@
             <label>{{ 'Auth.password' | translate}}:</label>
             <input type="password" name="password" id="password" formControlName="password" placeholder="{{ 'Auth.password' | translate}}">
             <button type="submit" class="SubmitButton">{{ 'Auth.login' | translate}}</button>
-            <a href="/Register" class="SubmitButton">{{ 'Auth.register' | translate}}</a>
         </form>
+        <button (click)="GoToRegister()" class="SubmitButton" type="menu" style="width: 100%;">{{ 'Auth.register' | translate}}</button>
 </section>

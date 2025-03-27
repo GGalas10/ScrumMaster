@@ -1,0 +1,22 @@
+@use 'variables' as *;
+section{
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    background-color: #0D47A1;
+    display: flex;
+    padding: 5px 25px;
+    box-sizing: border-box;
+}
+p{
+    color: #FFFFFF;
+    user-select: none;
+    cursor: pointer;
+}
+.rightMenu{
+    margin-left: auto;
+    margin-right: 0;
+}

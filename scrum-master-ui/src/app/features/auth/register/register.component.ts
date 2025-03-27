@@ -20,4 +20,7 @@ export class RegisterComponent {
     password: ['',Validators.compose([Validators.minLength(6), Validators.required])],
     confirmPassword: ['',Validators.compose([Validators.minLength(6), Validators.required])],
   })
+  GoToLogin(){
+    location.href = '/Login';
+  }
 }

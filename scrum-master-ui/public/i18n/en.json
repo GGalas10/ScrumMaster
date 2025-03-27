@@ -1,4 +1,12 @@
 {
+    "Main":
+    {
+        "changeLanguage" : "Change language"
+    },
+    "Home":
+    {
+        "helloInfo" : "Welcome to ScrumMaster"
+    },
     "Auth": 
     {
         "email" : "Email",

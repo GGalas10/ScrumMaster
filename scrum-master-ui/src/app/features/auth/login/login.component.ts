@@ -36,4 +36,7 @@ export class LoginComponent {
       },
     });
   }
+  GoToRegister(){
+    location.href = '/Register';
+  }
 }

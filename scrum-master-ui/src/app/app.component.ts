@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {TranslateService } from '@ngx-translate/core';
+import {TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,TranslatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -21,9 +21,18 @@ export class AppComponent implements OnInit {
   }
   getTransLanguage(){
     this.TransLang=[...this.translate.getLangs()];
-    console.log(this.TransLang);
     }
   setTransLanguage(){
-
+    switch(this.translate.currentLang){
+      case "pl" :
+        this.translate.use("en"); 
+        break;
+        case "en" :
+          this.translate.use("pl"); 
+        break;
+        default:
+          this.translate.use("pl");
+    }
+    
   }
 }

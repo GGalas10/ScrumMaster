@@ -11,6 +11,6 @@
         <label>{{ 'Auth.confirmPassword' | translate}}:</label>
         <input type="password" placeholder="{{ 'Auth.confirmPassword' | translate}}">
         <button type="submit" class="SubmitButton">{{ 'Auth.register' | translate}}</button>
-        <a href="/Login" class="SubmitButton">{{ 'Auth.login' | translate}}</a>
-    </form>
+    </form>  
+    <button (click)="GoToLogin()" class="SubmitButton" style="width: 100%;">{{ 'Auth.login' | translate}}</button>
 </section>
