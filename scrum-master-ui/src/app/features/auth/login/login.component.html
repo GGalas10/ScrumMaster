@@ -1,5 +1,5 @@
 <section class="MainSection">
-    <h1>Logowanie</h1>
+    <h1>{{ 'Auth.LoginHeader' | translate }}</h1>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="SubSection">
             <label>{{ 'Auth.email' | translate}}:</label>
             <input type="email" name="email" id="email" formControlName="email" placeholder="{{ 'Auth.email' | translate}}">

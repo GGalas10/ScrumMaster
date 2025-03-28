@@ -1,7 +1,7 @@
 {
     "Main":
     {
-        "changeLanguage" : "Change language"
+        "changeLanguage" : "Zmień język"
     },
     "Home":
     {
@@ -15,6 +15,16 @@
         "firstName" : "First name",
         "lastName" : "Last name",
         "login" : "Login",
-        "register" : "Register"
+        "register" : "Register",
+        "LoginHeader" : "Logging",
+        "RegisterHeader" : "Registration"
+    },
+    "Errors":
+    {
+        "FirstNameRequired" : "Fill in the fist name field",
+        "LastNameRequired" : "Fill in the last name field",
+        "EmaiRequired" : "Fill in the email field",
+        "PasswordRequired" : "Fill in the password field",
+        "ConfirmPasswordRequired" : "Fill in the confirm password field"
     }
 }

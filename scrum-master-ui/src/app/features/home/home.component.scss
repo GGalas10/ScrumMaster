@@ -1,3 +1,4 @@
+@use 'variables' as *;
 .ButtonSection{
     display: flex;
     flex-direction: column;
@@ -5,4 +6,9 @@
     margin: auto;
     width: 15%;
     text-align: center;
+}
+h1{
+    text-align: center;
+    margin-top:80px;
+    color: $font-color;
 }

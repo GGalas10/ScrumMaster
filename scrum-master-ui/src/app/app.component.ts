@@ -17,21 +17,23 @@ export class AppComponent implements OnInit {
     this.translate.use('pl');
   }
   ngOnInit(): void {
-    this.getTransLanguage();
+    const savedLang = localStorage.getItem('lang') || 'pl';
+    this.translate.use(savedLang);
   }
-  getTransLanguage(){
-    this.TransLang=[...this.translate.getLangs()];
-    }
   setTransLanguage(){
     switch(this.translate.currentLang){
       case "pl" :
         this.translate.use("en"); 
+        localStorage.setItem('lang', 'en');
         break;
-        case "en" :
+      case "en" :        
           this.translate.use("pl"); 
+          localStorage.setItem('lang', 'pl');
         break;
-        default:
+      default:
           this.translate.use("pl");
+          localStorage.setItem('lang', 'pl');
+          break;
     }
     
   }

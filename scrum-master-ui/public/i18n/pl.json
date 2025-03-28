@@ -1,7 +1,7 @@
 {
     "Main":
     {
-        "changeLanguage" : "Zmień język"
+        "changeLanguage" : "Change language"
     },
     "Home":
     {
@@ -15,6 +15,16 @@
         "firstName" : "Imię",
         "lastName" : "Nazwisko",
         "login" : "Zaloguj",
-        "register" : "Zarejestruj"
+        "register" : "Zarejestruj",
+        "LoginHeader" : "Logowanie",
+        "RegisterHeader" : "Rejestracja"
+    },
+    "Errors":
+    {
+        "FirstNameRequired" : "Uzupełnij polę imię",
+        "LastNameRequired" : "Uzupełnij pole nazwisko",
+        "EmaiRequired" : "Uzupełnij pole email",
+        "PasswordRequired" : "Uzupełnij pole hasła",
+        "ConfirmPasswordRequired" : "Uzupełnij pole Potwórz hasło"
     }
 }
