@@ -1,3 +1,12 @@
 <section>
-    <h1>{{this.title}}</h1>
+    <h1>{{`${title}` | translate}}</h1>
+    <div>
+        <p style="line-height: 30px;">
+            @for (item of errors; track $index) 
+            {
+                {{`${item}` | translate}}<br/>
+            }
+        </p>
+    </div>
+    <p class="OkButton" (click)="CloseModal()">Ok</p>
 </section>

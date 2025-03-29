@@ -21,6 +21,7 @@
     },
     "Errors":
     {
+        "FormInvalid" : "Formularz jest błędnie wypełniony",
         "FirstNameRequired" : "Uzupełnij polę imię",
         "LastNameRequired" : "Uzupełnij pole nazwisko",
         "EmaiRequired" : "Uzupełnij pole email",

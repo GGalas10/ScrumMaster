@@ -20,7 +20,8 @@
         "RegisterHeader" : "Registration"
     },
     "Errors":
-    {
+    {     
+        "FormInvalid" : "The form is incorrectly filled in",
         "FirstNameRequired" : "Fill in the fist name field",
         "LastNameRequired" : "Fill in the last name field",
         "EmaiRequired" : "Fill in the email field",
