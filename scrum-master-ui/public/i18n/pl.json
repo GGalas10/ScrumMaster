@@ -14,6 +14,7 @@
         "confirmPassword" : "Powtórz hasło",
         "firstName" : "Imię",
         "lastName" : "Nazwisko",
+        "userName" : "Nazwa użytkownika",
         "login" : "Zaloguj",
         "register" : "Zarejestruj",
         "LoginHeader" : "Logowanie",
@@ -24,8 +25,14 @@
         "FormInvalid" : "Formularz jest błędnie wypełniony",
         "FirstNameRequired" : "Uzupełnij polę imię",
         "LastNameRequired" : "Uzupełnij pole nazwisko",
+        "UserNameRequired" : "Uzupełnij pole nazwy użytkownika",
         "EmaiRequired" : "Uzupełnij pole email",
         "PasswordRequired" : "Uzupełnij pole hasła",
-        "ConfirmPasswordRequired" : "Uzupełnij pole Potwórz hasło"
+        "ConfirmPasswordRequired" : "Uzupełnij pole Potwórz hasło",
+        "PasswordMinLength" : "Hasło musi składać się z minimum 8 znaków",
+        "IncorrectPasswords" : "Hasła muszą być takie same",
+        "SomethingWrong" : "Coś poszło nie tak. Spróbuj ponownie później",
+        "EmailAlreadyExist" : "Mail już jest w użyciu",
+        "UserNameAlreadyExist" : "Nazwa użytkownika jest już w użyciu"
     }
 }

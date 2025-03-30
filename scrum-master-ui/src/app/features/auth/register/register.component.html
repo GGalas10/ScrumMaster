@@ -5,6 +5,8 @@
         <input formControlName="firstName" type="text" placeholder="{{ 'Auth.firstName' | translate}}" [class.invalid]="registerForm.controls['firstName'].invalid && (registerForm.controls['firstName'].dirty || registerForm.controls['firstName'].touched)">
         <label>{{ 'Auth.lastName' | translate}}:</label>
         <input formControlName="lastName" type="text" placeholder="{{ 'Auth.lastName' | translate}}" [class.invalid]="registerForm.controls['lastName'].invalid && (registerForm.controls['lastName'].dirty || registerForm.controls['lastName'].touched)">
+        <label>{{ 'Auth.userName' | translate}}:</label>
+        <input formControlName="userName" type="text" placeholder="{{ 'Auth.userName' | translate}}" [class.invalid]="registerForm.controls['userName'].invalid && (registerForm.controls['userName'].dirty || registerForm.controls['userName'].touched)">
         <label>{{ 'Auth.email' | translate}}:</label>
         <input formControlName="email" type="email" placeholder="{{ 'Auth.email' | translate}}" [class.invalid]="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
         <label>{{ 'Auth.password' | translate}}:</label>

@@ -25,18 +25,33 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             if (string.IsNullOrWhiteSpace(command.password))
                 throw new Exception("Password_Cannot_Be_Null");
 
+            if (string.IsNullOrWhiteSpace(command.firstName))
+                throw new Exception("FirstName_Cannot_Be_Null");
+
+            if (string.IsNullOrWhiteSpace(command.lastName))
+                throw new Exception("LastName_Cannot_Be_Null");
+
+            if (string.IsNullOrWhiteSpace(command.userName))
+                throw new Exception("UserName_Cannot_Be_Null");
+
+            if (command.password.Length < 6)
+                throw new Exception("Password_Is_Too_Short");
+
+            if (command.password != command.confirmPassword)
+                throw new Exception("Passwords_Incorrect");
+
             var checkEmail = await _userManager.FindByEmailAsync(command.email);
             if (checkEmail != null)
                 throw new Exception("User_Email_Already_Exist");
 
-            var checkName = await _userManager.FindByNameAsync($"{command.firstName}{command.lastName}");
+            var checkName = await _userManager.FindByNameAsync(command.userName);
             if (checkName != null)
                 throw new Exception("User_Name_Already_Exist");
 
             var newUser = new AppUser()
             {
                 Email = command.email,
-                UserName = $"{command.firstName}{command.lastName}",
+                UserName = command.userName,
                 FirstName = command.firstName ,
                 LastName = command.lastName ,
             };

@@ -14,6 +14,7 @@
         "confirmPassword" : "Confirm password",
         "firstName" : "First name",
         "lastName" : "Last name",
+        "userName" : "User name",
         "login" : "Login",
         "register" : "Register",
         "LoginHeader" : "Logging",
@@ -24,8 +25,14 @@
         "FormInvalid" : "The form is incorrectly filled in",
         "FirstNameRequired" : "Fill in the fist name field",
         "LastNameRequired" : "Fill in the last name field",
+        "UserNameRequired" : "Fill in the user name field",
         "EmaiRequired" : "Fill in the email field",
         "PasswordRequired" : "Fill in the password field",
-        "ConfirmPasswordRequired" : "Fill in the confirm password field"
+        "ConfirmPasswordRequired" : "Fill in the confirm password field",
+        "PasswordMinLength" : "The password must have a minimum of 8 characters",
+        "IncorrectPasswords" : "Passwords must be the same",
+        "SomethingWrong" : "Something has gone wrong. Try again later",     
+        "EmailAlreadyExist" : "Mail is already in use",
+        "UserNameAlreadyExist" : "The user name is already in use"
     }
 }
