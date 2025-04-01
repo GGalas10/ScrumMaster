@@ -1,4 +1,5 @@
-﻿using ScrumMaster.Tasks.Infrastructure.Commands;
+﻿using Microsoft.Extensions.Configuration;
+using ScrumMaster.Tasks.Infrastructure.Commands;
 using ScrumMaster.Tasks.Infrastructure.Implementations;
 using ScrumMaster.Tasks.Tests.InfrastructureTest.Commons;
 
@@ -6,12 +7,16 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
 {
     public class TaskServiceTests
     {
+        
         [Fact]
         public async Task CreateTask_WhenCommandIsNull_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
 
             //Act
             try
@@ -28,8 +33,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task CreateTask_WhenTitleIsNull_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var command = new CreateTaskCommand() { title = null, description = "TestDescription", sprintId = Guid.NewGuid() };
 
             //Act
@@ -47,8 +55,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task CreateTask_WhenDescriptionIsNull_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var command = new CreateTaskCommand() { title = "TestTitle", description = "TestDescription", sprintId = Guid.NewGuid() };
 
             //Act
@@ -66,8 +77,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task CreateTask_WhenSprintIdIsEmpty_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var command = new CreateTaskCommand() { title = "TestTitle", description = "TestDescription", sprintId = Guid.Empty };
 
             //Act
@@ -85,8 +99,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task CreateTask_WhenCommandIsCorrect_Should_AddNewTask()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var command = new CreateTaskCommand() { title = "TestTitle", description = "TestDescription", sprintId = Guid.NewGuid() };
 
             //Act
@@ -99,8 +116,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task UpdateTask_WhenCommandIsNull_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
 
             //Act
             try
@@ -117,8 +137,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task UpdateTask_WhenCannotFindTask_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var command = new UpdateTaskCommand() {sprintId = Guid.Parse("00000000-0000-0000-0000-000000000001") };
 
             //Act
@@ -136,8 +159,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task UpdateTask_WhenCommandDoNoTHasAnyChanges_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var randomTask = dbContext.Tasks.First();
             var command = new UpdateTaskCommand() {oldTaskId = randomTask.Id };
 
@@ -156,8 +182,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task UpdateTask_WhenCommandHasNewTitle_Should_ChangeTitle()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var randomTask = dbContext.Tasks.First();
             var command = new UpdateTaskCommand() {oldTaskId = randomTask.Id,title = "NewTestTitleAfterUpdate" };
 
@@ -172,8 +201,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task DeleteTask_WhenGuidIsEmpty_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
 
             //Act
             try
@@ -191,8 +223,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task DeleteTask_WhenCannotFindTask_Should_ThrowException()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
 
             //Act
             try
@@ -210,8 +245,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
         public async Task DeleteTask_WhenTaskIdIsCorrect_Should_RemoveTask()
         {
             //Arrange
+            Dictionary<string, string> inMemorySettings = new Dictionary<string, string> {
+            {"Api.Sprint", "Test"} };
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext);
+            var service = new TaskService(dbContext, configuration);
             var randomTask = dbContext.Tasks.First();
 
             //Act

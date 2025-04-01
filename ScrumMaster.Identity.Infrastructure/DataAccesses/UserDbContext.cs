@@ -7,5 +7,6 @@ namespace ScrumMaster.Identity.Infrastructure.DataAccess
     public class UserDbContext : IdentityDbContext<AppUser>
     {
         public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }
