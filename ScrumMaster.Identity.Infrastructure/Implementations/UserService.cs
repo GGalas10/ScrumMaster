@@ -2,6 +2,7 @@
 using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure.Commands;
 using ScrumMaster.Identity.Infrastructure.Contracts;
+using ScrumMaster.Identity.Infrastructure.DTO;
 
 namespace ScrumMaster.Identity.Infrastructure.Implementations
 {
@@ -9,12 +10,14 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IJwtHandler _jwtHandler;
-        public UserService(UserManager<AppUser> userManager,IJwtHandler jwtHandler)
+        private readonly IRefreshTokenService _refreshTokenService;
+        public UserService(UserManager<AppUser> userManager,IJwtHandler jwtHandler,IRefreshTokenService refreshTokenService)
         {
             _userManager = userManager;
             _jwtHandler = jwtHandler;
+            _refreshTokenService = refreshTokenService;
         }
-        public async Task<string> RegisterUser(RegisterUserCommand command)
+        public async Task<AuthDTO> RegisterUser(RegisterUserCommand command)
         {
             if (command == null)
                 throw new Exception("Command_Is_Null");
@@ -74,10 +77,16 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             if (!isLoged)
                 throw new Exception("Wrong_Credentials");
 
-            return _jwtHandler.CreateToken(user);
+            var jwtToken = _jwtHandler.CreateToken(user);
+            var refreshToken = await _refreshTokenService.CreateRefreshToken(Guid.Parse(user.Id));
+            return new AuthDTO()
+            {
+                jwtToken = jwtToken,
+                refreshToken = refreshToken
+            };
         }
 
-        public async Task<string> LoginUser(LoginUserCommand command)
+        public async Task<AuthDTO> LoginUser(LoginUserCommand command)
         {
             if (command == null)
                 throw new Exception("Command_Is_Null");
@@ -90,7 +99,14 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             if (!isLoged)
                 throw new Exception("Wrong_Credentials");
 
-            return _jwtHandler.CreateToken(user);
+            var jwtToken = _jwtHandler.CreateToken(user);
+            var refreshToken = await _refreshTokenService.CreateRefreshToken(Guid.Parse(user.Id));
+
+            return new AuthDTO()
+            {
+                jwtToken = jwtToken,
+                refreshToken = refreshToken
+            };
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ScrumMaster.Identity.Infrastructure.Commands;
-using ScrumMaster.Identity.Infrastructure.DataAccess;
+using ScrumMaster.Identity.Infrastructure.DataAccesses;
 using ScrumMaster.Identity.Tests.Common;
 using System.Net;
 using System.Text;

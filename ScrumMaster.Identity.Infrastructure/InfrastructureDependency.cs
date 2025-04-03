@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ScrumMaster.Identity.Infrastructure.Contracts;
+using ScrumMaster.Identity.Infrastructure.DataAccesses;
 using ScrumMaster.Identity.Infrastructure.Implementations;
 
 namespace ScrumMaster.Identity.Infrastructure
@@ -10,6 +11,7 @@ namespace ScrumMaster.Identity.Infrastructure
         {
             service.AddScoped<IJwtHandler, JwtHandler>();
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IUserDbContext, UserDbContext>();
             return service;
         }
     }

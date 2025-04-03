@@ -2,7 +2,7 @@
 using NBomber.Contracts.Stats;
 using NBomber.CSharp;
 using ScrumMaster.Identity.Infrastructure.Commands;
-using ScrumMaster.Identity.Infrastructure.DataAccess;
+using ScrumMaster.Identity.Infrastructure.DataAccesses;
 using ScrumMaster.Identity.Tests.Common;
 using System.Text;
 using System.Text.Json;

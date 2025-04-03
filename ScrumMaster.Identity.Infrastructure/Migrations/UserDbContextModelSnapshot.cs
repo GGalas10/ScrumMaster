@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ScrumMaster.Identity.Infrastructure.DataAccess;
+using ScrumMaster.Identity.Infrastructure.DataAccesses;
 
 #nullable disable
 

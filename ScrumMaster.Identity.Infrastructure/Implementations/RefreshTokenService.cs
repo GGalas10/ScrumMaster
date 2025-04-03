@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure.Contracts;
-using ScrumMaster.Identity.Infrastructure.DataAccess;
+using ScrumMaster.Identity.Infrastructure.DataAccesses;
 using ScrumMaster.Identity.Infrastructure.DTO;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,9 +10,9 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
 {
     public class RefreshTokenService : IRefreshTokenService
     {
-        private readonly UserDbContext _userDbContext;
+        private readonly IUserDbContext _userDbContext;
         private readonly IJwtHandler _jwtHandler;
-        public RefreshTokenService(UserDbContext userDbContext, IJwtHandler jwtHandler)
+        public RefreshTokenService(IUserDbContext userDbContext, IJwtHandler jwtHandler)
         {
             _userDbContext = userDbContext;
             _jwtHandler = jwtHandler;
@@ -41,7 +41,7 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
                 throw new UnauthorizedAccessException("Cannot_Find_RefreshToken");
             var newJwt = _jwtHandler.CreateToken(oldRefresh.User);     
             var newRefresh = await CreateRefreshToken(oldRefresh.UserId);
-            _userDbContext.Remove(oldRefresh);
+            _userDbContext.RefreshTokens.Remove(oldRefresh);
             _userDbContext.SaveChanges();
             return new AuthDTO()
             {

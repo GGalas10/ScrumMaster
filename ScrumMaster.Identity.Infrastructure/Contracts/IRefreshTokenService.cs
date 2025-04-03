@@ -2,7 +2,7 @@
 
 namespace ScrumMaster.Identity.Infrastructure.Contracts
 {
-    internal interface IRefreshTokenService
+    public interface IRefreshTokenService
     {
         Task<string> CreateRefreshToken(Guid userId);
         Task<AuthDTO> LoginWithRefresh(string refreshToken);

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ScrumMaster.Identity.Infrastructure.DataAccess;
+using ScrumMaster.Identity.Infrastructure.DataAccesses;
 
 namespace ScrumMaster.Identity.Tests.Common
 {

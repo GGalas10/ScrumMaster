@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure;
-using ScrumMaster.Identity.Infrastructure.DataAccess;
+using ScrumMaster.Identity.Infrastructure.DataAccesses;
 using ScrumMaster.Identity.Infrastructure.DTO;
 using System.Text;
 
