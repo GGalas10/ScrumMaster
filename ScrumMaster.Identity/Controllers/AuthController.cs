@@ -20,6 +20,7 @@ namespace ScrumMaster.Identity.Controllers
             try
             {
                 var jwt = await _userService.RegisterUser(command);
+                SetRefreshTokenCookie(jwt.refreshToken);
                 return Ok(jwt.jwtToken);
             }
             catch (Exception ex)
@@ -33,6 +34,7 @@ namespace ScrumMaster.Identity.Controllers
             try
             {
                 var jwt = await _userService.LoginUser(command);
+                SetRefreshTokenCookie(jwt.refreshToken);
                 return Ok(jwt.jwtToken);
             }
             catch (Exception ex)
@@ -41,17 +43,25 @@ namespace ScrumMaster.Identity.Controllers
             }
         }
         [HttpPost("/Refresh")]
-        public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
+        public async Task<IActionResult> RefreshToken()
         {
             try
             {
+                var refreshToken = Request.Cookies["RefreshToken"];
+                if (refreshToken == null)
+                    return Unauthorized();
                 var result = await _refreshTokenService.LoginWithRefresh(refreshToken);
+                SetRefreshTokenCookie(result.refreshToken);
                 return Ok(result.jwtToken);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        private void SetRefreshTokenCookie(string refreshToken)
+        {
+            Response.Cookies.Append("RefreshToken",refreshToken,new CookieOptions() { Expires = DateTime.Now.AddDays(6),SameSite = SameSiteMode.Strict ,Secure = true, HttpOnly = true});
         }
     }
 }
