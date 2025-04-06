@@ -29,7 +29,7 @@
         "EmaiRequired" : "Uzupełnij pole email",
         "PasswordRequired" : "Uzupełnij pole hasła",
         "ConfirmPasswordRequired" : "Uzupełnij pole Potwórz hasło",
-        "PasswordMinLength" : "Hasło musi składać się z minimum 8 znaków",
+        "PasswordMinLength" : "Hasło musi składać się z minimum 10 znaków",
         "IncorrectPasswords" : "Hasła muszą być takie same",
         "SomethingWrong" : "Coś poszło nie tak. Spróbuj ponownie później",
         "EmailAlreadyExist" : "Mail już jest w użyciu",

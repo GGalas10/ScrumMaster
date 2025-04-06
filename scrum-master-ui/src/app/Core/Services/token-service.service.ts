@@ -17,4 +17,7 @@ export class TokenServiceService {
       return false;
     return true;
   }
+  Logout():void{
+    this.jwt = null;
+  }
 }

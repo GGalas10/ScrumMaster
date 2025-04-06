@@ -57,7 +57,7 @@ export class RegisterComponent {
       this.ShowErrorModal(errors,"Errors.FormInvalid");
       return;
     }
-    if(this.registerForm.value.confirmPassword == this.registerForm.value.password){
+    if(this.registerForm.value.confirmPassword != this.registerForm.value.password){
       errors.push('Errors.IncorrectPasswords')
       this.ShowErrorModal(errors,"Errors.FormInvalid");
       return;
@@ -98,6 +98,11 @@ export class RegisterComponent {
           if(err.error == "User_Name_Already_Exist")
             errors.push('Errors.UserNameAlreadyExist')
 
+          if(err.error == "Password_Is_Too_Short")
+            errors.push('Errors.PasswordMinLength')
+
+          if(errors.length <= 0)
+            errors.push('Errors.SomethingWrong');
           this.ShowErrorModal(errors,"Errors.FormInvalid");
         }
       })

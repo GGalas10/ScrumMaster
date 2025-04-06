@@ -12,6 +12,7 @@ namespace ScrumMaster.Identity.Infrastructure
             service.AddScoped<IJwtHandler, JwtHandler>();
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IUserDbContext, UserDbContext>();
+            service.AddScoped<IRefreshTokenService, RefreshTokenService>();
             return service;
         }
     }

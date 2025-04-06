@@ -43,10 +43,12 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddAuthorization();
 builder.Services.Configure<JwtSettings>(jwtSettings);
 builder.Services.AddInfrastructureLayer();
+var front = builder.Configuration["Front:URL"];
 builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 {
-    policy.AllowAnyOrigin()
+    policy.WithOrigins(front!)
           .AllowAnyMethod()
+          .AllowCredentials()
           .WithHeaders("ScrumMaster", "Content-Type");
 }));
 var app = builder.Build();

@@ -12,3 +12,12 @@ h1{
     margin-top:80px;
     color: $font-color;
 }
+.linkBtn{
+    color: $background-color;
+    background-color: gray;
+    padding: 6px 15px;
+    border-radius: 14px;
+}
+.linkBtn:hover{
+    opacity: 0.8;
+}

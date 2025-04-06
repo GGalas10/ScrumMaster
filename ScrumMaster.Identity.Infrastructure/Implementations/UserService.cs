@@ -37,7 +37,7 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             if (string.IsNullOrWhiteSpace(command.userName))
                 throw new Exception("UserName_Cannot_Be_Null");
 
-            if (command.password.Length < 6)
+            if (command.password.Length < 10)
                 throw new Exception("Password_Is_Too_Short");
 
             if (command.password != command.confirmPassword)
