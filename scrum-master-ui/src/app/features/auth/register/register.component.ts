@@ -18,14 +18,16 @@ export class RegisterComponent {
   errors:string[]=[];
   title:string = "";
   showModal = false;
+  confirmShow = false;
+  passShow = false;
   constructor(private authService:AuthService){}
   registerForm = this.formBuilder.group({
     firstName : ['',Validators.required],
     lastName : ['',Validators.required],
     userName : ['',Validators.required],
     email: ['',Validators.compose([Validators.email, Validators.required])],
-    password: ['',Validators.compose([Validators.minLength(6), Validators.required])],
-    confirmPassword: ['',Validators.compose([Validators.minLength(6), Validators.required])],
+    password: ['',Validators.compose([Validators.minLength(10), Validators.required])],
+    confirmPassword: ['',Validators.compose([Validators.minLength(10), Validators.required])],
   })
   GoToLogin(){
     location.href = '/Login';
@@ -100,6 +102,9 @@ export class RegisterComponent {
 
           if(err.error == "Password_Is_Too_Short")
             errors.push('Errors.PasswordMinLength')
+
+          if(err.error == "PasswordRequiresNonAlphanumeric")
+            errors.push('Errors.PasswordRequiresNonAlphanumeric')
 
           if(errors.length <= 0)
             errors.push('Errors.SomethingWrong');

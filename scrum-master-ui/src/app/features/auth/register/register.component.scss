@@ -43,3 +43,14 @@ h1{
 .invalid{
     border: 2px solid red;
 }
+.passwordShow{
+    position: absolute;
+    margin-top: 24px;
+    margin-left: 365px;
+    z-index: 2;
+    cursor: pointer;
+}
+.passwordShow *{
+    color:$background-color;
+    fill: $background-color;
+}
