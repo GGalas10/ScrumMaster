@@ -21,7 +21,7 @@ namespace ScrumMaster.Identity.Controllers
             {
                 var jwt = await _userService.RegisterUser(command);
                 SetRefreshTokenCookie(jwt.refreshToken);
-                return Ok(jwt.jwtToken);
+                return Json(jwt.jwtToken);
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace ScrumMaster.Identity.Controllers
             {
                 var jwt = await _userService.LoginUser(command);
                 SetRefreshTokenCookie(jwt.refreshToken);
-                return Ok(jwt.jwtToken);
+                return Json(jwt.jwtToken);
             }
             catch (Exception ex)
             {
@@ -52,7 +52,7 @@ namespace ScrumMaster.Identity.Controllers
                     return Unauthorized();
                 var result = await _refreshTokenService.LoginWithRefresh(refreshToken);
                 SetRefreshTokenCookie(result.refreshToken);
-                return Ok(result.jwtToken);
+                return Json(result.jwtToken);
             }
             catch (Exception ex)
             {

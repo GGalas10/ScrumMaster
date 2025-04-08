@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { LoginCommand, RegisterCommand } from '../Models/UsersInterfaces';
-import { TokenServiceService } from './token-service.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { TokenServiceService } from './token-service.service';
 export class AuthService {
   headers:HttpHeaders = new HttpHeaders({"ScrumMaster":"true"});
   apiUrl = environment.identityUrl;
-  constructor(private http: HttpClient,private tokenService: TokenServiceService) { }
+  constructor(private http: HttpClient,private tokenService: TokenService) { }
   RegisterUser(command: RegisterCommand): Observable<string> { 
     return this.http.post<string>(`${this.apiUrl}/Register`, command,{headers:this.headers, withCredentials : true})
     .pipe(tap(response=>{
@@ -25,6 +25,7 @@ export class AuthService {
   }
   Refresh():Observable<string>{
     return this.http.post<string>(`${this.apiUrl}/Refresh`,null,{headers:this.headers, withCredentials : true}).pipe(tap(response=>{
+      console.log(response);
       this.tokenService.SetJwtToken(response);
     }));
   }

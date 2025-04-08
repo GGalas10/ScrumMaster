@@ -1,12 +1,12 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { TokenServiceService } from '../Services/token-service.service';
+import { TokenService } from '../Services/token.service';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../Services/Auth.service';
 
 export const authInterceptorsInterceptor: HttpInterceptorFn = (req, next) => {
   
-  const tokenService = inject(TokenServiceService);
+  const tokenService = inject(TokenService);
   const authService = inject(AuthService);
   const token = tokenService.GetJwtToken();
 

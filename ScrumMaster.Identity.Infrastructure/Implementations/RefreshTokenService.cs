@@ -36,10 +36,11 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
 
         public async Task<AuthDTO> LoginWithRefresh(string refreshToken)
         {
-            var oldRefresh = _userDbContext.RefreshTokens.Include(x=>x.User).FirstOrDefault(x => !x.IsRevoked && x.Token == refreshToken);
+            var oldRefresh = _userDbContext.RefreshTokens.FirstOrDefault(x => !x.IsRevoked && x.Token == refreshToken);
             if (oldRefresh == null)
                 throw new UnauthorizedAccessException("Cannot_Find_RefreshToken");
-            var newJwt = _jwtHandler.CreateToken(oldRefresh.User);     
+            var user = await _userDbContext.Users.FirstOrDefaultAsync(x => x.Id == oldRefresh.UserId.ToString());
+            var newJwt = _jwtHandler.CreateToken(user);     
             var newRefresh = await CreateRefreshToken(oldRefresh.UserId);
             _userDbContext.RefreshTokens.Remove(oldRefresh);
             _userDbContext.SaveChanges();

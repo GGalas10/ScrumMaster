@@ -33,6 +33,7 @@
         "IncorrectPasswords" : "Hasła muszą być takie same",
         "SomethingWrong" : "Coś poszło nie tak. Spróbuj ponownie później",
         "EmailAlreadyExist" : "Mail już jest w użyciu",
-        "UserNameAlreadyExist" : "Nazwa użytkownika jest już w użyciu"
+        "UserNameAlreadyExist" : "Nazwa użytkownika jest już w użyciu",
+        "NonAlphanumeric" : "Hasło musi zawierać jeden znak specjalny"
     }
 }

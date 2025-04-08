@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CustomAlertComponent } from "../../../shared/components/custom-alert/custom-alert.component";
 import { CommonModule } from '@angular/common';
 import { RegisterCommand } from '../../../Core/Models/UsersInterfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent {
   showModal = false;
   confirmShow = false;
   passShow = false;
-  constructor(private authService:AuthService){}
+  constructor(private authService:AuthService, private router:Router){}
   registerForm = this.formBuilder.group({
     firstName : ['',Validators.required],
     lastName : ['',Validators.required],
@@ -30,7 +31,7 @@ export class RegisterComponent {
     confirmPassword: ['',Validators.compose([Validators.minLength(10), Validators.required])],
   })
   GoToLogin(){
-    location.href = '/Login';
+    this.router.navigate(['/Login']);
   }
   RegisterUser(){
     let errors:string[] = [];
@@ -66,7 +67,7 @@ export class RegisterComponent {
     }else{
       this.authService.RegisterUser(this.GetModelFromForm()).subscribe({
         next : (response) => {
-          console.log(response);
+          this.router.navigate(['/']);
         },
         error : (err) => {
           let errors:string[] = [];
@@ -104,7 +105,7 @@ export class RegisterComponent {
             errors.push('Errors.PasswordMinLength')
 
           if(err.error == "PasswordRequiresNonAlphanumeric")
-            errors.push('Errors.PasswordRequiresNonAlphanumeric')
+            errors.push('Errors.NonAlphanumeric')
 
           if(errors.length <= 0)
             errors.push('Errors.SomethingWrong');
