@@ -10,5 +10,6 @@ namespace ScrumMaster.Tasks.Infrastructure.Contracts
         Task DeleteTask(Guid taskId);
         Task<TaskDTO> GetTaskById(Guid taskId);
         Task<List<TaskDTO>> GetAllSprintTasks(Guid sprintId);
+        List<TaskStatusDTO> GetTaskStatuses();
     }
 }

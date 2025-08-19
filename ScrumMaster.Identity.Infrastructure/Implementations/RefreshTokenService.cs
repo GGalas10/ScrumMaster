@@ -25,7 +25,7 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             {
                 Id = Guid.NewGuid(),
                 Token = newRefresh,
-                UserId = userId,
+                UserId = userId.ToString(),
                 CreatedAt = DateTime.UtcNow,
                 ExpiresAt = DateTime.UtcNow.AddDays(7),
                 IsRevoked = false
@@ -41,13 +41,14 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
                 throw new UnauthorizedAccessException("Cannot_Find_RefreshToken");
             var user = await _userDbContext.Users.FirstOrDefaultAsync(x => x.Id == oldRefresh.UserId.ToString());
             var newJwt = _jwtHandler.CreateToken(user);     
-            var newRefresh = await CreateRefreshToken(oldRefresh.UserId);
+            var newRefresh = await CreateRefreshToken(Guid.Parse(oldRefresh.UserId));
             _userDbContext.RefreshTokens.Remove(oldRefresh);
             _userDbContext.SaveChanges();
             return new AuthDTO()
             {
                 jwtToken = newJwt,
-                refreshToken = refreshToken
+                refreshToken = newRefresh,
+                userName = user.UserName
             };
         }
         private static string GenerateRefreshToken()

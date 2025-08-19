@@ -1,0 +1,6 @@
+services:
+  scrum-master-ui:
+    ports:
+      - "2403:4200"
+    environment:
+      - NODE_ENV=development

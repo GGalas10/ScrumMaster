@@ -5,7 +5,14 @@
             <input type="email" name="email" id="email" formControlName="email" placeholder="{{ 'Auth.email' | translate}}">
             <label>{{ 'Auth.password' | translate}}:</label>
             <input type="password" name="password" id="password" formControlName="password" placeholder="{{ 'Auth.password' | translate}}">
-            <button type="submit" class="SubmitButton">{{ 'Auth.login' | translate}}</button>
-        </form>
-        <button (click)="GoToRegister()" class="SubmitButton" type="menu" style="width: 100%;">{{ 'Auth.register' | translate}}</button>
+            <ng-container *ngIf="!isLoginClick;else loader">             
+                <button type="submit" class="SubmitButton">{{ 'Auth.login' | translate}}</button>
+            </ng-container>
+            <ng-template #loader>
+                <div class="loader"></div>
+            </ng-template>
+            </form>
+        
+        <button [routerLink]="['/Register']" routerLinkActive="router-link-active"  class="SubmitButton" type="menu" style="width: 100%;">{{ 'Auth.register' | translate}}</button>
 </section>
+<app-custom-alert [title]="title" [errors]="errors" *ngIf="showModal" (closeEvent)="showModal = false"></app-custom-alert>

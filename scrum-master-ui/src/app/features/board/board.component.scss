@@ -1,0 +1,23 @@
+.body{
+    margin-top: 60px;
+    margin-left: 150px;
+    min-height: 1000px;
+    display: flex;
+    flex-direction: column;
+}
+.BoardHeader{
+    min-height: 75px;
+    text-align: center;
+}
+.BoardColumn{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    gap:10px
+}
+.OneColumn{
+    background-color: gray;
+    height: 100%;
+    width: 150px;
+}

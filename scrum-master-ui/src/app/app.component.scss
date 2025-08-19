@@ -17,6 +17,13 @@ p{
     cursor: pointer;
 }
 .rightMenu{
+    display: flex;
+    gap:15px;
     margin-left: auto;
     margin-right: 0;
+}
+.dropdownMenu{
+    position: absolute;
+    top: 55px;
+    right: 0px;
 }

@@ -5,14 +5,14 @@ services:
       context: ./ScrumMaster.Identity
       dockerfile: Dockerfile
     ports:
-      - "2301:8080"
+      - "2201:8080"
 
   sprints-service:
     build:
       context: ./ScrumMaster.Sprints
       dockerfile: Dockerfile
     ports:
-      - "2302:8080"
+      - "2202:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
@@ -21,7 +21,16 @@ services:
       context: ./ScrumMaster.Tasks
       dockerfile: Dockerfile
     ports:
-      - "2303:8080"
+      - "2203:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  project-service:
+    build:
+      context: ./ScrumMaster.Project
+      dockerfile: Dockerfile
+    ports:
+      - "2205:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
@@ -33,7 +42,7 @@ services:
       - ./scrum-master-ui:/app
       - /app/node_modules
     ports:
-      - "2304:4200" 
+      - "2204:4200" 
     depends_on:
       - identity-service
       - sprints-service

@@ -1,0 +1,19 @@
+<section class="MainPanel">
+    <p class="MenuItem">{{ 'LeftMenu.Home' | translate }}</p>
+    <p class="MenuItem" (click)="ShowSubMenu('sprint')">Sprint</p>
+    <div class="MenuSubMenu" *ngIf="sprintMenu">
+        <p class="MenuSubItem">{{ 'LeftMenu.SprintList' | translate }}</p>
+    </div>
+    <p class="MenuItem" (click)="ShowSubMenu('board')">{{ 'LeftMenu.Board' | translate }}</p>
+    <div class="MenuSubMenu" *ngIf="boardMenu">
+        <p class="MenuSubItem">subHome</p>
+        <p class="MenuSubItem">subHome</p>
+        <p class="MenuSubItem">subHome</p>
+    </div>
+    <p class="MenuItem" (click)="ShowSubMenu('ai')">{{ 'LeftMenu.AiAssistant' | translate }}</p>
+    <div class="MenuSubMenu" *ngIf="AIAssistant">
+        <p class="MenuSubItem">subHome</p>
+        <p class="MenuSubItem">subHome</p>
+        <p class="MenuSubItem">subHome</p>
+    </div>
+</section>

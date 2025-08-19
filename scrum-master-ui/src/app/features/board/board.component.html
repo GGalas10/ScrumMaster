@@ -1,1 +1,15 @@
-<p>board works!</p>
+<app-left-menu></app-left-menu>
+<section class="body">
+    <section class="BoardHeader">
+
+    </section>
+    <section *ngIf="taskStatuses" class="BoardColumn">
+        <ng-container *ngFor="let oneStatus of taskStatuses" >
+            <div class="OneColumn">
+                <div class="BoardHeader">
+                    <h2>{{oneStatus.statusName}}</h2>
+                </div>
+            </div>
+        </ng-container>
+    </section>
+</section>

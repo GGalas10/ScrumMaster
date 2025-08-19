@@ -7,5 +7,6 @@ namespace ScrumMaster.Identity.Infrastructure.Contracts
     {
         Task<AuthDTO> RegisterUser(RegisterUserCommand command);
         Task<AuthDTO> LoginUser(LoginUserCommand command);
+        Task<string> GetUserInfo(Guid userId);
     }
 }

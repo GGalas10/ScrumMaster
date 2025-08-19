@@ -1,7 +1,8 @@
 {
     "Main":
     {
-        "changeLanguage" : "Change language"
+        "changeLanguage" : "Change language",
+        "hello" : "Witaj"
     },
     "Home":
     {
@@ -18,7 +19,9 @@
         "login" : "Zaloguj",
         "register" : "Zarejestruj",
         "LoginHeader" : "Logowanie",
-        "RegisterHeader" : "Rejestracja"
+        "RegisterHeader" : "Rejestracja",
+        "Settings" : "Ustawienia",
+        "Logout" : "Wyloguj"
     },
     "Errors":
     {
@@ -34,6 +37,16 @@
         "SomethingWrong" : "Coś poszło nie tak. Spróbuj ponownie później",
         "EmailAlreadyExist" : "Mail już jest w użyciu",
         "UserNameAlreadyExist" : "Nazwa użytkownika jest już w użyciu",
-        "NonAlphanumeric" : "Hasło musi zawierać jeden znak specjalny"
+        "NonAlphanumeric" : "Hasło musi zawierać jeden znak specjalny",
+        "PasswordRequiresDigit":"Hasło musi zawierać co najmniej jedną cyfrę",
+        "PasswordRequiresUpper":"Twoje hasło musi zawierać przynajmniej jedną dużą literę",
+        "WrongCredentials" : "Podano błędne dane logowania"
+    },
+    "LeftMenu":
+    {
+        "Home" : "Strona główna",
+        "SprintList" : "Lista sprintów",
+        "Board" : "Tablica",
+        "AiAssistant" : "Asystent AI"
     }
 }

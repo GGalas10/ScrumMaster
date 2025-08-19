@@ -1,9 +1,10 @@
 {
   "profiles": {
-    "ScrumMaster.UI": {
+    "ScrumMaster": {
       "commandName": "DockerCompose",
+      "commandVersion": "1.0",
       "launchBrowser": true,
-      "composeLaunchAction": "scrum-master-ui",
+      "composeLaunchAction": "identity-service",
       "launchUrl": "http://localhost:2304",
       "applicationUrl": "http://localhost:5000"
     }

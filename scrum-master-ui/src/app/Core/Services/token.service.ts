@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
-  private jwt:string | null = null;
-  constructor() { }
-  GetJwtToken():string|null{
-    return this.jwt;
+  private isAuthenticated = false;
+  private userName = '';
+  constructor() {}
+  GetUserInfos(): string {
+    return this.userName;
   }
-  SetJwtToken(token:string){
-    console.log(token);
-    this.jwt = token;
+  Login(userName: string): void {
+    this.userName = userName;
+    this.isAuthenticated = true;
   }
-  IsLogin():boolean{
-    if(this.jwt == null)
-      return false;
-    return true;
+  IsLogin(): boolean {
+    return this.isAuthenticated;
   }
-  Logout():void{
-    this.jwt = null;
+  Logout(): void {
+    this.isAuthenticated = false;
+    this.userName = '';
   }
 }

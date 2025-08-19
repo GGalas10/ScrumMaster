@@ -42,5 +42,11 @@ namespace ScrumMaster.Tasks.Controllers
             var result = await _taskService.GetAllSprintTasks(sprintId);
             return Ok(result);
         }
+        [HttpGet]
+        public IActionResult GetTasksStatuses()
+        {
+            var result = _taskService.GetTaskStatuses();
+            return Ok(result);
+        }
     }
 }

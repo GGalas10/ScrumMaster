@@ -82,7 +82,8 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             return new AuthDTO()
             {
                 jwtToken = jwtToken,
-                refreshToken = refreshToken
+                refreshToken = refreshToken,
+                userName = user.UserName
             };
         }
 
@@ -105,8 +106,16 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             return new AuthDTO()
             {
                 jwtToken = jwtToken,
-                refreshToken = refreshToken
+                refreshToken = refreshToken,
+                userName = user.UserName
             };
+        }
+        public async Task<string> GetUserInfo(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+                return null;
+            return user.UserName;
         }
     }
 }

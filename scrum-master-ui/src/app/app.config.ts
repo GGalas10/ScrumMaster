@@ -1,34 +1,59 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  importProvidersFrom,
+  inject,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { HttpClient, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
-import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {
+  HttpClient,
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { authInterceptorsInterceptor } from './Core/Interceptors/auth-interceptors.interceptor';
+import { AuthService } from './Core/Services/Auth.service';
 
-const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
-  new TranslateHttpLoader(http, './i18n/', '.json');
-
-
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
+  http: HttpClient
+) => new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideHttpClient(),
+    {
+      provide: APP_INITIALIZER,
+      deps: [AuthService],
+      useFactory: appInitializer,
+      multi: true,
+    },
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
     provideTranslateService({
-      defaultLanguage: 'pl'
+      defaultLanguage: 'pl',
     }),
-    provideHttpClient(
-      withInterceptors([authInterceptorsInterceptor])
-    ),
+    provideHttpClient(withInterceptors([authInterceptorsInterceptor])),
     provideTranslateService({
-      loader:
-      {
+      loader: {
         provide: TranslateLoader,
-        useFactory : httpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ]
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+  ],
 };
+function appInitializer(authService: AuthService) {
+  return () => {
+    authService
+      .Refresh()
+      .then(() => {})
+      .finally(() => {
+        document.getElementById('global-loader')?.remove();
+      });
+  };
+}

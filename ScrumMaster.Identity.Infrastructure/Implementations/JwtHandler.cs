@@ -22,7 +22,7 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
                 throw new Exception("User_Cannot_Be_Null");
             var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Name, $"{user.FirstName} {user.LastName}"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -34,7 +34,7 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             var token = new JwtSecurityToken(
                 null,null,
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationMinutes),
+                expires: DateTime.Now.AddMinutes(_jwtSettings.ExpirationMinutes),
                 signingCredentials: creds
             );
 

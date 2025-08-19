@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure.Commands;
 using ScrumMaster.Identity.Infrastructure.Contracts;
+using ScrumMaster.Identity.Infrastructure.DTO;
+using System.Security.Claims;
 
 namespace ScrumMaster.Identity.Controllers
 {
@@ -8,6 +12,7 @@ namespace ScrumMaster.Identity.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRefreshTokenService _refreshTokenService;
+        public Guid UserId => Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value);
         public AuthController(IUserService userService, IRefreshTokenService refreshTokenService)
         {
             _userService = userService;
@@ -19,9 +24,9 @@ namespace ScrumMaster.Identity.Controllers
         {
             try
             {
-                var jwt = await _userService.RegisterUser(command);
-                SetRefreshTokenCookie(jwt.refreshToken);
-                return Json(jwt.jwtToken);
+                var result = await _userService.RegisterUser(command);
+                SetTokens(result);
+                return Json(result.userName);
             }
             catch (Exception ex)
             {
@@ -33,9 +38,9 @@ namespace ScrumMaster.Identity.Controllers
         {
             try
             {
-                var jwt = await _userService.LoginUser(command);
-                SetRefreshTokenCookie(jwt.refreshToken);
-                return Json(jwt.jwtToken);
+                var result = await _userService.LoginUser(command);
+                SetTokens(result);
+                return Json(result.userName);
             }
             catch (Exception ex)
             {
@@ -51,17 +56,61 @@ namespace ScrumMaster.Identity.Controllers
                 if (refreshToken == null)
                     return Unauthorized();
                 var result = await _refreshTokenService.LoginWithRefresh(refreshToken);
-                SetRefreshTokenCookie(result.refreshToken);
-                return Json(result.jwtToken);
+                SetTokens(result);
+                return Json(result.userName);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        private void SetRefreshTokenCookie(string refreshToken)
+        [HttpGet("/BoardInfo")]
+        [Authorize]
+        public async Task<IActionResult> BoardInfo()
         {
-            Response.Cookies.Append("RefreshToken",refreshToken,new CookieOptions() { Expires = DateTime.Now.AddDays(6),SameSite = SameSiteMode.Strict ,Secure = true, HttpOnly = true});
+            try
+            {
+                if (UserId == Guid.Empty)
+                    return Unauthorized();
+                return Ok();
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            try
+            {
+                var result = await _userService.GetUserInfo(UserId);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet("/Logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("RefreshToken");
+            Response.Cookies.Delete("AccessToken");
+            return Ok();
+        }
+        [AllowAnonymous]
+        [HttpGet("/HealthCheck")]
+        public IActionResult HealthCheck()
+        {
+            return Ok();
+        }
+        private void SetTokens(AuthDTO jwt)
+        {
+            Response.Cookies.Delete("RefreshToken");
+            Response.Cookies.Delete("AccessToken");
+            Response.Cookies.Append("RefreshToken", jwt.refreshToken, new CookieOptions() { Expires = DateTime.Now.AddDays(6), SameSite = SameSiteMode.Strict, Secure = true, HttpOnly = true });
+            Response.Cookies.Append("AccessToken", jwt.jwtToken, new CookieOptions() { Expires = DateTime.Now.AddMinutes(1), SameSite = SameSiteMode.Strict, Secure = true, HttpOnly = true });
         }
     }
 }

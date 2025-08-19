@@ -1,0 +1,45 @@
+@use 'variables' as *;
+.MainPanel{
+    position: absolute;
+    top: 60px;
+    left: 0;
+    text-align: center;
+    width: 150px;
+    background-color: rgba(37, 119, 206, 0.28);
+    height: 100%;
+    box-sizing: border-box;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+.MenuItem{
+    margin: 0;
+    width: 100%;
+    padding: 10px 0px;
+    cursor: pointer;
+    user-select: none;
+    color: $light-font-color;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+.MenuItem:hover{ 
+    background-color: #00abff;
+}
+.MenuSubMenu{
+    width: 100%;
+    background-color: #00abff;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+}
+.MenuSubItem{
+    background-color: #00abff;
+    cursor: pointer;
+    user-select: none;
+    color: $light-font-color;
+    font-weight: 600;
+    opacity: 0.6;
+}
+.MenuSubItem:hover{
+    opacity: 0.3;
+}

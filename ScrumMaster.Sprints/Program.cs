@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ScrumMaster.Sprints.Infrastructure.DataAccess;
+using Microsoft.OpenApi.Models;
 using ScrumMaster.Sprints.Infrastructure;
+using ScrumMaster.Sprints.Infrastructure.DataAccess;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +36,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = !isTesting
         };
     });
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ScrumMaster Sprints API",
+        Version = "v1",
+        Description = "API do zarz¹dzania sprintami w ScrumMaster."
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Podaj token JWT (Bearer {token})",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 builder.Services.AddAuthorization();
 builder.Services.AddInfratstructure();
 var app = builder.Build();
@@ -46,10 +78,19 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumMaster Sprints API v1");
+    c.RoutePrefix = string.Empty;
+});
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumMaster Tasks API v1");
+    c.RoutePrefix = string.Empty;
+});
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -61,4 +102,4 @@ app.MapControllerRoute(
 
 
 app.Run();
-public partial class Program { }
+public partial class Program{}

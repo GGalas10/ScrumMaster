@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ScrumMaster.Tasks.Core.Enums;
 using ScrumMaster.Tasks.Core.Models;
 using ScrumMaster.Tasks.Infrastructure.Commands;
 using ScrumMaster.Tasks.Infrastructure.Contracts;
@@ -66,6 +67,18 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
             var tasks = await _context.Tasks.Where(x => x.SprintId == sprintId).ToListAsync();
 
             return tasks.Select(x => TaskDTO.GetFromModel(x)).ToList();
+        }
+        public List<TaskStatusDTO> GetTaskStatuses()
+        {
+            return Enum.GetValues(typeof(StatusEnum))
+                        .Cast<StatusEnum>()
+                        .Where(x => x != StatusEnum.Unknown)
+                        .Select(x => new TaskStatusDTO
+                        {
+                            statusOrder = (int)x,
+                            statusName = x.ToString()
+                        })
+                        .ToList();
         }
         private async Task CheckSprintExist(Guid sprintId)
         {

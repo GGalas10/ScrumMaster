@@ -8,6 +8,7 @@
         public DateTime EndDate { get; private set; }
         public string CreatedBy { get; private set; }
         public Guid CreatedUserId { get; private set; }
+        public Guid ProjectId { get; private set; }
         private Sprint() { }
         public Sprint(string name,DateTime startDate, DateTime endDate, string createdBy, Guid createdUserId)
         {

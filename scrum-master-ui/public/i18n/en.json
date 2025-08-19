@@ -1,7 +1,8 @@
 {
     "Main":
     {
-        "changeLanguage" : "Zmień język"
+        "changeLanguage" : "Zmień język",
+        "hello" : "Hello"
     },
     "Home":
     {
@@ -18,7 +19,9 @@
         "login" : "Login",
         "register" : "Register",
         "LoginHeader" : "Logging",
-        "RegisterHeader" : "Registration"
+        "RegisterHeader" : "Registration",
+        "Settings" : "Settings",
+        "Logout" : "Logout"
     },
     "Errors":
     {     
@@ -34,6 +37,16 @@
         "SomethingWrong" : "Something has gone wrong. Try again later",     
         "EmailAlreadyExist" : "Mail is already in use",
         "UserNameAlreadyExist" : "The user name is already in use",
-        "NonAlphanumeric" : "The password must contain one special character"
+        "NonAlphanumeric" : "The password must contain one special character",
+        "PasswordRequiresDigit":"The password must contain at least one digit",
+        "PasswordRequiresUpper":"Your password must contain at least one capital letter",
+        "WrongCredentials" : "Incorrect login details were entered"
+    },
+    "LeftMenu":
+    {
+        "Home" : "Home",
+        "SprintList" : "Sprint list",
+        "Board" : "Board",
+        "AiAssistant" : "AI Assistant"
     }
 }
