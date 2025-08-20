@@ -48,5 +48,9 @@
         "SprintList" : "Lista sprintów",
         "Board" : "Tablica",
         "AiAssistant" : "Asystent AI"
+    },
+    "Board":
+    {
+        "AddTask" : "Dodaj nowe zadanie"
     }
 }

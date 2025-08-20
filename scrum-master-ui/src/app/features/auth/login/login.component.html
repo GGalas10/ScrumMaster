@@ -13,6 +13,6 @@
             </ng-template>
             </form>
         
-        <button [routerLink]="['/Register']" routerLinkActive="router-link-active"  class="SubmitButton" type="menu" style="width: 100%;">{{ 'Auth.register' | translate}}</button>
+        <button [routerLink]="['/Register']" routerLinkActive="router-link-active"  class="SubmitButton" type="menu" style="width: 100%;margin-top:15px">{{ 'Auth.register' | translate}}</button>
 </section>
 <app-custom-alert [title]="title" [errors]="errors" *ngIf="showModal" (closeEvent)="showModal = false"></app-custom-alert>

@@ -30,7 +30,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
             if (command == null)
                 throw new Exception("Command_Cannot_Be_Null");
 
-            var oldSprint = await _context.Sprints.FirstOrDefaultAsync(x=>x.Id == command.SprintId);
+            var oldSprint = await _context.Sprints.FirstOrDefaultAsync(x => x.Id == command.SprintId);
             if (oldSprint == null)
                 throw new Exception("Cannot_Find_Sprint_In_Database");
 
@@ -51,12 +51,21 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
         }
 
         public async Task<SprintDTO> GetSprintByIdAsync(Guid id)
-        => SprintDTO.GetFromModel(await _context.Sprints.FirstOrDefaultAsync(x=>x.Id == id));
+        => SprintDTO.GetFromModel(await _context.Sprints.FirstOrDefaultAsync(x => x.Id == id));
 
         public async Task<List<SprintDTO>> GetAllUserSprintsAsync(Guid userId)
-        => await _context.Sprints.Where(x=>x.CreatedUserId == userId).Select(x=> SprintDTO.GetFromModel(x)).ToListAsync();
+        => await _context.Sprints.Where(x => x.CreatedUserId == userId).Select(x => SprintDTO.GetFromModel(x)).ToListAsync();
 
         public async Task<bool> CheckSprintExist(Guid sprintId)
-            => await _context.Sprints.AnyAsync(x=>x.Id==sprintId);
+            => await _context.Sprints.AnyAsync(x => x.Id == sprintId);
+        public async Task<List<SprintDTO>> GetSprintsByProjectId(Guid projectId)
+        {
+            if (projectId == Guid.Empty)
+                throw new Exception("ProjectId_Cannot_Be_Empty");
+            return await _context.Sprints
+                .Where(x => x.ProjectId == projectId)
+                .Select(x => SprintDTO.GetFromModel(x))
+                .ToListAsync();
+        }
     }
 }

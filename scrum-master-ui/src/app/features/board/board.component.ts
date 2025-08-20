@@ -4,10 +4,18 @@ import { LeftMenuComponent } from '../../shared/left-menu/left-menu.component';
 import { TaskService } from '../../Core/Services/task.service';
 import { TaskStatuses } from '../../Core/Models/TaskInterfaces';
 import { CommonModule } from '@angular/common';
+import { AddBtnComponent } from '../../shared/add-btn/add-btn.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-board',
-  imports: [LeftMenuComponent, CommonModule],
+  imports: [
+    LeftMenuComponent,
+    CommonModule,
+    AddBtnComponent,
+    AddBtnComponent,
+    TranslatePipe,
+  ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
@@ -28,5 +36,8 @@ export class BoardComponent implements OnInit {
       },
       error: (err) => console.log(err),
     });
+  }
+  AddNewTask(): void {
+    console.log('TaskDodany');
   }
 }

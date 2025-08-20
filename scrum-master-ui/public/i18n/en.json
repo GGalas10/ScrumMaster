@@ -48,5 +48,9 @@
         "SprintList" : "Sprint list",
         "Board" : "Board",
         "AiAssistant" : "AI Assistant"
+    },
+    "Board":
+    {
+        "AddTask" : "Add new task"
     }
 }

@@ -1,13 +1,16 @@
 .body{
     margin-top: 60px;
     margin-left: 150px;
-    min-height: 1000px;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
 }
 .BoardHeader{
-    min-height: 75px;
+    min-height: 40px;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 15px;
 }
 .BoardColumn{
     width: 100%;
@@ -20,4 +23,19 @@
     background-color: gray;
     height: 100%;
     width: 150px;
+}
+thead{
+    max-height: 25px;
+    border-bottom:1px solid black;
+}
+thead, tbody{
+    display: flex;
+    width: 100%;
+}
+th{
+    text-align: center;
+    border-left:1px black solid;
+}
+th,td{
+    flex: 1;
 }

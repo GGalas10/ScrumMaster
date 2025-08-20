@@ -33,6 +33,19 @@ namespace ScrumMaster.Sprints.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetSprintsByProjectId([FromQuery] Guid projectId)
+        {
+            try
+            {
+                var result = await _sprintService.GetSprintsByProjectId(projectId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> CreateSprint([FromBody]CreateSprintCommand command)
         {
