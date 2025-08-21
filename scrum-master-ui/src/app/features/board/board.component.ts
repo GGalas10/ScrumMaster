@@ -6,6 +6,7 @@ import { TaskStatuses } from '../../Core/Models/TaskInterfaces';
 import { CommonModule } from '@angular/common';
 import { AddBtnComponent } from '../../shared/add-btn/add-btn.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SprintList } from '../../Core/Models/SprintInterfaces';
 
 @Component({
   selector: 'app-board',
@@ -21,6 +22,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class BoardComponent implements OnInit {
   taskStatuses: TaskStatuses[] = [];
+  sprints: SprintList[] = [];
+  projectId: string = '00000000-0000-0000-0000-000000000001';
   constructor(
     private boardService: BoardService,
     private taskService: TaskService
@@ -35,6 +38,13 @@ export class BoardComponent implements OnInit {
         console.log(this.taskStatuses);
       },
       error: (err) => console.log(err),
+    });
+    this.boardService.GetSprintsForProject(this.projectId).subscribe({
+      next: (result) => (this.sprints = result),
+      error: (err) => {
+        console.log(err);
+        this.sprints = [];
+      },
     });
   }
   AddNewTask(): void {

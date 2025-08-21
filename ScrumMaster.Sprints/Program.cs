@@ -33,7 +33,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
             ValidateAudience = false,
-            ValidateIssuer = !isTesting
+            ValidateIssuer = false
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["AccessToken"];
+                return Task.CompletedTask;
+            }
         };
     });
 builder.Services.AddEndpointsApiExplorer();
@@ -70,6 +78,14 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddAuthorization();
 builder.Services.AddInfratstructure();
+var front = builder.Configuration["Front:URL"];
+builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
+{
+    policy.WithOrigins(front!)
+          .AllowAnyMethod()
+          .AllowCredentials()
+          .WithHeaders("ScrumMaster", "Content-Type", "Authorization");
+}));
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -84,6 +100,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumMaster Sprints API v1");
     c.RoutePrefix = string.Empty;
 });
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseSwaggerUI(c =>

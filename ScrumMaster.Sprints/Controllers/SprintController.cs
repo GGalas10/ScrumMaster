@@ -5,7 +5,6 @@ using ScrumMaster.Sprints.Infrastructure.Contracts;
 
 namespace ScrumMaster.Sprints.Controllers
 {
-    [Route("{controller}/{action}")]
     public class SprintController : _BaseController
     {
         private readonly ISprintService _sprintService;

@@ -9,14 +9,21 @@
         public string CreatedBy { get; private set; }
         public Guid CreatedUserId { get; private set; }
         public Guid ProjectId { get; private set; }
+        public bool IsActual { get; private set; }
         private Sprint() { }
-        public Sprint(string name,DateTime startDate, DateTime endDate, string createdBy, Guid createdUserId)
+        public Sprint(string name,DateTime startDate, DateTime endDate, string createdBy, Guid createdUserId,Guid projectId)
         {
             Id = Guid.NewGuid();
             SetName(name);
             SetSprintDate(startDate,endDate);
             SetCreatedBy(createdBy);
             SetCreatedUserId(createdUserId);
+            IsActual = true;
+            ProjectId = projectId;
+        }
+        public void SetActual(bool isActual)
+        {
+            IsActual = isActual;
         }
         public void SetName(string name)
         {

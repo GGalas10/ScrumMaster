@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   identityUrl: 'http://localhost:2201',
-  sprintUrl: 'http://localhost:2202',
+  sprintUrl: 'http://localhost:2202/Sprint',
   taskUrl: 'http://localhost:2203/Task',
   projectUrl: 'http://localhost:2205',
 };
