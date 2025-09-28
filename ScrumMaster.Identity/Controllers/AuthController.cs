@@ -64,20 +64,6 @@ namespace ScrumMaster.Identity.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("/BoardInfo")]
-        [Authorize]
-        public async Task<IActionResult> BoardInfo()
-        {
-            try
-            {
-                if (UserId == Guid.Empty)
-                    return Unauthorized();
-                return Ok();
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetUserInfo()

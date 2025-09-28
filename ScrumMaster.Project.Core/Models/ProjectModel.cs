@@ -12,17 +12,22 @@
             SetProjectName(projectName);
             SetProjectDescription(projectDescription);
         }
-        public void SetProjectName(string projectName)
+        private void SetProjectName(string projectName)
         {
             if (string.IsNullOrEmpty(projectName))
                 throw new Exception("ProjectName_Cannot_Be_Empty_Or_Null");
             ProjectName = projectName;
         }
-        public void SetProjectDescription(string projectDescription)
+        private void SetProjectDescription(string projectDescription)
         {
             if (string.IsNullOrEmpty(projectDescription))
                 throw new Exception("ProjectDescription_Cannot_Be_Empty_Or_Null");
             ProjectDescription = projectDescription;
+        }
+        public void UpdateProject(string projectName, string projectDescription)
+        {
+            SetProjectName(projectName);
+            SetProjectDescription(projectDescription);
         }
     }
 }

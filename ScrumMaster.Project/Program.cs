@@ -17,11 +17,7 @@ builder.Services.AddControllersWithViews();
 
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-SymmetricSecurityKey key;
-if (isTesting)
-    key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("s+Qr8+VhSWEHHuwyqwP0kNvtg3HCSEX25A3MP1iENH4="));
-else
-    key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -31,8 +27,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = key,
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
+            ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateIssuer = !isTesting
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["AccessToken"];
+                return Task.CompletedTask;
+            }
         };
     });
 builder.Services.AddEndpointsApiExplorer();
@@ -40,9 +44,9 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "ScrumMaster Sprints API",
+        Title = "ScrumMaster Projects API",
         Version = "v1",
-        Description = "API do zarz¹dzania sprintami w ScrumMaster."
+        Description = "API do zarz¹dzania projektami w ScrumMaster."
     });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -69,8 +73,15 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddInfrastructureLayer();
 builder.Services.AddAuthorization();
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers(); 
+var front = builder.Configuration["Front:URL"];
+builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
+{
+    policy.WithOrigins(front!)
+          .AllowAnyMethod()
+          .AllowCredentials()
+          .WithHeaders("ScrumMaster", "Content-Type", "Authorization");
+}));
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -83,12 +94,13 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumMaster Sprints API v1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumMaster Project API v1");
     c.RoutePrefix = string.Empty;
 });
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

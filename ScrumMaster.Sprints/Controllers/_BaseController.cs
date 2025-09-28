@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel;
 using System.Security.Claims;
 
 namespace ScrumMaster.Sprints.Controllers
 {
     [Authorize]
+    [Route("[action]")]
     public class _BaseController : ControllerBase
     {
         protected Guid UserId => Guid.Parse(User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.NameIdentifier)?.Value);

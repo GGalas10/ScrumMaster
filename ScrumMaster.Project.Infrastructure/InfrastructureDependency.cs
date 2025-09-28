@@ -11,6 +11,7 @@ namespace ScrumMaster.Project.Infrastructure
         {
             service.AddScoped<IProjectDbContext, ProjectDbContext>();
             service.AddScoped<IProjectService, ProjectService>();
+            service.AddScoped<IAccessService, AccessService>();
             return service;
         }
     }

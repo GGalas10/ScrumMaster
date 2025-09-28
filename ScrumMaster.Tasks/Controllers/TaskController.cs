@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScrumMaster.Tasks.Infrastructure.Commands;
 using ScrumMaster.Tasks.Infrastructure.Contracts;
 
 namespace ScrumMaster.Tasks.Controllers
 {
+    [Authorize]
+    [Route("[action]")]
     public class TaskController : Controller
     {
         private readonly ITaskService _taskService;
