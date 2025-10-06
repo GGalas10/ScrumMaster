@@ -4,7 +4,6 @@ using ScrumMaster.Project.CustomAttributes;
 using ScrumMaster.Project.Infrastructure.Contracts;
 using ScrumMaster.Project.Infrastructure.CustomExceptions;
 using ScrumMaster.Project.Infrastructure.DTOs.Commands;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace ScrumMaster.Project.Controllers
 {
@@ -19,36 +18,6 @@ namespace ScrumMaster.Project.Controllers
         {
             _projectService = projectService;
             _accessService = accessService;
-        }
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult PeekToken()
-        {
-            var auth = Request.Headers["Authorization"].ToString();
-            if (string.IsNullOrWhiteSpace(auth) || !auth.StartsWith("Bearer "))
-                return BadRequest("Brak nagłówka Authorization: Bearer <token>");
-
-            var token = auth.Substring("Bearer ".Length).Trim();
-            var handler = new JwtSecurityTokenHandler();
-            if (!handler.CanReadToken(token)) return BadRequest("Nieprawidłowy format JWT");
-
-            var jwt = handler.ReadJwtToken(token);
-            var header = new
-            {
-                alg = jwt.Header.Alg,
-                kid = jwt.Header.TryGetValue("kid", out var kidObj) ? kidObj?.ToString() : null
-            };
-            var payload = new
-            {
-                iss = jwt.Issuer,
-                aud = jwt.Audiences,     // często lista!
-                exp = jwt.Payload.Exp,   // unix ts
-                nbf = jwt.Payload.Nbf,
-                iat = jwt.Payload.Iat,
-                claims = jwt.Claims.Select(c => new { c.Type, c.Value })
-            };
-
-            return Ok(new { header, payload });
         }
         [HttpGet]
         public async Task<IActionResult> GetBoardInfo([FromQuery]Guid projectId)
@@ -176,6 +145,25 @@ namespace ScrumMaster.Project.Controllers
             {
                 var role = await _accessService.GetUserProjectRole(projectId, UserId);
                 return Ok(role);
+            }
+            catch (Exception ex)
+            {
+                return ex switch
+                {
+                    BadRequestException => BadRequest(ex.Message),
+                    NotFoundException => NotFound(ex.Message),
+                    RoleException => Forbid(),
+                    _ => StatusCode(500, "Something_Went_Wrong"),
+                };
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetUserProjects()
+        {
+            try
+            {
+                var result = await _projectService.GetUsersProject(UserId);
+                return Ok(result);
             }
             catch (Exception ex)
             {

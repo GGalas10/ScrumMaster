@@ -6,6 +6,7 @@ namespace ScrumMaster.Project.Core.Models
     {
         public Guid Id { get; private set; }
         public Guid ProjectId { get; private set; }
+        public virtual ProjectModel Project { get; private set; }
         public Guid UserId { get; private set; }
         public ProjectRoleEnum UserRole { get; private set; }
         private ProjectUserAccess() { }

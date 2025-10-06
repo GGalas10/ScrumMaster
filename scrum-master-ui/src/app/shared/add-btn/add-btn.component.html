@@ -1,4 +1,4 @@
-<button class="add-btn" aria-label="Dodaj zadanie" onclick="onclick()" [ngStyle]="{'width.px': size, 'height.px': size}">
+<button class="add-btn" aria-label="Dodaj zadanie" (click)="addNew()" [ngStyle]="{'width.px': size, 'height.px': size}">
     <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M11 11V4h2v7h7v2h-7v7h-2v-7H4v-2h7z" fill="currentColor"></path>
     </svg>

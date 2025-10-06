@@ -2,11 +2,6 @@
     <a [routerLink]="['']" >
         <img height="50px" src="LogoScrumMaster.png">
     </a>
-    <ng-container *ngIf="IsLogin()">
-            <div>
-                <p style="margin-left: 50px;">Twój aktualny projekt</p>
-            </div>
-        </ng-container> 
     <div class="rightMenu">         
         <p (click)="setTransLanguage()">{{'Main.changeLanguage'|translate}}</p>          
         <p *ngIf="IsLogin()" (click)="showMenu = !showMenu">{{'Main.hello'|translate}} <b>{{GetUserName()}}</b></p>

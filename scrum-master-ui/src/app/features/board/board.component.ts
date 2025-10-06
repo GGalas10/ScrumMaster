@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AddBtnComponent } from '../../shared/add-btn/add-btn.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SprintList } from '../../Core/Models/SprintInterfaces';
+import { UserProject } from '../../Core/Models/ProjectInterfaces';
 
 @Component({
   selector: 'app-board',
@@ -21,33 +22,14 @@ import { SprintList } from '../../Core/Models/SprintInterfaces';
   styleUrl: './board.component.scss',
 })
 export class BoardComponent implements OnInit {
-  taskStatuses: TaskStatuses[] = [];
-  sprints: SprintList[] = [];
-  projectId: string = '00000000-0000-0000-0000-000000000001';
-  constructor(
-    private boardService: BoardService,
-    private taskService: TaskService
-  ) {}
+  userProjects: UserProject[] = [];
+  constructor(private boardService: BoardService) {}
   ngOnInit(): void {
-    this.boardService.GetBoardInfo().subscribe({
+    this.boardService.GetUsersProject().subscribe({
+      next: (result) => {
+        this.userProjects = result;
+      },
       error: (response) => console.log(response),
     });
-    this.taskService.GetTaskStatuses().subscribe({
-      next: (response) => {
-        this.taskStatuses = response;
-        console.log(this.taskStatuses);
-      },
-      error: (err) => console.log(err),
-    });
-    this.boardService.GetSprintsForProject(this.projectId).subscribe({
-      next: (result) => (this.sprints = result),
-      error: (err) => {
-        console.log(err);
-        this.sprints = [];
-      },
-    });
-  }
-  AddNewTask(): void {
-    console.log('TaskDodany');
   }
 }

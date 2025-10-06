@@ -4,7 +4,7 @@
     {
         public Guid Id { get; private set; }
         public Guid ProjectId { get; private set; }
-        public ProjectModel Project { get; private set; }
+        public virtual ProjectModel Project { get; private set; }
         private ProjectSettings() { }
         public ProjectSettings(Guid projectId, ProjectModel project)
         {

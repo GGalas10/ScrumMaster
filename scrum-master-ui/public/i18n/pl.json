@@ -51,6 +51,8 @@
     },
     "Board":
     {
-        "AddTask" : "Dodaj nowe zadanie"
+        "UserProjects": "Twoje projekty",
+        "AddProject" : "Dodaj nowy projekt",
+        "EmptyUserProjects" : "Nie jesteś przypisany do żadnego projektu. Stwórz go lub poproś administratora o dodanie do projektu."
     }
 }

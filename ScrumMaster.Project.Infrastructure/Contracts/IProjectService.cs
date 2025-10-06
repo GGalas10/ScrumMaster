@@ -8,5 +8,6 @@ namespace ScrumMaster.Project.Infrastructure.Contracts
         Task<BoardInfoDTO> GetBoardInfo(Guid projectId,Guid userId);
         Task<Guid> AddNewProject(AddProjectCommand command);
         Task UpdateProject(UpdateProjectCommand command);
+        Task<List<UserProjects>> GetUsersProject(Guid userId);
     }
 }

@@ -51,6 +51,8 @@
     },
     "Board":
     {
-        "AddTask" : "Add new task"
+        "UserProjects": "Your projects",
+        "AddProject" : "Add new project",
+        "EmptyUserProjects" : "You are not assigned to any project. Create one or ask the administrator to add you to a project."
     }
 }

@@ -30,8 +30,7 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
                 throw new RoleException("User_Has_No_Access_To_This_Project");
             var boardInfo = new BoardInfoDTO() { projectDescription = project.ProjectDescription};
             return boardInfo;
-        }
-        
+        }      
         public async Task<Guid> AddNewProject(AddProjectCommand command)
         {
             if(command == null)
@@ -68,6 +67,17 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
             }
             _projectDbContext.Projects.Update(project);
             await _projectDbContext.SaveChangesAsync();
+        }
+        public async Task<List<UserProjects>> GetUsersProject(Guid userId)
+        {
+            var userProjects = await _projectDbContext.ProjectUserAccesses.Include(x=>x.Project).AsNoTracking().Where(p=>p.UserId == userId)
+                .Select(p => new UserProjects
+                {
+                    projectId = p.ProjectId,
+                    projectName = p.Project.ProjectName,
+                    userRole = p.UserRole
+                }).ToListAsync();
+            return userProjects;
         }
     }
 }

@@ -11,7 +11,7 @@ export class AddBtnComponent {
   @Input() tooltip = 'Dodaj';
   @Input() size: number = 25;
   @Output() add = new EventEmitter<void>();
-  onClick() {
+  addNew() {
     this.add.emit();
   }
 }

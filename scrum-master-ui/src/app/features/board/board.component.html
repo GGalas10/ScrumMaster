@@ -1,31 +1,11 @@
 <app-left-menu></app-left-menu>
 <section class="body">
     <section class="BoardHeader">
-        <app-add-btn [tooltip]="'Board.AddTask' | translate" [size]="25" *ngIf="sprints.length>0"></app-add-btn>
-        <ng-container *ngIf="sprints && sprints.length > 0">
-            <select>
-                <ng-container *ngFor="let sprint of sprints">
-                    <option [value]="sprint.id" [selected]="sprint.isActual">
-                    {{ sprint.name }}
-                    </option>
-                </ng-container>
-            </select>
-        </ng-container>
+        <h1 style="margin: auto;">{{"Board.UserProjects" | translate}}</h1>
     </section>
-    <ng-container *ngIf="sprints.length > 0;else emptySprint">
-    <table>
-        <section *ngIf="taskStatuses" class="BoardColumn">
-            <thead>
-                <ng-container *ngFor="let oneStatus of taskStatuses" >
-                    <th>
-                        {{oneStatus.statusName}}
-                    </th>
-                </ng-container>
-            </thead>
-        </section>
-    </table>
+    <ng-container *ngIf="userProjects.length > 0;else emptyProjects">
     </ng-container>
-    <ng-template #emptySprint>
-        <h5>Brak sprintów w tym projekcie. Dodaj go w zakładce sprint</h5>
+    <ng-template #emptyProjects>
+        <h3 style="text-align: center;">{{ "Board.EmptyUserProjects" | translate}}</h3>
     </ng-template>
 </section>

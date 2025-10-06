@@ -10,7 +10,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
             //Arrange/Act
             try
             {
-                var newSprint = new Sprint(null, DateTime.Now, DateTime.Now.AddDays(10), "TestUser", Guid.NewGuid());
+                var newSprint = new Sprint(null, DateTime.Now, DateTime.Now.AddDays(10), "TestUser", Guid.NewGuid(), Guid.NewGuid());
             }
             //Assert
             catch(Exception ex)
@@ -24,7 +24,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
             //Arrange/Act
             try
             {
-                var newSprint = new Sprint("Sprint Name", DateTime.Now.AddDays(10), DateTime.Now, "TestUser", Guid.NewGuid());
+                var newSprint = new Sprint("Sprint Name", DateTime.Now.AddDays(10), DateTime.Now, "TestUser", Guid.NewGuid(), Guid.NewGuid());
             }
             //Assert
             catch(Exception ex)
@@ -38,7 +38,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
             //Arrange/Act
             try
             {
-                var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now, "TestUser", Guid.NewGuid());
+                var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now, "TestUser", Guid.NewGuid(), Guid.NewGuid());
             }
             //Assert
             catch(Exception ex)
@@ -52,7 +52,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
             //Arrange/Act
             try
             {
-                var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), null, Guid.NewGuid());
+                var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), null, Guid.NewGuid(), Guid.NewGuid());
             }
             //Assert
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
             //Arrange/Act
             try
             {
-                var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.Empty);
+                var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.Empty, Guid.NewGuid());
             }
             //Assert
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         public void UpdateModel_IfThereIsNoChanges_Should_ReturnFalse()
         {
             //Arrange
-            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid());
+            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid(), Guid.NewGuid());
 
             //Act
             var result = newSprint.UpdateSprint(null, null, DateTime.MinValue, DateTime.MinValue);
@@ -90,7 +90,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         public void UpdateModel_IfStartDateIsAfterEnd_Should_ThrowException()
         {
             //Arrange
-            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid());
+            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid(), Guid.NewGuid());
 
             //Act
             try
@@ -107,7 +107,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         public void UpdateModel_IfStartDateAndEndDateIsTheSame_Should_ThrowException()
         {
             //Arrange
-            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid());
+            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid(), Guid.NewGuid());
 
             //Act
             try
@@ -124,7 +124,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         public void UpdateModel_IfEndDateIsBeforeStartDate_Should_ThrowException()
         {
             //Arrange
-            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid());
+            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid(), Guid.NewGuid());
 
             //Act
             try
@@ -141,7 +141,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         public void UpdateModel_IfItHasChanges_Should_ReturnTrue()
         {
             //Arrange
-            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid());
+            var newSprint = new Sprint("Sprint Name", DateTime.Now, DateTime.Now.AddDays(1), "CreatedTest", Guid.NewGuid(), Guid.NewGuid());
 
             //Act
             var result = newSprint.UpdateSprint("NewTestName", null, DateTime.MinValue, DateTime.MinValue);
