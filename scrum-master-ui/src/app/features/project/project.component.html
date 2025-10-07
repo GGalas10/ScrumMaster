@@ -1,0 +1,12 @@
+<section class="body">
+    <h1 style="margin: 15px auto;">{{"Board.UserProjects" | translate}}</h1>
+    <ng-container *ngIf="userProjects.length > 0;else emptyProjects">
+    </ng-container>
+    <ng-template #emptyProjects>
+        <h3 style="text-align: center;">{{ "Board.EmptyUserProjects" | translate}}</h3>
+        <button class="btn-glass-dark" (click)="open=true">
+            <span>{{ "Board.AddProject" | translate}}</span>
+        </button>
+    </ng-template>
+</section>
+<app-new-project-modal [(open)]="open" (create)="onCreate($event)"></app-new-project-modal>

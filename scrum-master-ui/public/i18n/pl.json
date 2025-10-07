@@ -53,6 +53,12 @@
     {
         "UserProjects": "Twoje projekty",
         "AddProject" : "Dodaj nowy projekt",
-        "EmptyUserProjects" : "Nie jesteś przypisany do żadnego projektu. Stwórz go lub poproś administratora o dodanie do projektu."
+        "EmptyUserProjects" : "Nie jesteś przypisany do żadnego projektu. Stwórz go lub poproś administratora o dodanie do projektu.",
+        "ProjectName" : "Nazwa projektu",
+        "ProjectDescription" : "Opis projektu",
+        "Cancel" : "Anuluj",
+        "AddProjectBtn" : "Dodaj projekt",
+        "NewProject" : "Nowy projekt",
+        "ShortDescription" : "Opis projektu"
     }
 }

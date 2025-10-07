@@ -8,3 +8,10 @@ a{
 a:visited{
     color: $font-color;
 }
+.body{
+    margin-top: 60px;
+    margin-left: 150px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}

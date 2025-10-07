@@ -13,7 +13,7 @@ export const checkLoginGuard: CanActivateFn = (route, state) => {
     filter((initialized) => initialized),
     take(1),
     map(() => {
-      return tokenService.IsLogin() ? router.createUrlTree(['/Board']) : true;
+      return tokenService.IsLogin() ? router.createUrlTree(['/Project']) : true;
     })
   );
 };

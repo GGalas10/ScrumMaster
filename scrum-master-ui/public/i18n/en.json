@@ -53,6 +53,12 @@
     {
         "UserProjects": "Your projects",
         "AddProject" : "Add new project",
-        "EmptyUserProjects" : "You are not assigned to any project. Create one or ask the administrator to add you to a project."
+        "EmptyUserProjects" : "You are not assigned to any project. Create one or ask the administrator to add you to a project.",
+        "ProjectName" : "Project name",
+        "ProjectDescription" : "Project description",
+        "Cancel" : "Cancel",
+        "AddProjectBtn" : "Add project",
+        "NewProject" : "New project",
+        "ShortDescription" : "Description of the project"
     }
 }

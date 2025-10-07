@@ -1,11 +1,3 @@
 <app-left-menu></app-left-menu>
 <section class="body">
-    <section class="BoardHeader">
-        <h1 style="margin: auto;">{{"Board.UserProjects" | translate}}</h1>
-    </section>
-    <ng-container *ngIf="userProjects.length > 0;else emptyProjects">
-    </ng-container>
-    <ng-template #emptyProjects>
-        <h3 style="text-align: center;">{{ "Board.EmptyUserProjects" | translate}}</h3>
-    </ng-template>
 </section>

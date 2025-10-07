@@ -1,0 +1,38 @@
+    <div
+      class="sheet-backdrop"
+      [class.open]="open"
+      (click)="onBackdrop()"
+      aria-hidden="true">
+    </div>
+    <section
+      class="sheet"
+      [class.open]="open"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="createProjectTitle"
+      (keydown.escape)="close()"
+      tabindex="-1"
+      #sheetRoot
+    >
+      <header class="sheet-header">
+        <h3 id="createProjectTitle">{{"Board.NewProject" | translate}}</h3>
+        <button class="icon-btn" type="button" (click)="close()" aria-label="Zamknij">✕</button>
+      </header>
+
+      <form class="sheet-body" (ngSubmit)="submit()">
+        <label class="form-row">
+          <span>{{"Board.ProjectName" | translate}}</span>
+          <input #firstField type="text" [(ngModel)]="name" name="name" required placeholder="Np. Sprint Planner" />
+        </label>
+
+        <label class="form-row">
+          <span>{{"Board.ProjectDescription" | translate}}</span>
+          <textarea [(ngModel)]="description" name="description" rows="3" placeholder='{{"Board.ShortDescription" | translate}}' required></textarea>
+        </label>
+
+        <footer class="sheet-footer">
+          <button type="button" class="btn btn-ghost" (click)="close()">{{"Board.Cancel" | translate}}</button>
+          <button type="submit" class="btn btn-glass-dark">{{"Board.AddProjectBtn" | translate}}</button>
+        </footer>
+      </form>
+    </section>

@@ -12,16 +12,9 @@ export class BoardService {
   headers: HttpHeaders = new HttpHeaders({ ScrumMaster: 'true' });
   apiUrl = environment.identityUrl;
   sprintUrl = environment.sprintUrl;
-  projectUrl = environment.projectUrl;
   constructor(private http: HttpClient) {}
   GetBoardInfo(): Observable<string> {
     return this.http.get<string>(`${this.apiUrl}/BoardInfo`, {
-      headers: this.headers,
-      withCredentials: true,
-    });
-  }
-  GetUsersProject(): Observable<UserProject[]> {
-    return this.http.get<UserProject[]>(`${this.projectUrl}/GetUserProjects`, {
       headers: this.headers,
       withCredentials: true,
     });

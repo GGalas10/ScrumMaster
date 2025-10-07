@@ -11,25 +11,11 @@ import { UserProject } from '../../Core/Models/ProjectInterfaces';
 
 @Component({
   selector: 'app-board',
-  imports: [
-    LeftMenuComponent,
-    CommonModule,
-    AddBtnComponent,
-    AddBtnComponent,
-    TranslatePipe,
-  ],
+  imports: [LeftMenuComponent, CommonModule, TranslatePipe],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
 export class BoardComponent implements OnInit {
-  userProjects: UserProject[] = [];
-  constructor(private boardService: BoardService) {}
-  ngOnInit(): void {
-    this.boardService.GetUsersProject().subscribe({
-      next: (result) => {
-        this.userProjects = result;
-      },
-      error: (response) => console.log(response),
-    });
-  }
+  constructor() {}
+  ngOnInit(): void {}
 }

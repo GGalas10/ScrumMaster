@@ -3,3 +3,7 @@ export interface UserProject {
   projectName: string;
   userRole: number;
 }
+export interface CreateProject {
+  projectName: string;
+  projectDescription: string;
+}
