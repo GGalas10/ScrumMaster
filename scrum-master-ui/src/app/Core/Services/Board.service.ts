@@ -10,13 +10,16 @@ import { UserProject } from '../Models/ProjectInterfaces';
 })
 export class BoardService {
   headers: HttpHeaders = new HttpHeaders({ ScrumMaster: 'true' });
-  apiUrl = environment.identityUrl;
+  projectUrl = environment.projectUrl;
   sprintUrl = environment.sprintUrl;
   constructor(private http: HttpClient) {}
-  GetBoardInfo(): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl}/BoardInfo`, {
-      headers: this.headers,
-      withCredentials: true,
-    });
+  GetBoardInfo(projectId: string): Observable<string> {
+    return this.http.get<string>(
+      `${this.projectUrl}/GetBoardInfo?projectId=${projectId}`,
+      {
+        headers: this.headers,
+        withCredentials: true,
+      }
+    );
   }
 }

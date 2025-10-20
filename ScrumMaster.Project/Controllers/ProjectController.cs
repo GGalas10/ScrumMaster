@@ -104,6 +104,7 @@ namespace ScrumMaster.Project.Controllers
         {
             try
             {
+                command.userId = UserId;
                 var result = await _projectService.AddNewProject(command);
                 return Ok(result);
             }

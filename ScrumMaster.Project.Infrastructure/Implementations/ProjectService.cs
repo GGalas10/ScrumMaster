@@ -38,7 +38,7 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
             var newProject = new ProjectModel(command.projectName, command.projectDescription);
             _projectDbContext.Projects.Add(newProject);
             await _projectDbContext.SaveChangesAsync();
-            await _accessService.AddUserAccess(new AccessCommand
+            await _accessService.CreateUserRole(new AccessCommand
             {
                 adminId = command.userId,
                 projectId = newProject.Id,

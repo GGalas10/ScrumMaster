@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BoardService } from '../../Core/Services/Board.service';
 import { LeftMenuComponent } from '../../shared/left-menu/left-menu.component';
-import { TaskService } from '../../Core/Services/task.service';
-import { TaskStatuses } from '../../Core/Models/TaskInterfaces';
 import { CommonModule } from '@angular/common';
-import { AddBtnComponent } from '../../shared/add-btn/add-btn.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { SprintList } from '../../Core/Models/SprintInterfaces';
-import { UserProject } from '../../Core/Models/ProjectInterfaces';
+import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -16,6 +13,33 @@ import { UserProject } from '../../Core/Models/ProjectInterfaces';
   styleUrl: './board.component.scss',
 })
 export class BoardComponent implements OnInit {
-  constructor() {}
-  ngOnInit(): void {}
+  projectId = signal('');
+  projectDescription = '';
+  isLoading = true;
+  projectError = '';
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private boardService: BoardService
+  ) {
+    this.activatedRoute.params.subscribe((params) => {
+      this.projectId.set(params['id']);
+    });
+  }
+  ngOnInit(): void {
+    this.boardService
+      .GetBoardInfo(this.projectId())
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          this.projectDescription = result;
+        },
+        error: (err) => {
+          this.projectError = err.error;
+        },
+      });
+  }
 }

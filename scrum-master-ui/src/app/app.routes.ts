@@ -15,6 +15,6 @@ export const routes: Routes = [
     component: RegisterComponent,
     canActivate: [checkLoginGuard],
   },
-  { path: 'Board', component: BoardComponent, canActivate: [authGuard] },
+  { path: 'Board/:id', component: BoardComponent, canActivate: [authGuard] },
   { path: 'Project', component: ProjectComponent, canActivate: [authGuard] },
 ];

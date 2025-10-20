@@ -8,6 +8,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NewProjectModalComponent } from '../../shared/new-project-modal/new-project-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project',
@@ -18,7 +19,7 @@ import { NewProjectModalComponent } from '../../shared/new-project-modal/new-pro
 export class ProjectComponent implements OnInit {
   open = false;
   userProjects: UserProject[] = [];
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService, private router: Router) {}
   ngOnInit(): void {
     this.projectService.GetUsersProject().subscribe({
       next: (result) => {
@@ -28,6 +29,13 @@ export class ProjectComponent implements OnInit {
     });
   }
   onCreate(command: CreateProject): void {
-    console.log(command);
+    this.projectService.CreateProject(command).subscribe({
+      next: (result) => {
+        this.router.navigate(['/Board', result]);
+      },
+      error: (err) => {
+        alert(err);
+      },
+    });
   }
 }

@@ -5,6 +5,7 @@ namespace ScrumMaster.Project.Infrastructure.Contracts
 {
     public interface IAccessService
     {
+        Task CreateUserRole(AccessCommand command);
         Task AddUserAccess(AccessCommand command);
         Task UpdateUserAccess(AccessCommand command);
         Task RemoveUserAccess(DeleteAccessCommand command);

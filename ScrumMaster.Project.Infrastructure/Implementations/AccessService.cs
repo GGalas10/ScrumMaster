@@ -15,6 +15,17 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
         {
             _projectDbContext = projectDbContext;
         }
+        public async Task CreateUserRole(AccessCommand command)
+        {
+            if (command == null)
+                throw new BadRequestException("Command_Cannot_Be_Null");
+            var project = await _projectDbContext.Projects.AsNoTracking().AnyAsync(p => p.Id == command.projectId);
+            if (!project)
+                throw new NotFoundException("Project_Not_Found");
+            var newAccess = new ProjectUserAccess(command.projectId, command.userId, command.roleEnum);
+            _projectDbContext.ProjectUserAccesses.Add(newAccess);
+            await _projectDbContext.SaveChangesAsync();
+        }
         public async Task AddUserAccess(AccessCommand command)
         {
             if(command == null)
@@ -29,6 +40,8 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
             if (existingAccess != null)
                 throw new RoleException("User_Access_Already_Exists");
             var newAccess = new ProjectUserAccess(command.projectId, command.userId, command.roleEnum);
+            _projectDbContext.ProjectUserAccesses.Add(newAccess);
+            await _projectDbContext.SaveChangesAsync(); 
         }
         public async Task UpdateUserAccess(AccessCommand command)
         {

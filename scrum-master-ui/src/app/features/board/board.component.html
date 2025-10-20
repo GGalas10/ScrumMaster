@@ -1,3 +1,15 @@
-<app-left-menu></app-left-menu>
-<section class="body">
+<section *ngIf="!isLoading;else loading">
+    <ng-container *ngIf="projectDescription;else emptyProject">
+        <app-left-menu></app-left-menu>
+        <section class="body">
+        </section>
+    </ng-container>
+    <ng-template #emptyProject>
+        <section class="body">
+            <p>{{this.projectError}}</p>
+        </section>
+    </ng-template>
 </section>
+<ng-template #loading>
+    <div class="loader"><div></div></div>
+</ng-template>

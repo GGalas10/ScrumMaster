@@ -15,3 +15,36 @@ a:visited{
     display: flex;
     flex-direction: column;
 }
+.loader {
+  position: relative;
+  width: 75px;
+  height: 75px;
+  margin: 100px auto;
+}
+.loader::before,
+.loader::after, 
+.loader div::before, 
+.loader div::before{ 
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid #3b82f6;
+  animation: pulse 1.5s ease-out infinite;
+  opacity: 0.6;
+}
+
+.loader::after { animation-delay: -0.9s; }
+.loader div::before { animation-delay: -0.6s; }
+.loader div::after { animation-delay: -0.3s; }
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
