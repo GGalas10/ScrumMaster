@@ -6,6 +6,7 @@ import { CustomAlertComponent } from '../../../shared/components/custom-alert/cu
 import { CommonModule } from '@angular/common';
 import { RegisterCommand } from '../../../Core/Models/UsersInterfaces';
 import { Router } from '@angular/router';
+import { ErrorModel } from '../../../shared/ErrorClass';
 
 @Component({
   selector: 'app-register',
@@ -21,9 +22,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   private formBuilder = inject(FormBuilder);
-  errors: string[] = [];
-  title: string = '';
-  showModal = false;
+  errorModel = new ErrorModel();
   confirmShow = false;
   passShow = false;
   constructor(private authService: AuthService, private router: Router) {}
@@ -50,38 +49,19 @@ export class RegisterComponent {
     }
   }
   RegisterUser() {
-    let errors: string[] = [];
     if (!this.registerForm.valid) {
-      if (this.registerForm.controls['firstName'].invalid)
-        errors.push('Errors.FirstNameRequired');
-
-      if (this.registerForm.controls['lastName'].invalid)
-        errors.push('Errors.LastNameRequired');
-
-      if (this.registerForm.controls['userName'].invalid)
-        errors.push('Errors.UserNameRequired');
-
-      if (this.registerForm.controls['email'].invalid)
-        errors.push('Errors.EmaiRequired');
-
-      if (this.registerForm.controls['password'].errors?.['required'])
-        errors.push('Errors.PasswordRequired');
-
-      if (this.registerForm.controls['confirmPassword'].errors?.['required'])
-        errors.push('Errors.ConfirmPasswordRequired');
-
-      if (this.registerForm.controls['password'].errors?.['minlength'])
-        errors.push('Errors.PasswordMinLength');
-
-      this.ShowErrorModal(errors, 'Errors.FormInvalid');
+      this.errorModel.showMoreErrors(this.ValidForm(), 'Errors.FormInvalid');
       return;
     }
     if (
       this.registerForm.value.confirmPassword !=
       this.registerForm.value.password
     ) {
-      errors.push('Errors.IncorrectPasswords');
-      this.ShowErrorModal(errors, 'Errors.FormInvalid');
+      this.errorModel.showOneBadRequest(
+        'Passwords_Incorrect',
+        'Errors.FormInvalid'
+      );
+      console.log(this.errorModel);
       return;
     } else {
       this.authService.RegisterUser(this.GetModelFromForm()).subscribe({
@@ -89,59 +69,12 @@ export class RegisterComponent {
           this.router.navigate(['/']);
         },
         error: (err) => {
-          let errors: string[] = [];
-          if (err.error == 'Command_Is_Null')
-            errors.push('Errors.SomethingWrong');
-
-          if (err.error == 'Email_Cannot_Be_Null')
-            errors.push('Errors.EmaiRequired');
-
-          if (err.error == 'Password_Cannot_Be_Null')
-            errors.push('Errors.PasswordRequired');
-
-          if (err.error == 'FirstName_Cannot_Be_Null')
-            errors.push('Errors.FirstNameRequired');
-
-          if (err.error == 'LastName_Cannot_Be_Null')
-            errors.push('Errors.LastNameRequired');
-
-          if (err.error == 'LastName_Cannot_Be_Null')
-            errors.push('Errors.LastNameRequired');
-
-          if (err.error == 'UserName_Cannot_Be_Null')
-            errors.push('Errors.PasswordMinLength');
-
-          if (err.error == 'Passwords_Incorrect')
-            errors.push('Errors.IncorrectPasswords');
-
-          if (err.error == 'User_Email_Already_Exist')
-            errors.push('Errors.EmailAlreadyExist');
-
-          if (err.error == 'User_Name_Already_Exist')
-            errors.push('Errors.UserNameAlreadyExist');
-
-          if (err.error == 'Password_Is_Too_Short')
-            errors.push('Errors.PasswordMinLength');
-
-          if (err.error == 'PasswordRequiresDigit')
-            errors.push('Errors.PasswordRequiresDigit');
-
-          if (err.error == 'PasswordRequiresUpper')
-            errors.push('Errors.PasswordRequiresUpper');
-
-          if (err.error == 'PasswordRequiresNonAlphanumeric')
-            errors.push('Errors.NonAlphanumeric');
-
-          if (errors.length <= 0) errors.push('Errors.SomethingWrong');
-          this.ShowErrorModal(errors, 'Errors.FormInvalid');
+          if (err.status == 400)
+            this.errorModel.showOneBadRequest(err.error, 'Errors.FormInvalid');
+          this.errorModel.showOneInternal();
         },
       });
     }
-  }
-  ShowErrorModal(errors: string[], title: string) {
-    this.errors = errors;
-    this.title = title;
-    this.showModal = true;
   }
   GetModelFromForm(): RegisterCommand {
     return {
@@ -152,5 +85,32 @@ export class RegisterComponent {
       password: this.registerForm.value.password ?? '',
       confirmPassword: this.registerForm.value.confirmPassword ?? '',
     };
+  }
+  ValidForm(): string[] {
+    let errors: string[] = [];
+    if (this.registerForm.controls['firstName'].invalid)
+      errors.push('Errors.FirstNameRequired');
+
+    if (this.registerForm.controls['lastName'].invalid)
+      errors.push('Errors.LastNameRequired');
+
+    if (this.registerForm.controls['userName'].invalid)
+      errors.push('Errors.UserNameRequired');
+
+    if (this.registerForm.controls['email'].invalid)
+      errors.push('Errors.EmaiRequired');
+
+    if (this.registerForm.controls['password'].errors?.['required'])
+      errors.push('Errors.PasswordRequired');
+
+    if (this.registerForm.controls['confirmPassword'].errors?.['required'])
+      errors.push('Errors.ConfirmPasswordRequired');
+
+    if (this.registerForm.controls['confirmPassword'].errors?.['minlength'])
+      errors.push('Errors.Passwords_Incorrect');
+
+    if (this.registerForm.controls['password'].errors?.['minlength'])
+      errors.push('Errors.PasswordMinLength');
+    return errors;
   }
 }

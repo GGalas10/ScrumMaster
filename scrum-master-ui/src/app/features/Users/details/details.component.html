@@ -1,0 +1,17 @@
+<app-left-menu></app-left-menu>
+<section *ngIf="user;else loading">
+    <section class="body">
+        <div class="NameBody">
+            <h1>{{"User.Details" | translate}}</h1>
+            <label for="Name">Imię i nazwisko:</label>
+            <p name="Name">{{this.user.firstName}} {{this.user.lastName}}</p>
+            <label for="email">Email:</label>
+            <p name="email">{{this.user.email}}</p>
+            <label for="registerAt">Konto istnieje od:</label>
+            <p for="registerAt">{{this.user.registerAt | date: 'yyyy-MM-dd'}}</p>
+        </div>
+    </section>
+</section>
+<ng-template #loading>
+    <div class="loader"><div></div></div>
+</ng-template>

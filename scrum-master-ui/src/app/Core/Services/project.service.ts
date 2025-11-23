@@ -8,18 +8,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProjectService {
-  headers: HttpHeaders = new HttpHeaders({ ScrumMaster: 'true' });
   projectUrl = environment.projectUrl;
   constructor(private http: HttpClient) {}
   GetUsersProject(): Observable<UserProject[]> {
     return this.http.get<UserProject[]>(`${this.projectUrl}/GetUserProjects`, {
-      headers: this.headers,
+      headers: environment.headers,
       withCredentials: true,
     });
   }
   CreateProject(command: CreateProject): Observable<string> {
     return this.http.post<string>(`${this.projectUrl}/CreateProject`, command, {
-      headers: this.headers,
+      headers: environment.headers,
       withCredentials: true,
     });
   }

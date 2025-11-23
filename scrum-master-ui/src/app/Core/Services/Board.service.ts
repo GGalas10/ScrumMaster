@@ -4,20 +4,20 @@ import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { SprintList } from '../Models/SprintInterfaces';
 import { UserProject } from '../Models/ProjectInterfaces';
+import { BoardDto } from '../Models/BoardInterfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BoardService {
-  headers: HttpHeaders = new HttpHeaders({ ScrumMaster: 'true' });
   projectUrl = environment.projectUrl;
   sprintUrl = environment.sprintUrl;
   constructor(private http: HttpClient) {}
-  GetBoardInfo(projectId: string): Observable<string> {
-    return this.http.get<string>(
+  GetBoardInfo(projectId: string): Observable<BoardDto> {
+    return this.http.get<BoardDto>(
       `${this.projectUrl}/GetBoardInfo?projectId=${projectId}`,
       {
-        headers: this.headers,
+        headers: environment.headers,
         withCredentials: true,
       }
     );

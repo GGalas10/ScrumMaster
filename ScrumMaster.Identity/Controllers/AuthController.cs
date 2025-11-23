@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure.Commands;
 using ScrumMaster.Identity.Infrastructure.Contracts;
 using ScrumMaster.Identity.Infrastructure.DTO;
+using ScrumMaster.Identity.Infrastructure.Exceptions;
 using System.Security.Claims;
 
 namespace ScrumMaster.Identity.Controllers
@@ -30,7 +31,10 @@ namespace ScrumMaster.Identity.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if(ex is BadRequestException)
+                    return BadRequest(ex.Message);
+
+                return StatusCode(500,ex.Message);
             }
         }
         [HttpPost("/Login")]
@@ -44,7 +48,10 @@ namespace ScrumMaster.Identity.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+
+                return StatusCode(500, ex.Message);
             }
         }
         [HttpPost("/Refresh")]
@@ -61,6 +68,8 @@ namespace ScrumMaster.Identity.Controllers
             }
             catch (Exception ex)
             {
+                if(ex is UnauthorizedAccessException)
+                    return Unauthorized();
                 return BadRequest(ex.Message);
             }
         }

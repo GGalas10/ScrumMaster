@@ -1,8 +1,8 @@
 <section>
-    <h1>{{`${title}` | translate}}</h1>
+    <h1>{{`${errorModel.title}` | translate}}</h1>
     <div>
         <p style="line-height: 30px;">
-            @for (item of errors; track $index) 
+            @for (item of errorModel.messages; track $index) 
             {
                 {{`${item}` | translate}}<br/>
             }

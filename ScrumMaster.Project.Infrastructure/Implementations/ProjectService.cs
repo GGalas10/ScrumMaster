@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using ScrumMaster.Project.Core.Enums;
 using ScrumMaster.Project.Core.Models;
 using ScrumMaster.Project.Infrastructure.Contracts;
@@ -6,29 +7,36 @@ using ScrumMaster.Project.Infrastructure.CustomExceptions;
 using ScrumMaster.Project.Infrastructure.DataAccesses;
 using ScrumMaster.Project.Infrastructure.DTOs;
 using ScrumMaster.Project.Infrastructure.DTOs.Commands;
+using System.Text;
+using System.Text.Json;
 
 namespace ScrumMaster.Project.Infrastructure.Implementations
 {
     public class ProjectService : IProjectService
     {
         private readonly IProjectDbContext _projectDbContext;
-        private readonly IAccessService _accessService;
-        public ProjectService(IProjectDbContext projectDbContext)
+        private readonly IAccessService _accessService; 
+        private readonly HttpClient _identityHttpClient;
+        public ProjectService(IProjectDbContext projectDbContext, IHttpClientFactory httpFactory)
         {
             _projectDbContext = projectDbContext;
             _accessService = new AccessService(_projectDbContext);
+            _identityHttpClient = httpFactory.CreateClient("Identity");
         }
         public async Task<BoardInfoDTO> GetBoardInfo(Guid projectId, Guid userId)
         {
             if(projectId == Guid.Empty)
                 throw new BadRequestException("ProjectId_Cannot_Be_Empty");
+
             var project = await _projectDbContext.Projects.AsNoTracking().FirstOrDefaultAsync(p => p.Id == projectId);
             if (project == null)
                 throw new NotFoundException("Project_Not_Found");
+
             var userRole = await _accessService.GetUserProjectRole(projectId, userId);
             if (userRole == ProjectRoleEnum.None)
                 throw new RoleException("User_Has_No_Access_To_This_Project");
-            var boardInfo = new BoardInfoDTO() { projectDescription = project.ProjectDescription};
+
+            var boardInfo = new BoardInfoDTO() { projectDescription = project.ProjectDescription, projectName = project.ProjectName, members = await GetAllProjectMembers(projectId) };
             return boardInfo;
         }      
         public async Task<Guid> AddNewProject(AddProjectCommand command)
@@ -78,6 +86,18 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
                     userRole = p.UserRole
                 }).ToListAsync();
             return userProjects;
+        }
+        private async Task<List<MemberDTO>> GetAllProjectMembers(Guid projectId)
+        {
+            var projectMembers = await _projectDbContext.ProjectUserAccesses.AsNoTracking().Where(p => p.ProjectId == projectId).ToListAsync();
+            var body = JsonSerializer.Serialize(projectMembers.Select(x => x.UserId).ToList());
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
+            var response = await _identityHttpClient.PostAsync("/api/Project/GetUserList", content);
+
+            response.EnsureSuccessStatusCode();
+
+            var members = JsonSerializer.Deserialize<List<MemberDTO>>(await response.Content.ReadAsStringAsync());
+            return members;
         }
     }
 }

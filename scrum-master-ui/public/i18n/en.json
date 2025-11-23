@@ -2,7 +2,8 @@
     "Main":
     {
         "changeLanguage" : "Zmień język",
-        "hello" : "Hello"
+        "hello" : "Hello",
+        "YourProjects" : "Your projects"
     },
     "Home":
     {
@@ -25,6 +26,7 @@
     },
     "Errors":
     {     
+        "GeneralTitle" : "An error has occurred",
         "FormInvalid" : "The form is incorrectly filled in",
         "FirstNameRequired" : "Fill in the fist name field",
         "LastNameRequired" : "Fill in the last name field",
@@ -40,7 +42,10 @@
         "NonAlphanumeric" : "The password must contain one special character",
         "PasswordRequiresDigit":"The password must contain at least one digit",
         "PasswordRequiresUpper":"Your password must contain at least one capital letter",
-        "WrongCredentials" : "Incorrect login details were entered"
+        "WrongCredentials" : "Incorrect login details were entered",
+        "ProjectId_Cannot_Be_Empty" : "Something went wrong",
+        "Project_Not_Found" : "We were unable to find your project in the database",
+        "User_Has_No_Access_To_This_Project" : "You do not have access to this project. Please contact the administrator"
     },
     "LeftMenu":
     {
@@ -60,5 +65,9 @@
         "AddProjectBtn" : "Add project",
         "NewProject" : "New project",
         "ShortDescription" : "Description of the project"
+    },
+    "User":
+    {
+        "Details" : "User details"
     }
 }

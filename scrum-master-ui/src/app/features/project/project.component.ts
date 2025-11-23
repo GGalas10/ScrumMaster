@@ -8,25 +8,42 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NewProjectModalComponent } from '../../shared/new-project-modal/new-project-modal.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
+import { ErrorModel } from '../../shared/ErrorClass';
 
 @Component({
   selector: 'app-project',
-  imports: [TranslatePipe, CommonModule, FormsModule, NewProjectModalComponent],
+  imports: [
+    TranslatePipe,
+    CommonModule,
+    FormsModule,
+    NewProjectModalComponent,
+    RouterLink,
+  ],
   templateUrl: './project.component.html',
   styleUrl: './project.component.scss',
 })
 export class ProjectComponent implements OnInit {
   open = false;
   userProjects: UserProject[] = [];
+  isLoading = true;
+  errors = new ErrorModel();
   constructor(private projectService: ProjectService, private router: Router) {}
   ngOnInit(): void {
-    this.projectService.GetUsersProject().subscribe({
-      next: (result) => {
-        this.userProjects = result;
-      },
-      error: (response) => console.log(response),
-    });
+    this.projectService
+      .GetUsersProject()
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          this.userProjects = result;
+        },
+        error: (response) => console.log(response),
+      });
   }
   onCreate(command: CreateProject): void {
     this.projectService.CreateProject(command).subscribe({

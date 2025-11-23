@@ -1,0 +1,25 @@
+.NameBody{
+    h1{
+        flex: 0 0 100%; 
+        text-align: center;
+    }
+    label{
+        font-weight: 600;
+        flex: 0 0 48%;
+        margin: 0;
+        text-align: right;
+    }
+    p{
+        margin: 0;
+        flex: 0 0 48%;
+    }
+    padding: 15px;
+    margin: 15px auto;
+    background-color: #c8d3ff;
+    border-radius: 15px;
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:15px
+}

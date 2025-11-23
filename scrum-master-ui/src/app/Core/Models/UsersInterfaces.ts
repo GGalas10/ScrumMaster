@@ -10,3 +10,17 @@ export interface LoginCommand {
   email: string;
   password: string;
 }
+export interface MemberDTO {
+  id: string;
+  firstName: string;
+  lastName: string;
+  shortcut: string;
+}
+
+export interface UserDetails {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  registerAt: Date;
+}

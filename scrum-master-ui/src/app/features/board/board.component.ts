@@ -3,31 +3,29 @@ import { BoardService } from '../../Core/Services/Board.service';
 import { LeftMenuComponent } from '../../shared/left-menu/left-menu.component';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { finalize } from 'rxjs';
+import { BoardDto } from '../../Core/Models/BoardInterfaces';
+import { QueryParameterService } from '../../shared/query-parameter.service';
 
 @Component({
   selector: 'app-board',
-  imports: [LeftMenuComponent, CommonModule, TranslatePipe],
+  imports: [LeftMenuComponent, CommonModule, TranslatePipe, RouterModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
 export class BoardComponent implements OnInit {
-  projectId = signal('');
-  projectDescription = '';
+  boardDTO!: BoardDto;
   isLoading = true;
   projectError = '';
   constructor(
     private activatedRoute: ActivatedRoute,
-    private boardService: BoardService
-  ) {
-    this.activatedRoute.params.subscribe((params) => {
-      this.projectId.set(params['id']);
-    });
-  }
+    private boardService: BoardService,
+    private queryParameter: QueryParameterService
+  ) {}
   ngOnInit(): void {
     this.boardService
-      .GetBoardInfo(this.projectId())
+      .GetBoardInfo(this.queryParameter.getQueryParam('id'))
       .pipe(
         finalize(() => {
           this.isLoading = false;
@@ -35,7 +33,7 @@ export class BoardComponent implements OnInit {
       )
       .subscribe({
         next: (result) => {
-          this.projectDescription = result;
+          this.boardDTO = result;
         },
         error: (err) => {
           this.projectError = err.error;

@@ -1,0 +1,76 @@
+@use 'variables' as *;
+.body{
+    section{
+        padding: 5px 15px;
+    }
+}
+.ProjectNameSection{
+    background: linear-gradient(to bottom, whitesmoke 60%, #E3F2FD 100%);
+    letter-spacing: 2px;
+}
+.BodySection{
+    div{
+        background-color: #c8d3ff;
+        border-radius: 14px;
+        padding: 15px;
+    }
+    gap:10px;
+    display: flex;
+    flex-direction: row;
+    flex: 0 1 auto;
+}
+.LeftModal{
+    width: 70%;
+}
+.RightModal{
+    width: 30%;
+    height: auto;
+    h3{
+        margin-top:0;
+        margin-bottom: 15px;
+    }
+}
+.MembersSection{
+    padding: 0 !important;
+    display: flex;
+    gap:10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.OneMember{
+    text-align: center;
+    align-content: center;
+    height: 45px;
+    width: 45px;
+    background-color: wheat;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    margin: 0;
+    position: relative;
+    transition: transform 0.2s ease-in-out;
+}
+.OneMember:hover{
+    transform: scale(1.1);
+}
+.ToolTipText{
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  right: -100px;
+  top: -15px;
+  background: #99939380;
+  color: $font-color;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: opacity 0.2s ease-in-out;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  border-radius: 13px;
+}
+.OneMember:hover .ToolTipText {
+  visibility: visible;
+  opacity: 1;
+}

@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ScrumMaster.Project.Handlers;
 using ScrumMaster.Project.Infrastructure;
 using ScrumMaster.Project.Infrastructure.DataAccesses;
 using System.Text;
@@ -13,9 +15,13 @@ var isTesting = builder.Environment.EnvironmentName == "Testing";
 if (!isTesting)
     builder.Services.AddDbContext<ProjectDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection")));
 builder.Services.AddControllersWithViews();
-
-
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<AccessTokenHandler>();
+builder.Services.AddHttpClient("Identity", (sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri($"{config["API:Identity"]}");
+}).AddHttpMessageHandler<AccessTokenHandler>();
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

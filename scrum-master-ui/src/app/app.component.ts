@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { TokenService } from './Core/Services/token.service';
@@ -24,7 +24,8 @@ export class AppComponent implements OnInit {
   TransLang: string[] = [];
   constructor(
     private translate: TranslateService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    public router: Router
   ) {
     this.translate.addLangs(['pl', 'en']);
     this.translate.setDefaultLang('pl');

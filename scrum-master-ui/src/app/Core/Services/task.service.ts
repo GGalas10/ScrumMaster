@@ -8,12 +8,11 @@ import { TaskStatuses } from '../Models/TaskInterfaces';
   providedIn: 'root',
 })
 export class TaskService {
-  headers: HttpHeaders = new HttpHeaders({ ScrumMaster: 'true' });
   apiUrl = environment.taskUrl;
   constructor(private http: HttpClient) {}
   GetTaskStatuses(): Observable<TaskStatuses[]> {
     return this.http.get<TaskStatuses[]>(`${this.apiUrl}/GetTasksStatuses`, {
-      headers: this.headers,
+      headers: environment.headers,
       withCredentials: true,
     });
   }

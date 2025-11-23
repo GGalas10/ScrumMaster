@@ -1,7 +1,10 @@
 <section>
-    <a [routerLink]="['']" >
+    <a>
         <img height="50px" src="LogoScrumMaster.png">
     </a>
+    <div *ngIf="IsLogin() && this.router.url !== '/Project'">
+        <p style="margin-left: 35px;" [routerLink]="['']">{{ 'Main.YourProjects' | translate }}</p>
+    </div>
     <div class="rightMenu">         
         <p (click)="setTransLanguage()">{{'Main.changeLanguage'|translate}}</p>          
         <p *ngIf="IsLogin()" (click)="showMenu = !showMenu">{{'Main.hello'|translate}} <b>{{GetUserName()}}</b></p>

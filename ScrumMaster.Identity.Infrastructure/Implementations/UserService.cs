@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure.Commands;
 using ScrumMaster.Identity.Infrastructure.Contracts;
 using ScrumMaster.Identity.Infrastructure.DTO;
+using ScrumMaster.Identity.Infrastructure.Exceptions;
 
 namespace ScrumMaster.Identity.Infrastructure.Implementations
 {
@@ -20,36 +22,36 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
         public async Task<AuthDTO> RegisterUser(RegisterUserCommand command)
         {
             if (command == null)
-                throw new Exception("Command_Is_Null");
+                throw new BadRequestException("Command_Is_Null");
 
             if (string.IsNullOrWhiteSpace(command.email))
-                throw new Exception("Email_Cannot_Be_Null");
+                throw new BadRequestException("Email_Cannot_Be_Null");
 
             if (string.IsNullOrWhiteSpace(command.password))
-                throw new Exception("Password_Cannot_Be_Null");
+                throw new BadRequestException("Password_Cannot_Be_Null");
 
             if (string.IsNullOrWhiteSpace(command.firstName))
-                throw new Exception("FirstName_Cannot_Be_Null");
+                throw new BadRequestException("FirstName_Cannot_Be_Null");
 
             if (string.IsNullOrWhiteSpace(command.lastName))
-                throw new Exception("LastName_Cannot_Be_Null");
+                throw new BadRequestException("LastName_Cannot_Be_Null");
 
             if (string.IsNullOrWhiteSpace(command.userName))
-                throw new Exception("UserName_Cannot_Be_Null");
+                throw new BadRequestException("UserName_Cannot_Be_Null");
 
             if (command.password.Length < 10)
-                throw new Exception("Password_Is_Too_Short");
+                throw new BadRequestException("Password_Is_Too_Short");
 
             if (command.password != command.confirmPassword)
-                throw new Exception("Passwords_Incorrect");
+                throw new BadRequestException("Passwords_Incorrect");
 
             var checkEmail = await _userManager.FindByEmailAsync(command.email);
             if (checkEmail != null)
-                throw new Exception("User_Email_Already_Exist");
+                throw new BadRequestException("User_Email_Already_Exist");
 
             var checkName = await _userManager.FindByNameAsync(command.userName);
             if (checkName != null)
-                throw new Exception("User_Name_Already_Exist");
+                throw new BadRequestException("User_Name_Already_Exist");
 
             var newUser = new AppUser()
             {
@@ -57,6 +59,8 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
                 UserName = command.userName,
                 FirstName = command.firstName ,
                 LastName = command.lastName ,
+                RegisterAt = DateTime.UtcNow,
+                LastUpdated = DateTime.UtcNow,
             };
 
             var result = await _userManager.CreateAsync(newUser, command.password);
@@ -90,19 +94,21 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
         public async Task<AuthDTO> LoginUser(LoginUserCommand command)
         {
             if (command == null)
-                throw new Exception("Command_Is_Null");
+                throw new BadRequestException("Command_Is_Null");
 
             var user = await _userManager.FindByEmailAsync(command.email);
             if (user == null)
-                throw new Exception("Wrong_Credentials");
+                throw new BadRequestException("Wrong_Credentials");
 
             var isLoged = await _userManager.CheckPasswordAsync(user, command.password);
             if (!isLoged)
-                throw new Exception("Wrong_Credentials");
+                throw new BadRequestException("Wrong_Credentials");
 
             var jwtToken = _jwtHandler.CreateToken(user);
             var refreshToken = await _refreshTokenService.CreateRefreshToken(Guid.Parse(user.Id));
 
+            user.LastLoginAt = DateTime.UtcNow;
+            await _userManager.UpdateAsync(user);
             return new AuthDTO()
             {
                 jwtToken = jwtToken,
@@ -116,6 +122,38 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
             if (user == null)
                 return null;
             return user.UserName;
+        }
+        public async Task<List<UserDTO>> GetUsers(List<Guid> userIds)
+        {
+            var userIdsAsString = userIds.Select(x => x.ToString()).ToList();
+            var users = await _userManager.Users.Where(u => userIdsAsString.Contains(u.Id)).ToListAsync();
+            return users.Select(x => 
+            {
+                return new UserDTO()
+                {
+                    id = Guid.Parse(x.Id),
+                    firstName = x.FirstName,
+                    lastName = x.LastName
+                };
+            }
+            ).ToList();
+        }
+        public async Task<UserDTO> GetUserById(Guid userId)
+        {
+            if(userId == Guid.Empty)
+                throw new Exception("UserId_Is_Empty");
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+                throw new Exception("User_Not_Found");
+            return new UserDTO()
+            {
+                id = Guid.Parse(user.Id),
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                email = user.Email,
+                registerAt = user.RegisterAt,
+                lastLoginAt = user.LastLoginAt
+            };
         }
     }
 }

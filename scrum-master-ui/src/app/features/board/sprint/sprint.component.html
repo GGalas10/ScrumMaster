@@ -1,1 +1,16 @@
-<p>sprint works!</p>
+<ng-container>
+        <app-left-menu></app-left-menu>
+        <ng-container *ngIf="spintsDTO;else loader">
+                <section class="body">
+                        <ng-container *ngFor="let sprint of spintsDTO">
+                                <p>{{sprint.sprintName}}</p>
+                        </ng-container>
+                        <app-add-btn tooltip="Dodaj nowy sprint" (add)="isModalOpen=true"></app-add-btn>
+                </section>
+        </ng-container>
+        
+</ng-container>
+<ng-template #loader>
+        <div class="loader"><div></div></div>
+</ng-template>
+<app-add-sprint [isOpen]="isModalOpen" (closed)="isModalOpen = false"></app-add-sprint>

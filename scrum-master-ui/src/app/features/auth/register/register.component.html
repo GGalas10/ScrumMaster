@@ -40,4 +40,4 @@
     </form>  
     <button (click)="GoToLogin()" class="SubmitButton" style="width: 100%;">{{ 'Auth.login' | translate}}</button>
 </section>
-<app-custom-alert [title]="title" [errors]="errors" *ngIf="showModal" (closeEvent)="showModal = false"></app-custom-alert>
+<app-custom-alert [errorModel]="errorModel" *ngIf="errorModel.show" (closeEvent)="errorModel.hide()"></app-custom-alert>

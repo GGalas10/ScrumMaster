@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-left-menu',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, RouterLink],
   templateUrl: './left-menu.component.html',
   styleUrl: './left-menu.component.scss',
 })
@@ -12,6 +13,12 @@ export class LeftMenuComponent {
   sprintMenu = false;
   boardMenu = false;
   AIAssistant = false;
+  projectId = signal('');
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe((params) => {
+      this.projectId.set(params['id']);
+    });
+  }
   ShowSubMenu(name: string): void {
     switch (name) {
       case 'sprint':

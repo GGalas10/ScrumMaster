@@ -1,8 +1,8 @@
 <section class="MainPanel">
-    <p class="MenuItem">{{ 'LeftMenu.Home' | translate }}</p>
+    <p class="MenuItem" [routerLink]="['/Board',projectId()]">{{ 'LeftMenu.Home' | translate }}</p>
     <p class="MenuItem" (click)="ShowSubMenu('sprint')">Sprint</p>
     <div class="MenuSubMenu" *ngIf="sprintMenu">
-        <p class="MenuSubItem">{{ 'LeftMenu.SprintList' | translate }}</p>
+        <p class="MenuSubItem" [routerLink]="['/Sprint',projectId()]">{{ 'LeftMenu.SprintList' | translate }}</p>
     </div>
     <p class="MenuItem" (click)="ShowSubMenu('board')">{{ 'LeftMenu.Board' | translate }}</p>
     <div class="MenuSubMenu" *ngIf="boardMenu">

@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   identity-service:
+    container_name: identityAPI
     build:
       context: ./ScrumMaster.Identity
       dockerfile: Dockerfile
@@ -8,6 +9,7 @@ services:
       - "2201:8080"
 
   sprints-service:
+    container_name: sprintAPI
     build:
       context: ./ScrumMaster.Sprints
       dockerfile: Dockerfile
@@ -17,6 +19,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
 
   tasks-service:
+    container_name: taskAPI
     build:
       context: ./ScrumMaster.Tasks
       dockerfile: Dockerfile
@@ -26,6 +29,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
 
   project-service:
+    container_name: projectAPI
     build:
       context: ./ScrumMaster.Project
       dockerfile: Dockerfile

@@ -5,7 +5,7 @@ using System.Security.Claims;
 namespace ScrumMaster.Sprints.Controllers
 {
     [Authorize]
-    [Route("[action]")]
+    [Route("[controller]/[action]")]
     public class _BaseController : ControllerBase
     {
         protected Guid UserId => Guid.Parse(User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.NameIdentifier)?.Value);

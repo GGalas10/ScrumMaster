@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { CustomAlertComponent } from '../../../shared/components/custom-alert/custom-alert.component';
 import { CommonModule } from '@angular/common';
+import { ErrorModel, ErrorsNameSwitch } from '../../../shared/ErrorClass';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +25,9 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
   private formBuilder = inject(FormBuilder);
-  title: string = 'Errors.FormInvalid';
-  errors: string[] = [];
+  title: string = '';
+  errors = new ErrorModel();
   isLoginClick = false;
-  showModal = false;
   form = this.formBuilder.group({
     email: ['', Validators.compose([Validators.email, Validators.required])],
     password: [
@@ -39,6 +39,7 @@ export class LoginComponent {
     this.isLoginClick = true;
     if (!this.form.valid) {
       alert('Uzupełnij wszystkie pola');
+      this.isLoginClick = false;
       return;
     }
     let command: LoginCommand = {
@@ -47,27 +48,21 @@ export class LoginComponent {
     };
     this.authService.LoginUser(command).subscribe({
       next: () => {
-        console.log(this.authService.redirectUrl);
         if (this.authService.redirectUrl) {
           console.log('redirectUrl', this.authService.redirectUrl);
           this.router.navigateByUrl(this.authService.redirectUrl);
         } else {
-          this.router.navigate(['/Board']);
+          this.router.navigate(['/Project']);
         }
       },
       error: (err) => {
-        this.errors = [];
-        if (
-          typeof err.error === 'string' &&
-          err.error.includes('Wrong_Credentials')
-        ) {
-          this.errors.push('Errors.WrongCredentials');
+        if (err.status == 400) {
+          this.errors.showOneBadRequest(err.error, 'Errors.FormInvalid');
           this.isLoginClick = false;
         } else {
-          this.errors.push('Errors.SomethingWrong');
+          this.errors.showOneInternal();
           this.isLoginClick = false;
         }
-        this.showModal = true;
       },
     });
   }

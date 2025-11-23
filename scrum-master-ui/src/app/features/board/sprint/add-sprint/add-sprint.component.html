@@ -1,0 +1,33 @@
+<!-- sprint-modal.component.html -->
+<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
+  <div class="modal-container" [class.open]="isOpen" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Edytuj sprint</h2>
+      <button type="button" class="close-btn" (click)="onClose()">✕</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+      <div class="form-row">
+        <label>Nazwa</label>
+        <input type="text" formControlName="name" />
+      </div>
+
+      <div class="form-row">
+        <label>Data startu</label>
+        <input type="date" formControlName="startDate" />
+      </div>
+
+      <div class="form-row">
+        <label>Data zakończenia</label>
+        <input type="date" formControlName="endDate" />
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="secondary" (click)="onClose()">Anuluj</button>
+        <button type="submit" class="primary" [disabled]="form.invalid">
+          Zapisz
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

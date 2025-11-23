@@ -2,7 +2,8 @@
     "Main":
     {
         "changeLanguage" : "Change language",
-        "hello" : "Witaj"
+        "hello" : "Witaj",
+        "YourProjects" : "Twoje projekty"
     },
     "Home":
     {
@@ -25,6 +26,7 @@
     },
     "Errors":
     {
+        "GeneralTitle" : "Wystąpił błąd",
         "FormInvalid" : "Formularz jest błędnie wypełniony",
         "FirstNameRequired" : "Uzupełnij polę imię",
         "LastNameRequired" : "Uzupełnij pole nazwisko",
@@ -40,7 +42,10 @@
         "NonAlphanumeric" : "Hasło musi zawierać jeden znak specjalny",
         "PasswordRequiresDigit":"Hasło musi zawierać co najmniej jedną cyfrę",
         "PasswordRequiresUpper":"Twoje hasło musi zawierać przynajmniej jedną dużą literę",
-        "WrongCredentials" : "Podano błędne dane logowania"
+        "WrongCredentials" : "Podano błędne dane logowania",
+        "ProjectId_Cannot_Be_Empty" : "Coś poszło nie tak",
+        "Project_Not_Found" : "Nie udało znaleźć się Twojego projektu w bazie",
+        "User_Has_No_Access_To_This_Project" : "Nie masz dostępów do tego projektu. Skontaktuj się z administratorem"
     },
     "LeftMenu":
     {
@@ -60,5 +65,9 @@
         "AddProjectBtn" : "Dodaj projekt",
         "NewProject" : "Nowy projekt",
         "ShortDescription" : "Opis projektu"
+    },
+    "User":
+    {
+        "Details" : "Szczegóły użytkownika"
     }
 }

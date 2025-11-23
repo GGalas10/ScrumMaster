@@ -1,14 +1,28 @@
+<app-left-menu></app-left-menu>
 <section *ngIf="!isLoading;else loading">
-    <ng-container *ngIf="projectDescription;else emptyProject">
-        <app-left-menu></app-left-menu>
-        <section class="body">
-        </section>
+    <ng-container *ngIf="boardDTO.projectDescription">      
+            <section class="body">
+                <section class="ProjectNameSection">
+                    <h1>{{this.boardDTO.projectName}}</h1>
+                </section>
+                <section class="BodySection">
+                    <div class="LeftModal">
+                        <h2>{{"Board.ShortDescription" | translate}}</h2>
+                        <p>{{this.boardDTO.projectDescription}}</p>
+                    </div>
+                    <div class="RightModal">
+                        <h3>Użytkownicy</h3>
+                        <section class="MembersSection">
+                            <ng-container *ngFor="let item of this.boardDTO.members">
+                                <p class="OneMember" [routerLink]="['/User/Details',item.id]">{{item.shortcut}}
+                                    <span class="ToolTipText">{{item.firstName}} {{item.lastName}}</span>
+                                </p>
+                            </ng-container>
+                        </section>
+                    </div>
+                </section>
+            </section>
     </ng-container>
-    <ng-template #emptyProject>
-        <section class="body">
-            <p>{{this.projectError}}</p>
-        </section>
-    </ng-template>
 </section>
 <ng-template #loading>
     <div class="loader"><div></div></div>

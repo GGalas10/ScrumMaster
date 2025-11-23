@@ -9,7 +9,6 @@ import { TokenService } from './token.service';
   providedIn: 'root',
 })
 export class AuthService {
-  headers: HttpHeaders = new HttpHeaders({ ScrumMaster: 'true' });
   apiUrl = environment.identityUrl;
   redirectUrl = '';
   private _initialized$ = new BehaviorSubject(false);
@@ -18,7 +17,7 @@ export class AuthService {
   RegisterUser(command: RegisterCommand): Observable<string> {
     return this.http
       .post<string>(`${this.apiUrl}/Register`, command, {
-        headers: this.headers,
+        headers: environment.headers,
         withCredentials: true,
       })
       .pipe(
@@ -30,7 +29,7 @@ export class AuthService {
   LoginUser(command: LoginCommand): Observable<string> {
     return this.http
       .post<string>(`${this.apiUrl}/Login`, command, {
-        headers: this.headers,
+        headers: environment.headers,
         withCredentials: true,
       })
       .pipe(
@@ -60,12 +59,13 @@ export class AuthService {
   Logout(): Observable<void> {
     this.tokenService.Logout();
     return this.http.get<void>(`${this.apiUrl}/Logout`, {
-      headers: this.headers,
+      headers: environment.headers,
+      withCredentials: true,
     });
   }
   Ping(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/HealthCheck`, {
-      headers: this.headers,
+      headers: environment.headers,
       withCredentials: true,
     });
   }

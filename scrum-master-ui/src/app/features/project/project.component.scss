@@ -39,3 +39,22 @@
     margin: auto;
   }
 }
+.ProjectBox{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 15px;
+  margin: 15px auto;
+}
+.OneProject{
+  span{
+    user-select: none;
+  }
+  font-size:1.3rem;
+  cursor: pointer;
+  font-family: "Noto Sans", sans-serif;
+}
+.OneProject:hover{
+  transition-duration: 0.3s;
+  transform: scale(1.1);
+}

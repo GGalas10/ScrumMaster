@@ -6,6 +6,8 @@ import { BoardComponent } from './features/board/board.component';
 import { authGuard } from './Core/Guards/auth.guard';
 import { checkLoginGuard } from './Core/Guards/check-login.guard';
 import { ProjectComponent } from './features/project/project.component';
+import { DetailsComponent } from './features/Users/details/details.component';
+import { SprintComponent } from './features/board/sprint/sprint.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [checkLoginGuard] },
@@ -17,4 +19,10 @@ export const routes: Routes = [
   },
   { path: 'Board/:id', component: BoardComponent, canActivate: [authGuard] },
   { path: 'Project', component: ProjectComponent, canActivate: [authGuard] },
+  {
+    path: 'User/Details/:id',
+    component: DetailsComponent,
+    canActivate: [authGuard],
+  },
+  { path: 'Sprint/:id', component: SprintComponent, canActivate: [authGuard] },
 ];
