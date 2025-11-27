@@ -14,4 +14,5 @@ export interface CreateSprintCommand {
   name: string;
   startDate: Date;
   endDate: Date;
+  projectId: string;
 }

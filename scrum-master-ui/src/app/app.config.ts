@@ -17,6 +17,7 @@ import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { authInterceptorsInterceptor } from './Core/Interceptors/auth-interceptors.interceptor';
 import { AuthService } from './Core/Services/Auth.service';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
@@ -31,6 +32,7 @@ export const appConfig: ApplicationConfig = {
       useFactory: appInitializer,
       multi: true,
     },
+    provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),

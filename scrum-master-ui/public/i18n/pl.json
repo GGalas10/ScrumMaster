@@ -69,5 +69,17 @@
     "User":
     {
         "Details" : "Szczegóły użytkownika"
+    },
+    "Sprint":
+    {
+        "AddSprintToolTip" : "Dodaj nowy sprint",
+        "AddSprint" : "Dodaj sprint",
+        "SprintName" : "Nazwa sprintu",
+        "StartDate" : "Data rozpoczęcia sprintu",
+        "EndDate" : "Data zakończenia sprintu",
+        "Cancel" : "Anuluj",
+        "Save" : "Zapisz",
+        "DataError" : "Data rozpoczęcia nie może być późniejsza niż data zakończenia.",
+        "EmptySprints" : "Brak sprintów w tym projekcie. Dodaj je przy użyciu przycisku."
     }
 }

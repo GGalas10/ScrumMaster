@@ -7,12 +7,31 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-add-sprint',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TranslatePipe],
   templateUrl: './add-sprint.component.html',
   styleUrl: './add-sprint.component.scss',
+  animations: [
+    trigger('slideDown', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)', opacity: 0 }),
+        animate(
+          '300ms ease-out',
+          style({ transform: 'translateY(0)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '250ms ease-in',
+          style({ transform: 'translateY(-100%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AddSprintComponent {
   @Input() isOpen = false;
@@ -23,11 +42,14 @@ export class AddSprintComponent {
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      startDate: this.fb.control<Date | null>(null),
-      endDate: this.fb.control<Date | null>(null),
-    });
+    this.form = this.fb.group(
+      {
+        name: ['', Validators.required],
+        startDate: [this.fb.control<Date>, Validators.required],
+        endDate: [this.fb.control<Date>, Validators.required],
+      },
+      { validators: this.dateRangeValidator }
+    );
   }
   onSubmit(): void {
     if (this.form.invalid) {
@@ -36,11 +58,20 @@ export class AddSprintComponent {
     }
 
     this.submitted.emit(this.form.getRawValue() as CreateSprintCommand);
+    this.form.reset();
     this.onClose();
   }
 
   onClose(): void {
-    this.isOpen = false; // tylko lokalnie, rodzic i tak steruje flagą
+    this.isOpen = false;
     this.closed.emit();
+  }
+  dateRangeValidator(form: FormGroup) {
+    const start: Date | null = form.get('startDate')?.value;
+    const end: Date | null = form.get('endDate')?.value;
+
+    if (!start || !end) return null;
+
+    return start <= end ? null : { dateRangeInvalid: true };
   }
 }

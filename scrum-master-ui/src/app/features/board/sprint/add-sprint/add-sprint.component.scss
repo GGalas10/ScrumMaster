@@ -1,5 +1,3 @@
-/* sprint-modal.component.css */
-
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -17,14 +15,7 @@
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  transform: translateY(-100%);
-  transition: transform 0.3s ease-out;
   overflow: hidden;
-}
-
-/* "wyjeżdża" od góry */
-.modal-container.open {
-  transform: translateY(20px);
 }
 
 .modal-header {
@@ -84,4 +75,10 @@ button.secondary {
   background: transparent;
   font-size: 1.2rem;
   cursor: pointer;
+}
+.error{
+  text-align: center;
+  color: red;
+  font-weight: 600;
+  font-size: 1.2rem;
 }

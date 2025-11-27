@@ -2,10 +2,12 @@
         <app-left-menu></app-left-menu>
         <ng-container *ngIf="spintsDTO;else loader">
                 <section class="body">
+                        <h1>Lista sprintów</h1>
+                        <ng-container *ngIf="spintsDTO.length > 0;else emptySprint"></ng-container>
                         <ng-container *ngFor="let sprint of spintsDTO">
                                 <p>{{sprint.sprintName}}</p>
                         </ng-container>
-                        <app-add-btn tooltip="Dodaj nowy sprint" (add)="isModalOpen=true"></app-add-btn>
+                        <app-add-btn tooltip='{{"Sprint.AddSprintToolTip" | translate}}' (add)="isModalOpen=true" class="AddBtn" [size]="35"></app-add-btn>
                 </section>
         </ng-container>
         
@@ -13,4 +15,9 @@
 <ng-template #loader>
         <div class="loader"><div></div></div>
 </ng-template>
-<app-add-sprint [isOpen]="isModalOpen" (closed)="isModalOpen = false"></app-add-sprint>
+<ng-template #emptySprint>
+        <div>
+                <p class="EmptyInfo">{{"Sprint.EmptySprints" | translate}}</p>
+        </div>
+</ng-template>
+<app-add-sprint [isOpen]="isModalOpen" (closed)="isModalOpen = false" (submitted)="CreateSprint($event)"></app-add-sprint>

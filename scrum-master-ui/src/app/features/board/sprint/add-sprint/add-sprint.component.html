@@ -1,31 +1,32 @@
-<!-- sprint-modal.component.html -->
-<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
-  <div class="modal-container" [class.open]="isOpen" (click)="$event.stopPropagation()">
+<div class="modal-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()" @slideDown>
     <div class="modal-header">
-      <h2>Edytuj sprint</h2>
+      <h2>{{"Sprint.AddSprint" | translate}}</h2>
       <button type="button" class="close-btn" (click)="onClose()">✕</button>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
       <div class="form-row">
-        <label>Nazwa</label>
+        <label>{{"Sprint.SprintName" | translate}}</label>
         <input type="text" formControlName="name" />
       </div>
 
       <div class="form-row">
-        <label>Data startu</label>
+        <label>{{"Sprint.StartDate" | translate}}</label>
         <input type="date" formControlName="startDate" />
       </div>
 
       <div class="form-row">
-        <label>Data zakończenia</label>
+        <label>{{"Sprint.EndDate" | translate}}</label>
         <input type="date" formControlName="endDate" />
       </div>
-
+      <div *ngIf="form.errors?.['dateRangeInvalid']" class="error">
+        {{"Sprint.DataError" | translate}}
+      </div>
       <div class="modal-footer">
-        <button type="button" class="secondary" (click)="onClose()">Anuluj</button>
-        <button type="submit" class="primary" [disabled]="form.invalid">
-          Zapisz
+        <button type="button" class="secondary" (click)="onClose()">{{"Sprint.Cancel" | translate}}</button>
+        <button type="submit" class="primary" [disabled]="form.invalid" (click)="onSubmit()">
+          {{"Sprint.Save" | translate}}
         </button>
       </div>
     </form>
