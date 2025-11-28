@@ -52,7 +52,8 @@
         "Home" : "Home",
         "SprintList" : "Sprint list",
         "Board" : "Board",
-        "AiAssistant" : "AI Assistant"
+        "AiAssistant" : "AI Assistant",
+        "SprintBoard" : "Task board"
     },
     "Board":
     {

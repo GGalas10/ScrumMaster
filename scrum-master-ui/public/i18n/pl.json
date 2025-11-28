@@ -52,7 +52,8 @@
         "Home" : "Strona główna",
         "SprintList" : "Lista sprintów",
         "Board" : "Tablica",
-        "AiAssistant" : "Asystent AI"
+        "AiAssistant" : "Asystent AI",
+        "SprintBoard" : "Tablica zadań"
     },
     "Board":
     {

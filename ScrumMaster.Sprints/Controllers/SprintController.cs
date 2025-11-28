@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ScrumMaster.Sprints.Infrastructure.Commands;
 using ScrumMaster.Sprints.Infrastructure.Contracts;
+using ScrumMaster.Sprints.Infrastructure.Exceptions;
 
 namespace ScrumMaster.Sprints.Controllers
 {
@@ -29,7 +30,9 @@ namespace ScrumMaster.Sprints.Controllers
             } 
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if(ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
             }
         }
         [HttpGet]
@@ -42,7 +45,9 @@ namespace ScrumMaster.Sprints.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
             }
         }
         [HttpPost]
@@ -55,7 +60,9 @@ namespace ScrumMaster.Sprints.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
             }
         }
         [HttpPut]
@@ -68,7 +75,9 @@ namespace ScrumMaster.Sprints.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
             }
         }
         [HttpDelete]
@@ -81,7 +90,24 @@ namespace ScrumMaster.Sprints.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetActualSprint([FromQuery]Guid projectId)
+        {
+            try
+            {
+                var result = await _sprintService.GetActualSprintByProjectId(projectId,UserId);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
             }
         }
     }

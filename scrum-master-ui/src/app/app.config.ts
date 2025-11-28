@@ -5,7 +5,7 @@ import {
   inject,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withRouterConfig } from '@angular/router';
 import { routes } from './app.routes';
 import {
   HttpClient,
@@ -34,7 +34,12 @@ export const appConfig: ApplicationConfig = {
     },
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withRouterConfig({
+        onSameUrlNavigation: 'reload',
+      })
+    ),
     importProvidersFrom(HttpClientModule),
     provideTranslateService({
       defaultLanguage: 'pl',

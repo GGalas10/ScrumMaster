@@ -8,12 +8,14 @@ import { TaskStatuses } from '../Models/TaskInterfaces';
   providedIn: 'root',
 })
 export class TaskService {
-  apiUrl = environment.taskUrl;
   constructor(private http: HttpClient) {}
   GetTaskStatuses(): Observable<TaskStatuses[]> {
-    return this.http.get<TaskStatuses[]>(`${this.apiUrl}/GetTasksStatuses`, {
-      headers: environment.headers,
-      withCredentials: true,
-    });
+    return this.http.get<TaskStatuses[]>(
+      `${environment.taskUrl}/GetTasksStatuses`,
+      {
+        headers: environment.headers,
+        withCredentials: true,
+      }
+    );
   }
 }

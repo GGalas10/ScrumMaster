@@ -28,4 +28,13 @@ export class SprintService {
       }
     );
   }
+  GetActualSprint(projectId: string): Observable<string> {
+    return this.http.get<string>(
+      `${environment.sprintUrl}/GetActualSprint?projectId=${projectId}`,
+      {
+        headers: environment.headers,
+        withCredentials: true,
+      }
+    );
+  }
 }
