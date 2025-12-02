@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ScrumMaster.Sprints.Handlers;
 using ScrumMaster.Sprints.Infrastructure;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
 using System.Text;
@@ -13,16 +14,17 @@ var isTesting = builder.Environment.EnvironmentName == "Testing";
 // Add services to the container.
 if (!isTesting)
     builder.Services.AddDbContext<SprintDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConection")));
+
 builder.Services.AddControllersWithViews();
-
-
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<AccessTokenHandler>();
+builder.Services.AddHttpClient("Project", (sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri($"{config["API:Project"]}");
+}).AddHttpMessageHandler<AccessTokenHandler>();
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-SymmetricSecurityKey key;
-if (isTesting)
-    key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("s+Qr8+VhSWEHHuwyqwP0kNvtg3HCSEX25A3MP1iENH4="));
-else
-    key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -33,7 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
             ValidateAudience = false,
-            ValidateIssuer = false
+            ValidateIssuer = false,
         };
         options.Events = new JwtBearerEvents
         {
@@ -76,8 +78,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddAuthorization();
 builder.Services.AddInfratstructure();
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
+
 var front = builder.Configuration["Front:URL"];
 builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 {
@@ -86,7 +90,9 @@ builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
           .AllowCredentials()
           .WithHeaders("ScrumMaster", "Content-Type", "Authorization");
 }));
+
 var app = builder.Build();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -94,20 +100,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseCors("AllowFrontend");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumMaster Sprints API v1");
     c.RoutePrefix = string.Empty;
 });
-app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumMaster Tasks API v1");
-    c.RoutePrefix = string.Empty;
-});
 app.UseAuthorization();
 
 app.MapStaticAssets();

@@ -40,7 +40,7 @@ namespace ScrumMaster.Sprints.Controllers
         {
             try
             {
-                var result = await _sprintService.GetSprintsByProjectId(projectId);
+                var result = await _sprintService.GetSprintsByProjectId(projectId, UserId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace ScrumMaster.Sprints.Controllers
         {
             try
             {
-                await _sprintService.UpdateSprintAsync(command);
+                await _sprintService.UpdateSprintAsync(command, UserId);
                 return Ok();
             }
             catch (Exception ex)
@@ -85,7 +85,7 @@ namespace ScrumMaster.Sprints.Controllers
         {
             try
             {
-                await _sprintService.DeleteSprintAsync(sprintId);
+                await _sprintService.DeleteSprintAsync(sprintId, UserId);
                 return Ok();
             }
             catch (Exception ex)

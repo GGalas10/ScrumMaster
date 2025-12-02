@@ -6,7 +6,7 @@ using ScrumMaster.Tasks.Infrastructure.Contracts;
 namespace ScrumMaster.Tasks.Controllers
 {
     [Authorize]
-    [Route("[action]")]
+    [Route("[controller]/[action]")]
     public class TaskController : Controller
     {
         private readonly ITaskService _taskService;

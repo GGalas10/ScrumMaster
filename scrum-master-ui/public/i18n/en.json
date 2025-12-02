@@ -45,7 +45,8 @@
         "WrongCredentials" : "Incorrect login details were entered",
         "ProjectId_Cannot_Be_Empty" : "Something went wrong",
         "Project_Not_Found" : "We were unable to find your project in the database",
-        "User_Has_No_Access_To_This_Project" : "You do not have access to this project. Please contact the administrator"
+        "User_Has_No_Access_To_This_Project" : "You do not have access to this project. Please contact the administrator",
+        "DoesntPremission" : "You do not have access. Please contact the administrator."
     },
     "LeftMenu":
     {

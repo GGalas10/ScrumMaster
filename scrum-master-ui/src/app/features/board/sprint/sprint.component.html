@@ -21,3 +21,4 @@
         </div>
 </ng-template>
 <app-add-sprint [isOpen]="isModalOpen" (closed)="isModalOpen = false" (submitted)="CreateSprint($event)"></app-add-sprint>
+<app-custom-alert [errorModel]="errorModel" *ngIf="errorModel.show" (closeEvent)="errorModel.hide()"></app-custom-alert>

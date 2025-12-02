@@ -1,13 +1,13 @@
 <section class="MainPanel">
-    <p class="MenuItem" [routerLink]="['/Board',projectId()]">{{ 'LeftMenu.Home' | translate }}</p>
+    <p class="MenuItem" (click)="HomeLink()">{{ 'LeftMenu.Home' | translate }}</p>
     <p class="MenuItem" (click)="ShowSubMenu('sprint')">Sprint</p>
     <div class="MenuSubMenu" *ngIf="sprintMenu">
-        <p class="MenuSubItem" [routerLink]="['/Sprint',projectId()]">{{ 'LeftMenu.SprintList' | translate }}</p>
+        <p class="MenuSubItem" (click)="SprintLink()">{{ 'LeftMenu.SprintList' | translate }}</p>
         
     </div>
     <p class="MenuItem" (click)="ShowSubMenu('board')">{{ 'LeftMenu.Board' | translate }}</p>
     <div class="MenuSubMenu" *ngIf="boardMenu">
-        <p class="MenuSubItem" [routerLink]="routerLinkValue()">{{ 'LeftMenu.SprintBoard' | translate }}</p>
+        <p class="MenuSubItem" (click)="SprintTaskLink()">{{ 'LeftMenu.SprintBoard' | translate }}</p>
     </div>
     <p class="MenuItem" (click)="ShowSubMenu('ai')">{{ 'LeftMenu.AiAssistant' | translate }}</p>
     <div class="MenuSubMenu" *ngIf="AIAssistant">

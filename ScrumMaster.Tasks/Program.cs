@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ScrumMaster.Tasks.Handlers;
 using ScrumMaster.Tasks.Infrastructure;
 using ScrumMaster.Tasks.Infrastructure.DataAccess;
 using ScrumMaster.Tasks.Middleware;
@@ -9,11 +10,16 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<TaskDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection")));
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<AccessTokenHandler>();
+builder.Services.AddHttpClient("Sprint", (sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri($"{config["API:Project"]}");
+}).AddHttpMessageHandler<AccessTokenHandler>();
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -27,6 +33,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero,
             ValidateAudience = false,
             ValidateIssuer = false,
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["AccessToken"];
+                return Task.CompletedTask;
+            }
         };
     });
 builder.Services.AddEndpointsApiExplorer();
@@ -61,6 +75,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+builder.Services.AddInfrastructureLayer();
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
+
 var front = builder.Configuration["Front:URL"];
 builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 {
@@ -69,7 +87,7 @@ builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
           .AllowCredentials()
           .WithHeaders("ScrumMaster", "Content-Type", "Authorization");
 }));
-builder.Services.AddInfrastructureLayer();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,1 +1,19 @@
-<p>sprint-board works!</p>
+<ng-container>
+        <app-left-menu></app-left-menu>
+        <ng-container *ngIf="taskStatuses;else loader">
+            <section class="body">
+                <table>
+                    <thead>
+                        <ng-container *ngFor="let oneStatus of taskStatuses">
+                            <th>
+                                {{oneStatus.statusName}}
+                            </th>
+                        </ng-container>
+                    </thead>
+                </table>
+            </section>
+        </ng-container>
+</ng-container>
+<ng-template #loader>
+        <div class="loader"><div></div></div>
+</ng-template>

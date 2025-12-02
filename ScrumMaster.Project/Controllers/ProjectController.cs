@@ -13,7 +13,7 @@ namespace ScrumMaster.Project.Controllers
     {
         private readonly IProjectService _projectService;
         private readonly IAccessService _accessService;
-        public Guid UserId { get; set; }
+        public Guid UserId { get; set; } = Guid.Empty;
         public ProjectController(IProjectService projectService,IAccessService accessService)
         {
             _projectService = projectService;
@@ -140,11 +140,11 @@ namespace ScrumMaster.Project.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> GetUserProjectRole([FromQuery] Guid projectId)
+        public async Task<IActionResult> GetUserProjectRole([FromQuery] Guid projectId, [FromQuery] Guid? userId = null)
         {
             try
             {
-                var role = await _accessService.GetUserProjectRole(projectId, UserId);
+                var role = await _accessService.GetUserProjectRole(projectId, userId == null ? UserId : userId.Value);
                 return Ok(role);
             }
             catch (Exception ex)

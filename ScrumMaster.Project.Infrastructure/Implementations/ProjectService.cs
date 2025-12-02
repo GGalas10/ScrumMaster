@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ScrumMaster.Project.Core.Enums;
 using ScrumMaster.Project.Core.Models;
 using ScrumMaster.Project.Infrastructure.Contracts;

@@ -80,6 +80,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddInfrastructureLayer();
 builder.Services.AddAuthorization();
 builder.Services.AddControllers(); 
+
 var front = builder.Configuration["Front:URL"];
 builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 {

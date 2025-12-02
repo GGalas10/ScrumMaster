@@ -18,7 +18,6 @@
             SetSprintDate(startDate,endDate);
             SetCreatedBy(createdBy);
             SetCreatedUserId(createdUserId);
-            IsActual = true;
             ProjectId = projectId;
         }
         public void SetActual(bool isActual)
@@ -37,8 +36,8 @@
                 throw new Exception("StartDate_Cannot_Be_After_EndDate");
             if (DateOnly.FromDateTime(startDate) == DateOnly.FromDateTime(endDate))
                 throw new Exception("StartDate_Cannot_Be_The_Same_As_EndDate");
-            StartDate = startDate;
-            EndDate = endDate;
+            StartDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
+            EndDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
         }
         public void SetCreatedBy(string createdBy)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace ScrumMaster.Project.Handlers
+namespace ScrumMaster.Sprints.Handlers
 {
     public class AccessTokenHandler : DelegatingHandler
     {

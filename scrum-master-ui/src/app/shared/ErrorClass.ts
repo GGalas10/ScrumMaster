@@ -53,4 +53,5 @@ const ERROR_MESSAGES: Record<string, string> = {
   PasswordRequiresDigit: 'Errors.PasswordRequiresDigit',
   PasswordRequiresUpper: 'Errors.PasswordRequiresUpper',
   PasswordRequiresNonAlphanumeric: 'Errors.NonAlphanumeric',
+  User_Doesnt_Have_Premissions: 'Errors.DoesntPremission',
 };
