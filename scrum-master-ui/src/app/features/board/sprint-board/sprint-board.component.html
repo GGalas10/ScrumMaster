@@ -5,8 +5,9 @@
                 <table>
                     <thead>
                         <ng-container *ngFor="let oneStatus of taskStatuses">
-                            <th>
-                                {{oneStatus.statusName}}
+                            <th style="position: relative;">
+                                {{`Task.${oneStatus.statusName}Status` | translate}}
+                                <app-add-btn tooltip='{{"Task.AddTask"| translate}}' (add)="AddTaskBtnClick(oneStatus.statusOrder)" [size]="20" class="AddBtnTask"></app-add-btn>
                             </th>
                         </ng-container>
                     </thead>
@@ -17,3 +18,4 @@
 <ng-template #loader>
         <div class="loader"><div></div></div>
 </ng-template>
+<app-add-task [isOpen]="openModal" (closed)="openModal = false" [status]="addStatus" (submitted)="AddTask($event)"></app-add-task>

@@ -3,11 +3,11 @@
         <ng-container *ngIf="spintsDTO;else loader">
                 <section class="body">
                         <h1>Lista sprintów</h1>
-                        <ng-container *ngIf="spintsDTO.length > 0;else emptySprint"></ng-container>
-                        <ng-container *ngFor="let sprint of spintsDTO">
-                                <p>{{sprint.sprintName}}</p>
-                        </ng-container>
                         <app-add-btn tooltip='{{"Sprint.AddSprintToolTip" | translate}}' (add)="isModalOpen=true" class="AddBtn" [size]="35"></app-add-btn>
+                        <ng-container *ngIf="spintsDTO.length > 0;else emptySprint"></ng-container>
+                        <ng-container *ngFor="let sprint of spintsDTO;index as i">
+                                <p [routerLink]="['/Sprint',queryParameter.getQueryParam('id'),'Board',sprint.sprintId]" class="OneSprint">{{i+1}}. {{sprint.sprintName}}</p>
+                        </ng-container>
                 </section>
         </ng-container>
         

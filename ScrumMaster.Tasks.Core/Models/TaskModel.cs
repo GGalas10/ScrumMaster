@@ -4,20 +4,20 @@ namespace ScrumMaster.Tasks.Core.Models
 {
     public class TaskModel
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public StatusEnum Status { get; set; }
-        public Guid AssignedUserId { get; set; }
-        public Guid SprintId { get; set; }
+        public Guid Id { get; private set; }
+        public string Title { get; private set; }
+        public string Description { get; private set; }
+        public StatusEnum Status { get; private set; }
+        public Guid AssignedUserId { get; private set; }
+        public Guid SprintId { get; private set; }
         private TaskModel() { }
-        public TaskModel(string title, string description, Guid sprintId)
+        public TaskModel(string title, string description, Guid sprintId, StatusEnum status = StatusEnum.New)
         {
 
             SetTitle(title);
             SetDescription(description);
             ChangeSprint(sprintId);
-            Status = StatusEnum.New;
+            Status = status;
             Id = Guid.NewGuid();
         }
         public void SetTitle(string newTitle)

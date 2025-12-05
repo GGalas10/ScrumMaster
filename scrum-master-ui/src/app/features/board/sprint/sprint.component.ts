@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AddBtnComponent } from '../../../shared/add-btn/add-btn.component';
 import { AddSprintComponent } from './add-sprint/add-sprint.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CustomAlertComponent } from '../../../shared/components/custom-alert/custom-alert.component';
 import { ErrorModel } from '../../../shared/ErrorClass';
 
@@ -23,6 +23,7 @@ import { ErrorModel } from '../../../shared/ErrorClass';
     AddSprintComponent,
     TranslatePipe,
     CustomAlertComponent,
+    RouterLink,
   ],
   templateUrl: './sprint.component.html',
   styleUrl: './sprint.component.scss',
@@ -36,7 +37,7 @@ export class SprintComponent implements OnInit {
   }
   constructor(
     private sprintService: SprintService,
-    private queryParameter: QueryParameterService,
+    public queryParameter: QueryParameterService,
     private router: Router
   ) {}
   CreateSprint(command: CreateSprintCommand) {

@@ -27,7 +27,7 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
             if (command == null)
                 throw new BadRequestException("Command_Cannot_Be_Null");
             await CheckSprintExist(command.sprintId);
-            var newTask = new TaskModel(command.title, command.description, command.sprintId);
+            var newTask = new TaskModel(command.title, command.description, command.sprintId, command.status);
             _context.Tasks.Add(newTask);
             await _context.SaveChangesAsync();
             return newTask.Id;
@@ -76,7 +76,7 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
                         .Select(x => new TaskStatusDTO
                         {
                             statusOrder = (int)x,
-                            statusName = x.ToString()
+                            statusName = x.ToString(),
                         })
                         .ToList();
         }

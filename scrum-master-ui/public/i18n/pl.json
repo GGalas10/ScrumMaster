@@ -83,5 +83,17 @@
         "Save" : "Zapisz",
         "DataError" : "Data rozpoczęcia nie może być późniejsza niż data zakończenia.",
         "EmptySprints" : "Brak sprintów w tym projekcie. Dodaj je przy użyciu przycisku."
+    },
+    "Task":
+    {
+        "AddTask" : "Dodaj zadanie",
+        "TaskTitle" : "Tytuł zadania",
+        "TaskDescription" : "Opis zadania",
+        "NewStatus" : "Nowe",
+        "ToDoStatus" : "Do zrobienia",
+        "ActiveStatus" : "Aktywne",
+        "CompleteStatus" : "Gotowe",
+        "ResolvedStatus" : "Rozwiązane",
+        "ClosedStatus" : "Zamknięte"
     }
 }
