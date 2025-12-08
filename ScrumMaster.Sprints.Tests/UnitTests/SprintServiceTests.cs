@@ -2,6 +2,7 @@
 using ScrumMaster.Sprints.Infrastructure.Commands;
 using ScrumMaster.Sprints.Infrastructure.Implementations;
 using ScrumMaster.Sprints.Infrastructure.Tests.Commons;
+using ScrumMaster.Sprints.Tests.Commons;
 
 namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
 {
@@ -12,7 +13,8 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             try
@@ -31,7 +33,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             var result = await service.CreateNewSprintAsync(new CreateSprintCommand()
             {
@@ -49,12 +51,12 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             try
             {
-                await service.UpdateSprintAsync(null);
+                await service.UpdateSprintAsync(null, Guid.NewGuid());
             }
 
             //Assert
@@ -68,14 +70,14 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             try
             {
                 UpdateSprintCommand command = new UpdateSprintCommand();
                 command.SprintId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-                await service.UpdateSprintAsync(command);
+                await service.UpdateSprintAsync(command, Guid.NewGuid());
             }
 
             //Assert
@@ -89,7 +91,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
             UpdateSprintCommand command = new UpdateSprintCommand();
             command.SprintId = Guid.Parse("00000000-0000-0000-0000-000000000002");
             command.StartAt = DateTime.Now;
@@ -98,7 +100,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
             //Act
             try
             {
-                await service.UpdateSprintAsync(command);
+                await service.UpdateSprintAsync(command, Guid.NewGuid());
             }
 
             //Assert
@@ -112,7 +114,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
             UpdateSprintCommand command = new UpdateSprintCommand();
             command.SprintId = Guid.Parse("00000000-0000-0000-0000-000000000002");
             command.EndAt = DateTime.Now.AddDays(-20);
@@ -120,7 +122,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
             //Act
             try
             {
-                await service.UpdateSprintAsync(command);
+                await service.UpdateSprintAsync(command, Guid.NewGuid());
             }
 
             //Assert
@@ -134,14 +136,14 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
             UpdateSprintCommand command = new UpdateSprintCommand();
             command.SprintId = Guid.Parse("00000000-0000-0000-0000-000000000002");
 
             //Act
             try
             {
-                await service.UpdateSprintAsync(command);
+                await service.UpdateSprintAsync(command, Guid.NewGuid());
             }
 
             //Assert
@@ -155,13 +157,13 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
             UpdateSprintCommand command = new UpdateSprintCommand();
             command.SprintId = Guid.Parse("00000000-0000-0000-0000-000000000002");
             command.SprintName = "NameTest";
 
             //Act
-            await service.UpdateSprintAsync(command);
+            await service.UpdateSprintAsync(command, Guid.NewGuid());
             var sprint = dbContext.Sprints.FirstOrDefault(x => x.Id == Guid.Parse("00000000-0000-0000-0000-000000000002"));
 
             //Assert
@@ -172,12 +174,12 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             try
             {
-                await service.DeleteSprintAsync(Guid.Parse("00000000-0000-0000-0000-000000000002"));
+                await service.DeleteSprintAsync(Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.NewGuid());
             }
 
             //Assert
@@ -191,10 +193,10 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
-            await service.DeleteSprintAsync(Guid.Parse("00000000-0000-0000-0000-000000000002"));
+            await service.DeleteSprintAsync(Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.NewGuid());
 
             //Assert
             Assert.Equal(0, dbContext.Sprints.Count());
@@ -204,7 +206,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             var result = await service.GetSprintByIdAsync(Guid.Parse("00000000-0000-0000-0000-000000000001"));
@@ -217,7 +219,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             var result = await service.GetSprintByIdAsync(Guid.Parse("00000000-0000-0000-0000-000000000002"));
@@ -230,7 +232,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             var result = await service.GetAllUserSprintsAsync(Guid.Parse("00000000-0000-0000-0000-000000000002"));
@@ -243,7 +245,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.UnitTests
         {
             //Arrange
             var dbContext = InitDatabase.InitialDatabase();
-            var service = new SprintService(dbContext);
+            var service = new SprintService(dbContext, IHttpFactoryInit.Create());
 
             //Act
             var result = await service.GetAllUserSprintsAsync(Guid.Parse("00000000-0000-0000-0000-000000000001"));

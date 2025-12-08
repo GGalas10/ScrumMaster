@@ -16,7 +16,7 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
 
             //Act
             try
@@ -37,7 +37,7 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var command = new CreateTaskCommand() { title = null, description = "TestDescription", sprintId = Guid.NewGuid() };
 
             //Act
@@ -59,7 +59,7 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var command = new CreateTaskCommand() { title = "TestTitle", description = "TestDescription", sprintId = Guid.NewGuid() };
 
             //Act
@@ -81,7 +81,7 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var command = new CreateTaskCommand() { title = "TestTitle", description = "TestDescription", sprintId = Guid.Empty };
 
             //Act
@@ -103,7 +103,7 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var command = new CreateTaskCommand() { title = "TestTitle", description = "TestDescription", sprintId = Guid.NewGuid() };
 
             //Act
@@ -120,12 +120,12 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
 
             //Act
             try
             {
-                await service.UpdateTask(null);
+                await service.UpdateTask(null, Guid.NewGuid());
             }
             //Assert
             catch(Exception ex)
@@ -141,13 +141,13 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var command = new UpdateTaskCommand() {sprintId = Guid.Parse("00000000-0000-0000-0000-000000000001") };
 
             //Act
             try
             {
-                await service.UpdateTask(command);
+                await service.UpdateTask(command, Guid.NewGuid());
             }
             //Assert
             catch(Exception ex)
@@ -163,14 +163,14 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var randomTask = dbContext.Tasks.First();
             var command = new UpdateTaskCommand() {oldTaskId = randomTask.Id };
 
             //Act
             try
             {
-                await service.UpdateTask(command);
+                await service.UpdateTask(command, Guid.NewGuid());
             }
             //Assert
             catch(Exception ex)
@@ -186,12 +186,12 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var randomTask = dbContext.Tasks.First();
             var command = new UpdateTaskCommand() {oldTaskId = randomTask.Id,title = "NewTestTitleAfterUpdate" };
 
             //Act
-             await service.UpdateTask(command);
+             await service.UpdateTask(command, Guid.NewGuid());
             var updatedTask = dbContext.Tasks.FirstOrDefault(x => x.Id == randomTask.Id);
 
             //Assert
@@ -205,12 +205,12 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
 
             //Act
             try
             {
-                await service.DeleteTask(Guid.Empty);
+                await service.DeleteTask(Guid.Empty, Guid.NewGuid());
             }
 
             //Assert
@@ -227,12 +227,12 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
 
             //Act
             try
             {
-                await service.DeleteTask(Guid.Parse("00000000-0000-0000-0000-000000000001"));
+                await service.DeleteTask(Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid());
             }
 
             //Assert
@@ -249,11 +249,11 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             {"Api.Sprint", "Test"} };
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
             var dbContext = DbContextInitializer.InitDatabase();
-            var service = new TaskService(dbContext, configuration);
+            var service = new TaskService(dbContext, ServiceInterfacesInit.CreateSprintAPIService(), ServiceInterfacesInit.CreateProjectAPIService(), ServiceInterfacesInit.CreateUserAPIService());
             var randomTask = dbContext.Tasks.First();
 
             //Act
-            await service.DeleteTask(randomTask.Id);
+            await service.DeleteTask(randomTask.Id, Guid.NewGuid());
 
             //Assert
 

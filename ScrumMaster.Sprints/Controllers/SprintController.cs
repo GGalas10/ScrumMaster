@@ -110,5 +110,20 @@ namespace ScrumMaster.Sprints.Controllers
                 return StatusCode(500, "Something_Wrong");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetProjectId([FromQuery]Guid sprintId)
+        {
+            try
+            {
+                var result = await _sprintService.GetProjectIdBySprintId(sprintId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
+            }
+        }
     }
 }

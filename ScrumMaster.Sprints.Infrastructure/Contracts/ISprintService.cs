@@ -13,5 +13,6 @@ namespace ScrumMaster.Sprints.Infrastructure.Contracts
         Task<bool> CheckSprintExist(Guid sprintId);
         Task<List<SprintDTO>> GetSprintsByProjectId(Guid projectId, Guid userId);
         Task<Guid> GetActualSprintByProjectId(Guid projectId,Guid userId);
+        Task<Guid> GetProjectIdBySprintId(Guid sprintId);
     }
 }

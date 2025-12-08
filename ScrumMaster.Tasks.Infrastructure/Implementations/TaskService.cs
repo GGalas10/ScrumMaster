@@ -1,71 +1,87 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ScrumMaster.Tasks.Core.Enums;
 using ScrumMaster.Tasks.Core.Models;
 using ScrumMaster.Tasks.Infrastructure.Commands;
 using ScrumMaster.Tasks.Infrastructure.Contracts;
 using ScrumMaster.Tasks.Infrastructure.DataAccess;
 using ScrumMaster.Tasks.Infrastructure.DTOs;
+using ScrumMaster.Tasks.Infrastructure.DTOs.Users;
 using ScrumMaster.Tasks.Infrastructure.Exceptions;
-using System.Text.Json;
 
 namespace ScrumMaster.Tasks.Infrastructure.Implementations
 {
     public class TaskService : ITaskService
     {
         private readonly ITaskDbContext _context;
-        private readonly HttpClient _httpClient;
-        private readonly string _sprintBaseApi;
-        public TaskService(ITaskDbContext context,IConfiguration config)
+        private readonly ISprintAPIService _sprintAPIService;
+        private readonly IProjectAPIService _projectAPIService;
+        private readonly IUserAPIService _userAPIService;
+        public TaskService(ITaskDbContext context, ISprintAPIService sprintAPIService, IProjectAPIService projectAPIService, IUserAPIService userAPIService)
         {
             _context = context;
-            _httpClient = new HttpClient();
-            _sprintBaseApi = config.GetSection("API")["Sprint"];
+            _sprintAPIService = sprintAPIService;
+            _projectAPIService = projectAPIService;
+            _userAPIService = userAPIService;
         }
         public async Task<Guid> CreateTask(CreateTaskCommand command)
         {
             if (command == null)
                 throw new BadRequestException("Command_Cannot_Be_Null");
-            await CheckSprintExist(command.sprintId);
-            var newTask = new TaskModel(command.title, command.description, command.sprintId, command.status);
+            await _sprintAPIService.CheckSprintExist(command.sprintId);
+            await UserHavePremissions(command.createdById, command.sprintId, UserPremissionsEnum.CanSave);
+            var user = await _userAPIService.GetUserById(command.createdById);
+            var newTask = new TaskModel(command.title, command.description, command.sprintId, command.createdById, $"{user.firstName} {user.lastName}");
             _context.Tasks.Add(newTask);
             await _context.SaveChangesAsync();
             return newTask.Id;
         }
-        public async Task UpdateTask(UpdateTaskCommand command)
+        public async Task UpdateTask(UpdateTaskCommand command, Guid userId)
         {
             if (command == null)
                 throw new BadRequestException("Command_Cannot_Be_Null");
             var oldTask = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == command.oldTaskId);
-            if(command.sprintId != Guid.Empty)
-                await CheckSprintExist(command.sprintId);
+            await _sprintAPIService.CheckSprintExist(command.sprintId);
+            await UserHavePremissions(userId, command.sprintId, UserPremissionsEnum.CanSave);
             if (oldTask == null)
                 throw new BadRequestException("Cannot_Find_Task_To_Update");
-            var anyChanges = oldTask.UpdateTask(command.title, command.description, command.status, command.sprintId, command.assignedUserId);
+            UserDTO assignedUser = null;
+            if (command.assignedUserId != Guid.Empty)
+                assignedUser = await _userAPIService.GetUserById(command.assignedUserId);
+            var anyChanges = oldTask.UpdateTask(command.title, command.description, command.status, command.sprintId, command.assignedUserId, assignedUser == null ? "" : $"{assignedUser.firstName} {assignedUser.lastName}");
             if (!anyChanges)
                 throw new BadRequestException("Any_Changes_To_Change");
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteTask(Guid taskId)
+        public async Task DeleteTask(Guid taskId, Guid userId)
         {
             if (taskId == Guid.Empty)
                 throw new BadRequestException("TaskId_Cannot_Be_Empty");
-            
             var taskToDelete = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == taskId);
+            await UserHavePremissions(userId, taskToDelete.SprintId, UserPremissionsEnum.CanDelete);
             if (taskToDelete == null)
                 throw new BadRequestException("Cannot_Find_Task_To_Delete");
             _context.Tasks.Remove(taskToDelete);
             await _context.SaveChangesAsync();
         }
-        public async Task<TaskDTO> GetTaskById(Guid taskId)
-            => TaskDTO.GetFromModel(await _context.Tasks.FirstOrDefaultAsync(x => x.Id == taskId));
-        public async Task<List<TaskDTO>> GetAllSprintTasks(Guid sprintId)
+        public async Task<TaskDTO> GetTaskById(Guid taskId, Guid userId)
+        {
+            if (taskId == Guid.Empty)
+                throw new BadRequestException("TaskId_Cannot_Be_Empty");
+            var task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == taskId);
+            if (task == null)
+                throw new BadRequestException("Cannot_Find_Task");
+            await UserHavePremissions(userId, task.SprintId, UserPremissionsEnum.CanRead);
+            var creatBy = await _userAPIService.GetUserById(task.CreateById);
+            var assignedTo = await _userAPIService.GetUserById(task.CreateById);
+            return TaskDTO.GetFromModel(task);
+        }
+        public async Task<List<TaskDTO>> GetAllSprintTasks(Guid sprintId, Guid userId)
         {
             if (sprintId == Guid.Empty)
                 throw new BadRequestException("SprintId_Cannot_Be_Empty");
-
+            await UserHavePremissions(userId, sprintId, UserPremissionsEnum.CanRead);
             var tasks = await _context.Tasks.Where(x => x.SprintId == sprintId).ToListAsync();
-
+            await UserHavePremissions(userId, sprintId, UserPremissionsEnum.CanRead);
             return tasks.Select(x => TaskDTO.GetFromModel(x)).ToList();
         }
         public List<TaskStatusDTO> GetTaskStatuses()
@@ -80,15 +96,10 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
                         })
                         .ToList();
         }
-        private async Task CheckSprintExist(Guid sprintId)
+        private async Task UserHavePremissions(Guid userId, Guid sprintId, UserPremissionsEnum premission)
         {
-            var result = await _httpClient.GetAsync($"{_sprintBaseApi}/Sprint/CheckSprintExist?sprintId={sprintId}");
-            if (result.IsSuccessStatusCode)
-            {
-                var sprintExist = JsonSerializer.Deserialize<bool>(await result.Content.ReadAsStringAsync());
-                if (!sprintExist)
-                    throw new Exception("Sprint_Cannot_Exist");
-            }
+            var projectId = await _sprintAPIService.GetProjectIdBySprintId(sprintId);
+            var canAdd = await _projectAPIService.UserHavePremissions(userId, projectId, UserPremissionsEnum.CanSave);
         }
     }
 }

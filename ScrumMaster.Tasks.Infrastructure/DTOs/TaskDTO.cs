@@ -9,7 +9,10 @@ namespace ScrumMaster.Tasks.Infrastructure.DTOs
         public string Description { get; set; }
         public StatusEnum Status { get; set; }
         public Guid AssignedUserId { get; set; }
+        public Guid CreateById { get; set; }
         public Guid SprintId { get; set; }
+        public string CreateBy { get; set; }
+        public string AssignedUserFullName { get; set; }
         public static TaskDTO GetFromModel(TaskModel model)
         {
             if (model == null)
@@ -20,7 +23,10 @@ namespace ScrumMaster.Tasks.Infrastructure.DTOs
                 Description = model.Description,
                 Status = model.Status,
                 AssignedUserId = model.AssignedUserId,
-                SprintId = model.SprintId
+                AssignedUserFullName = model.AssignedUser,
+                SprintId = model.SprintId,
+                CreateById = model.CreateById,
+                CreateBy = model.CreatedBy
             };
         }
     }

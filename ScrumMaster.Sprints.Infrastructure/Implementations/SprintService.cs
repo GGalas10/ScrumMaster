@@ -99,6 +99,13 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
                 return await _context.Sprints.Where(x => x.ProjectId == projectId).Select(x=>x.Id).FirstOrDefaultAsync();
             return result.Id;
         }
+        public async Task<Guid> GetProjectIdBySprintId(Guid sprintId)
+        {
+            var sprint = await _context.Sprints.FirstOrDefaultAsync(x => x.Id == sprintId);
+            if (sprint == null)
+                throw new BadRequestException("Cannot_Find_Sprint_In_Database");
+            return sprint.ProjectId;
+        }
         private async Task<bool> UserHavePremissions(Guid userId, Guid projectId, UserPremissionsEnum role)
         {
             var response = await _identityHttpClient.GetAsync($"GetUserProjectRole?projectId={projectId}&userId={userId}");

@@ -10,14 +10,24 @@ namespace ScrumMaster.Tasks.Core.Models
         public StatusEnum Status { get; private set; }
         public Guid AssignedUserId { get; private set; }
         public Guid SprintId { get; private set; }
+        public Guid CreateById { get; private set; }
+        public string CreatedBy { get; private set; }
+        public string AssignedUser { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
         private TaskModel() { }
-        public TaskModel(string title, string description, Guid sprintId, StatusEnum status = StatusEnum.New)
+        public TaskModel(string title, string description, Guid sprintId, Guid createdById,string createdBy, StatusEnum status = StatusEnum.New)
         {
 
             SetTitle(title);
             SetDescription(description);
             ChangeSprint(sprintId);
+            SetCreatedBy(createdById,createdBy);
             Status = status;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+            AssignedUser = "";
+            AssignedUserId = Guid.Empty;
             Id = Guid.NewGuid();
         }
         public void SetTitle(string newTitle)
@@ -44,17 +54,27 @@ namespace ScrumMaster.Tasks.Core.Models
                 throw new Exception("SprintId_Cannot_Be_Empty");
             SprintId = sprintId;
         }
-        public bool UpdateTask(string newTitle,string newDescription,StatusEnum newStatus,Guid sprintId,Guid assignedUser)
+        public void SetCreatedBy(Guid userId,string createdBy)
+        {
+            if (userId == Guid.Empty)
+                throw new Exception("CreatedById_Cannot_Be_Empty");
+            if(string.IsNullOrWhiteSpace(createdBy))
+                throw new Exception("CreatedBy_Cannot_Be_Null_Or_Empty");
+            CreateById = userId;
+            CreatedBy = createdBy;
+        }
+        public bool UpdateTask(string newTitle,string newDescription,StatusEnum newStatus,Guid sprintId,Guid assignedUserId, string assignedUser)
         {
             bool anyChanges = false;
             anyChanges = UpdateTitle(newTitle) ? true : anyChanges;
             anyChanges = UpdateDescription(newDescription) ? true : anyChanges;
-            anyChanges = UpdateAssignedUser(assignedUser) ? true : anyChanges;
+            anyChanges = UpdateAssignedUser(assignedUserId,assignedUser) ? true : anyChanges;
             anyChanges = UpdateSprint(sprintId) ? true : anyChanges;
             if(Status != newStatus)
             {
                 anyChanges = true;
                 Status = newStatus;
+                UpdatedAt = DateTime.UtcNow;
             }
             return anyChanges;
         }
@@ -72,10 +92,12 @@ namespace ScrumMaster.Tasks.Core.Models
             Description = newDescription;
             return true;
         }
-        private bool UpdateAssignedUser(Guid newAssignedUser)
+        private bool UpdateAssignedUser(Guid newAssignedUser, string assignedUser)
         {
             if (newAssignedUser == Guid.Empty || AssignedUserId == newAssignedUser)
                 return false;
+            if(string.IsNullOrWhiteSpace(assignedUser))
+                throw new Exception("AssignedUser_Cannot_Be_Null_Or_Empty");
             AssignedUserId = newAssignedUser;
             return true;
         }

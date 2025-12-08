@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ScrumMaster.Tasks.Extensions;
 using ScrumMaster.Tasks.Handlers;
 using ScrumMaster.Tasks.Infrastructure;
 using ScrumMaster.Tasks.Infrastructure.DataAccess;
@@ -15,11 +16,10 @@ builder.Services.AddDbContext<TaskDbContext>(options => options.UseNpgsql(builde
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<AccessTokenHandler>();
-builder.Services.AddHttpClient("Sprint", (sp, client) =>
-{
-    var config = sp.GetRequiredService<IConfiguration>();
-    client.BaseAddress = new Uri($"{config["API:Project"]}");
-}).AddHttpMessageHandler<AccessTokenHandler>();
+builder.Services.AddApiClient("Sprint", "Sprint");
+builder.Services.AddApiClient("Identity", "Identity");
+builder.Services.AddApiClient("Project", "Project");
+
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

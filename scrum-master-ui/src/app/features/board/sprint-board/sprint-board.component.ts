@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SprintService } from '../../../Core/Services/sprint.service';
 import { TaskService } from '../../../Core/Services/task.service';
 import { QueryParameterService } from '../../../shared/query-parameter.service';
 import { LeftMenuComponent } from '../../../shared/left-menu/left-menu.component';
@@ -31,7 +30,6 @@ export class SprintBoardComponent implements OnInit {
   addStatus = 0;
   taskStatuses!: TaskStatuses[];
   constructor(
-    private sprintService: SprintService,
     private taskService: TaskService,
     private queryParameter: QueryParameterService
   ) {}
@@ -46,6 +44,12 @@ export class SprintBoardComponent implements OnInit {
         console.log(err);
       },
     });
+    this.taskService
+      .GetAllSprintTasks(this.queryParameter.getQueryParam('sprintId'))
+      .subscribe({
+        next: (result) => console.log(result),
+        error: (err) => console.log(err.error),
+      });
   }
   AddTaskBtnClick(status: number) {
     this.addStatus = status;
@@ -53,6 +57,9 @@ export class SprintBoardComponent implements OnInit {
   }
   AddTask(command: CreateTaskCommand) {
     command.sprintId = this.sprintId;
-    console.log(command);
+    this.taskService.CreateTask(command).subscribe({
+      next: (result) => console.log(result),
+      error: (err) => console.log(err.error),
+    });
   }
 }
