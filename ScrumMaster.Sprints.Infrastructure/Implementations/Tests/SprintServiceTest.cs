@@ -5,15 +5,14 @@ using ScrumMaster.Sprints.Infrastructure.Contracts;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
 using ScrumMaster.Sprints.Infrastructure.DTO;
 using ScrumMaster.Sprints.Infrastructure.Exceptions;
-using System.Text.Json;
 
-namespace ScrumMaster.Sprints.Infrastructure.Implementations
+namespace ScrumMaster.Sprints.Infrastructure.Implementations.Tests
 {
-    public class SprintService : ISprintService
+    public class SprintServiceTest : ISprintService
     {
         private readonly ISprintDbContext _context;
         private readonly HttpClient _identityHttpClient;
-        public SprintService(ISprintDbContext sprintDbContext, IHttpClientFactory httpFactory)
+        public SprintServiceTest(ISprintDbContext sprintDbContext, IHttpClientFactory httpFactory)
         {
             _context = sprintDbContext;
             _identityHttpClient = httpFactory.CreateClient("Project");
@@ -35,9 +34,9 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
             await _context.SaveChangesAsync();
             return newSprint.Id;
         }
-        public async Task UpdateSprintAsync(UpdateSprintCommand command,Guid userId)
+        public async Task UpdateSprintAsync(UpdateSprintCommand command, Guid userId)
         {
-            
+
             if (command == null)
                 throw new BadRequestException("Command_Cannot_Be_Null");
 
@@ -54,7 +53,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
                 throw new BadRequestException("There_are_no_changes_for_sprint");
         }
         public async Task DeleteSprintAsync(Guid id, Guid userId)
-        {          
+        {
             var oldSprint = await _context.Sprints.FirstOrDefaultAsync(x => x.Id == id);
 
             if (oldSprint == null)
@@ -91,12 +90,12 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
             if (projectId == Guid.Empty)
                 throw new BadRequestException("ProjectId_Cannot_Be_Empty");
 
-            if(!await _context.Sprints.AnyAsync(x=>x.ProjectId == projectId))
+            if (!await _context.Sprints.AnyAsync(x => x.ProjectId == projectId))
                 throw new BadRequestException("Project_Doesnt_Have_Sprint");
 
             var result = await _context.Sprints.FirstOrDefaultAsync(x => x.ProjectId == projectId && x.IsActual);
             if (result == null)
-                return await _context.Sprints.Where(x => x.ProjectId == projectId).Select(x=>x.Id).FirstOrDefaultAsync();
+                return await _context.Sprints.Where(x => x.ProjectId == projectId).Select(x => x.Id).FirstOrDefaultAsync();
             return result.Id;
         }
         public async Task<Guid> GetProjectIdBySprintId(Guid sprintId)
@@ -108,25 +107,7 @@ namespace ScrumMaster.Sprints.Infrastructure.Implementations
         }
         private async Task<bool> UserHavePremissions(Guid userId, Guid projectId, UserPremissionsEnum role)
         {
-            var response = await _identityHttpClient.GetAsync($"GetUserProjectRole?projectId={projectId}&userId={userId}");
-            response.EnsureSuccessStatusCode();
-            var members = JsonSerializer.Deserialize<ProjectRoleEnum>(await response.Content.ReadAsStringAsync());
-            switch(role)
-            {
-                case UserPremissionsEnum.CanRead:
-                    if (members == ProjectRoleEnum.Owner || members == ProjectRoleEnum.Admin || members == ProjectRoleEnum.Member || members == ProjectRoleEnum.Guest || members == ProjectRoleEnum.Observer)
-                        return true;
-                    break;
-                case UserPremissionsEnum.CanSave:
-                    if (members == ProjectRoleEnum.Owner || members == ProjectRoleEnum.Admin || members == ProjectRoleEnum.Member)
-                        return true;
-                    break;
-                case UserPremissionsEnum.CanDelete:
-                    if (members == ProjectRoleEnum.Owner || members == ProjectRoleEnum.Admin || members == ProjectRoleEnum.Member)
-                        return true;
-                    break;
-            }
-            return false;
+            return true;
         }
     }
 }

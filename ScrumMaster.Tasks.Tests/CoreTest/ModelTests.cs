@@ -8,7 +8,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void SetTitle_WhenNewTitleIsEmpty_Should_ThrowException()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             try
             {
@@ -25,7 +25,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void SetTitle_WhenNewTittleIsCorrect_Should_ChangeModelTitle() 
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             newTask.SetTitle("NewTestTitle");
             //Assert
@@ -35,7 +35,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void SetDescription_WhenNewTitleIsEmpty_Should_ThrowException()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             try
             {
@@ -52,7 +52,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void SetDescription_WhenNewDescriptionIsCorrect_Should_ChangeModelDescription()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             newTask.SetDescription("NewTestDescription");
             //Assert
@@ -62,7 +62,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void ChangeAssignedUser_WhenNewUserIdIsEmpty_Should_ThrowException()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             try
             {
@@ -79,7 +79,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void ChangeAssignedUser_WhenNewUserIdIsCorrect_Should_ChangeModelUserId()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             newTask.ChangeAssignedUser(Guid.Parse("00000000-0000-0000-0000-000000000002"));
 
@@ -90,7 +90,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void ChangeSprint_WhenNewSprintIdIsEmpty_Should_ThrowException()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             try
             {
@@ -107,7 +107,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void ChangeSprint_WhenNewSprintIdIsCorrect_Should_ChangeModelSprintId()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             newTask.ChangeSprint(Guid.Parse("00000000-0000-0000-0000-000000000002"));
 
@@ -118,7 +118,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void UpdateTask_WhenHasNotAnyChanges_Should_ReturnFalse()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             var anyChanges =  newTask.UpdateTask(null,null,Core.Enums.StatusEnum.New,Guid.Empty,Guid.Empty, "");
 
@@ -129,7 +129,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void UpdateTask_WhenHasAnyChanges_Should_ReturnTrue()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             var anyChanges =  newTask.UpdateTask("NewTestName",null,Core.Enums.StatusEnum.New,Guid.Empty,Guid.Empty, "");
 
@@ -140,7 +140,7 @@ namespace ScrumMaster.Tasks.Tests.CoreTest
         public void UpdateTask_WhenGetNewName_Should_ChangeName()
         {
             //Arrange
-            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty, "");
+            var newTask = new TaskModel("TestName", "TestDescription", Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "Test");
             //Act
             var anyChanges =  newTask.UpdateTask("NewTestName",null,Core.Enums.StatusEnum.New,Guid.Empty,Guid.Empty, "");
 

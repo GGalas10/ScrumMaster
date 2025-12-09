@@ -57,9 +57,11 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
             if (taskId == Guid.Empty)
                 throw new BadRequestException("TaskId_Cannot_Be_Empty");
             var taskToDelete = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == taskId);
-            await UserHavePremissions(userId, taskToDelete.SprintId, UserPremissionsEnum.CanDelete);
+
             if (taskToDelete == null)
                 throw new BadRequestException("Cannot_Find_Task_To_Delete");
+
+            await UserHavePremissions(userId, taskToDelete.SprintId, UserPremissionsEnum.CanDelete);
             _context.Tasks.Remove(taskToDelete);
             await _context.SaveChangesAsync();
         }

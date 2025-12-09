@@ -48,7 +48,11 @@ namespace ScrumMaster.Identity.Tests.ServicesTests
             var command = new RegisterUserCommand()
             {
                 email = "TestEmail",
-                password = "Test"
+                password = "TestTest$123",
+                confirmPassword = "TestTest$123",
+                firstName = "Again",
+                lastName = "Test",
+                userName = "UserTestName"
             };
             //Act
             try
@@ -78,7 +82,9 @@ namespace ScrumMaster.Identity.Tests.ServicesTests
                 firstName = "Test",
                 lastName = "Name",
                 email = "TestEmail@test.pl",
-                password = "Test"
+                password = "TestTest$123",
+                confirmPassword = "TestTest$123",
+                userName = "Test Name"
             };
             //Act
             try
@@ -162,10 +168,12 @@ namespace ScrumMaster.Identity.Tests.ServicesTests
             var service = new UserService(manager.Object, jwtHandler, refreshToken);
             var command = new RegisterUserCommand()
             {
-                password = "Test",
+                password = "TestTest$123",
+                confirmPassword = "TestTest$123",
                 firstName = "Again",
                 lastName = "Test",
-                email = "TestEmail@test.pl"
+                email = "TestEmail@test.pl",
+                userName = "UserTestName"
             };
 
             //Act
@@ -186,10 +194,12 @@ namespace ScrumMaster.Identity.Tests.ServicesTests
             var service = new UserService(manager.Object, jwtHandler, refreshToken);
             var command = new RegisterUserCommand()
             {
-                password = "Test",
+                password = "TestTest$123",
+                confirmPassword = "TestTest$123",
                 firstName = "Again",
                 lastName = "Test",
-                email = "TestEmail@test.pl"
+                email = "TestEmail@test.pl",
+                userName = "UserTestName"
             };
 
             //Act

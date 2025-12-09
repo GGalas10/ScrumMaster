@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ScrumMaster.Sprints.Infrastructure.Commands;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
@@ -218,8 +219,8 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.IntegrationTests
             new Claim(JwtRegisteredClaimNames.Name, $"Test Name"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("s+Qr8+VhSWEHHuwyqwP0kNvtg3HCSEX25A3MP1iENH4="));
+            var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(GetJwtKeyFromFactory()));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
@@ -230,6 +231,12 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.IntegrationTests
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        private string GetJwtKeyFromFactory()
+        {
+            using var scope = _factory.Services.CreateScope();
+            var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+            return config["JwtSettings:Secret"]!;
         }
     }
 }

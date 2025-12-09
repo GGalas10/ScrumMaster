@@ -221,19 +221,19 @@ var assemblies = [
   {
     "name": "ScrumMaster.Sprints.Core",
     "classes": [
-      { "name": "ScrumMaster.Sprints.Core.Models.Sprint", "rp": "ScrumMaster.Sprints.Core_Sprint.html", "cl": 26, "ucl": 4, "cal": 30, "tl": 37, "cb": 10, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ScrumMaster.Sprints.Core.Models.Sprint", "rp": "ScrumMaster.Sprints.Core_Sprint.html", "cl": 26, "ucl": 4, "cal": 30, "tl": 102, "cb": 10, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
   {
     "name": "ScrumMaster.Sprints.Infrastructure",
     "classes": [
-      { "name": "ScrumMaster.Sprints.Infrastructure.Commands.CreateSprintCommand", "rp": "ScrumMaster.Sprints.Infrastructure_CreateSprintCommand.html", "cl": 16, "ucl": 0, "cal": 16, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ScrumMaster.Sprints.Infrastructure.Commands.UpdateSprintCommand", "rp": "ScrumMaster.Sprints.Infrastructure_UpdateSprintCommand.html", "cl": 15, "ucl": 0, "cal": 15, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ScrumMaster.Sprints.Infrastructure.Commands.CreateSprintCommand", "rp": "ScrumMaster.Sprints.Infrastructure_CreateSprintCommand.html", "cl": 16, "ucl": 0, "cal": 16, "tl": 18, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ScrumMaster.Sprints.Infrastructure.Commands.UpdateSprintCommand", "rp": "ScrumMaster.Sprints.Infrastructure_UpdateSprintCommand.html", "cl": 15, "ucl": 0, "cal": 15, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "ScrumMaster.Sprints.Infrastructure.DataAccess.SprintDbContext", "rp": "ScrumMaster.Sprints.Infrastructure_SprintDbContext.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "ScrumMaster.Sprints.Infrastructure.DependencyInfrastructureLayer", "rp": "ScrumMaster.Sprints.Infrastructure_DependencyInfrastructureLayer.html", "cl": 0, "ucl": 5, "cal": 5, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "ScrumMaster.Sprints.Infrastructure.DTO.SprintDTO", "rp": "ScrumMaster.Sprints.Infrastructure_SprintDTO.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 26, "cb": 2, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ScrumMaster.Sprints.Infrastructure.Implementations.SprintService", "rp": "ScrumMaster.Sprints.Infrastructure_SprintService.html", "cl": 29, "ucl": 2, "cal": 31, "tl": 58, "cb": 8, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ScrumMaster.Sprints.Infrastructure.Migrations.InitialSpringRepo", "rp": "ScrumMaster.Sprints.Infrastructure_InitialSpringRepo.html", "cl": 0, "ucl": 50, "cal": 50, "tl": 92, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ScrumMaster.Sprints.Infrastructure.Migrations.SprintDbContextModelSnapshot", "rp": "ScrumMaster.Sprints.Infrastructure_SprintDbContextModelSnapshot.html", "cl": 0, "ucl": 30, "cal": 30, "tl": 52, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ScrumMaster.Sprints.Infrastructure.Implementations.SprintService", "rp": "ScrumMaster.Sprints.Infrastructure_SprintService.html", "cl": 29, "ucl": 2, "cal": 31, "tl": 132, "cb": 8, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ScrumMaster.Sprints.Infrastructure.Migrations.InitialSpringRepo", "rp": "ScrumMaster.Sprints.Infrastructure_InitialSpringRepo.html", "cl": 0, "ucl": 50, "cal": 50, "tl": 90, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ScrumMaster.Sprints.Infrastructure.Migrations.SprintDbContextModelSnapshot", "rp": "ScrumMaster.Sprints.Infrastructure_SprintDbContextModelSnapshot.html", "cl": 0, "ucl": 30, "cal": 30, "tl": 61, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 

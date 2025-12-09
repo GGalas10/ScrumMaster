@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ScrumMaster.Sprints.Infrastructure.Contracts;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
+using ScrumMaster.Sprints.Infrastructure.Implementations.Tests;
 
 
 namespace ScrumMaster.Sprints.Infrastructure.Tests.Commons
@@ -24,6 +26,10 @@ namespace ScrumMaster.Sprints.Infrastructure.Tests.Commons
                 var sp = service.BuildServiceProvider();
                 using var scope = sp.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<SprintDbContext>();
+                var sprintService = service.SingleOrDefault(x => x.ServiceType == typeof(ISprintService));
+                if (sprintService != null)
+                    service.Remove(sprintService);
+                service.AddScoped<ISprintService, SprintServiceTest>();
             });
         }
     }

@@ -72,7 +72,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestPassword" };
+            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestPassword", confirmPassword = "TestPassword", userName = "TestUserName" };
 
             //Act
             var response = await client.PostAsync("Register", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
@@ -87,14 +87,14 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "Test$123" };
+            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "Test$123", confirmPassword = "Test$123", userName = "TestUserName" };
 
             //Act
             var response = await client.PostAsync("Register", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
             var content = await response.Content.ReadAsStringAsync();
 
             //Assert
-            Assert.Contains("PasswordTooShort", content);
+            Assert.Contains("Password_Is_Too_Short", content);
         }
         [Fact]
         public async void Register_WhenPasswordHasNotUppercase_Should_ReturnBadRequestWithErrorMessage()
@@ -102,7 +102,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "test$123" };
+            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "testtest$123", confirmPassword = "testtest$123", userName = "TestUserName" };
 
             //Act
             var response = await client.PostAsync("Register", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
@@ -117,7 +117,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestTest$123" };
+            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestTest$123", confirmPassword = "TestTest$123", userName = "TestUserName" };
 
             //Act
             await client.PostAsync("Register", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
@@ -133,7 +133,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestTest$123" };
+            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestTest$123", confirmPassword = "TestTest$123", userName = "TestUserName" };
 
             //Act
             await client.PostAsync("Register", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
@@ -150,7 +150,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestTest$123" };
+            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail",password = "TestTest$123", confirmPassword = "TestTest$123", userName = "TestUserName" };
 
             //Act
             var response = await client.PostAsync("Register", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
@@ -165,7 +165,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123" };
+            var command = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123", confirmPassword = "TestTest$123", userName = "TestUserName" };
 
             //Act
             await client.PostAsync("Register", new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json"));
@@ -182,7 +182,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var registerCommand = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123" };
+            var registerCommand = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123", confirmPassword = "TestTest$123", userName = "TestUserName" };
             var command = new LoginUserCommand() { email = "TestEmail", password = "TestTest$123" };
 
             //Act
@@ -200,7 +200,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var registerCommand = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123" };
+            var registerCommand = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123", confirmPassword = "TestTest$123", userName = "TestUserName" };
             var command = new LoginUserCommand() { email = "TestEmail", password = "TestTest123" };
 
             //Act
@@ -217,7 +217,7 @@ namespace ScrumMaster.Identity.Tests.IntegrationTests
             //Arrange
             ClearDatabase();
             var client = _factory.CreateClient();
-            var registerCommand = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123" };
+            var registerCommand = new RegisterUserCommand() { firstName = "FirstTest", lastName = "LastName", email = "TestEmail", password = "TestTest$123", confirmPassword = "TestTest$123", userName = "TestUserName" };
             var command = new LoginUserCommand() { email = "TestEmail", password = "TestTest$123" };
 
             //Act
