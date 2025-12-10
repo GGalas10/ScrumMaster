@@ -2,16 +2,22 @@
         <app-left-menu></app-left-menu>
         <ng-container *ngIf="taskStatuses;else loader">
             <section class="body">
-                <table>
-                    <thead>
-                        <ng-container *ngFor="let oneStatus of taskStatuses">
-                            <th style="position: relative;">
-                                {{`Task.${oneStatus.statusName}Status` | translate}}
-                                <app-add-btn tooltip='{{"Task.AddTask"| translate}}' (add)="AddTaskBtnClick(oneStatus.statusOrder)" [size]="20" class="AddBtnTask"></app-add-btn>
-                            </th>
-                        </ng-container>
-                    </thead>
-                </table>
+                <div class="board">
+                    <div class="OneColumn" *ngFor="let oneStatus of taskStatuses">
+                        <div class="columnHeader">
+                            {{`Task.${oneStatus.statusName}Status` | translate}}
+                            <app-add-btn tooltip='{{"Task.AddTask"| translate}}' (add)="AddTaskBtnClick(oneStatus.statusOrder)" [size]="20" class="AddBtnTask"></app-add-btn>
+                        </div>
+                        <div class="tasksColumn">
+                            <div *ngFor="let task of getTasksByStatus(oneStatus.statusOrder)" class="OneTask">
+                                <span class="TaskNumberSpan">
+                                    {{task.taskNumber}}
+                                </span>
+                                {{task.title}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </ng-container>
 </ng-container>

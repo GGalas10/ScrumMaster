@@ -1,5 +1,6 @@
 ﻿using ScrumMaster.Tasks.Core.Enums;
 using ScrumMaster.Tasks.Core.Exceptions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScrumMaster.Tasks.Core.Models
 {
@@ -16,6 +17,8 @@ namespace ScrumMaster.Tasks.Core.Models
         public string AssignedUser { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int TaskNumber { get; private set; }
         private TaskModel() { }
         public TaskModel(string title, string description, Guid sprintId, Guid createdById,string createdBy, StatusEnum status = StatusEnum.New)
         {

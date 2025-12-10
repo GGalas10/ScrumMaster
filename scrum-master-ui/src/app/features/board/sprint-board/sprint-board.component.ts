@@ -4,6 +4,7 @@ import { QueryParameterService } from '../../../shared/query-parameter.service';
 import { LeftMenuComponent } from '../../../shared/left-menu/left-menu.component';
 import {
   CreateTaskCommand,
+  TaskDTO,
   TaskStatuses,
 } from '../../../Core/Models/TaskInterfaces';
 import { CommonModule } from '../../../../../node_modules/@angular/common';
@@ -29,6 +30,7 @@ export class SprintBoardComponent implements OnInit {
   openModal = false;
   addStatus = 0;
   taskStatuses!: TaskStatuses[];
+  allTasks!: TaskDTO[];
   constructor(
     private taskService: TaskService,
     private queryParameter: QueryParameterService
@@ -47,13 +49,16 @@ export class SprintBoardComponent implements OnInit {
     this.taskService
       .GetAllSprintTasks(this.queryParameter.getQueryParam('sprintId'))
       .subscribe({
-        next: (result) => console.log(result),
+        next: (result) => (this.allTasks = result),
         error: (err) => console.log(err.error),
       });
   }
   AddTaskBtnClick(status: number) {
     this.addStatus = status;
     this.openModal = true;
+  }
+  getTasksByStatus(status: number): TaskDTO[] {
+    return (this.allTasks ?? []).filter((t) => t.status === status);
   }
   AddTask(command: CreateTaskCommand) {
     command.sprintId = this.sprintId;

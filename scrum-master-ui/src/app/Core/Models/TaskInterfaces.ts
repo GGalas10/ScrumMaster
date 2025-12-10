@@ -17,4 +17,5 @@ export interface TaskDTO {
   sprintId: string;
   createBy: string;
   assignedUserFullName: string;
+  taskNumber: number;
 }

@@ -1,11 +1,75 @@
-table th{
-    background-color: #646464;
-    color: whitesmoke;
-    height: 30px;
-    position: relative;
+@use 'variables' as *;
+div{
+    font-family: $font-Noto;
+}
+.board{
+  display: flex;
+  height: 100vh; 
+  gap:5px;
+  overflow-x: hidden;
+  max-height: 1000px;
+  margin:5px
+}
+.OneColumn{
+  border-radius: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .AddBtnTask{
-    position: absolute;
-    top:5px;
-    right: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.columnHeader{
+  border-radius: 15px 15px 0 0 ;
+  padding: 8px;
+  text-align: center;
+  background: #213652;
+  color: $light-font-color;
+  font-weight: bolder;
+  position: relative;
+  font-size: 1.1rem;
+  user-select: none;
+}
+.OneTask{
+  height: 75px;
+  min-height: 75px;
+  max-height: 75px;
+  background-color: rgba(22, 186, 192, 0.568);
+  border-radius: 10px;
+  padding: 8px;
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  gap:5px;
+}
+.OneTask:hover{
+    transform: scale(1.03);
+    transition-duration: 0.5s;
+}
+.tasksColumn{
+  flex: 1;
+  padding: 8px;
+  background: rgba(7, 1, 90, 0.596);
+  overflow-y: auto;
+  overflow-x: visible;
+  gap:8px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 15px 15px;
+}
+.TaskNumberSpan{
+  background-color: rgba(255, 255, 255, 0.568);
+  border-radius: 50%;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  align-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: bolder;
 }
