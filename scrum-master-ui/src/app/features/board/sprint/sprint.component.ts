@@ -6,7 +6,7 @@ import {
 } from '../../../Core/Models/SprintInterfaces';
 import { SprintService } from '../../../Core/Services/sprint.service';
 import { QueryParameterService } from '../../../shared/query-parameter.service';
-import { CommonModule } from '@angular/common';
+
 import { AddBtnComponent } from '../../../shared/add-btn/add-btn.component';
 import { AddSprintComponent } from './add-sprint/add-sprint.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -18,13 +18,12 @@ import { ErrorModel } from '../../../shared/ErrorClass';
   selector: 'app-sprint',
   imports: [
     LeftMenuComponent,
-    CommonModule,
     AddBtnComponent,
     AddSprintComponent,
     TranslatePipe,
     CustomAlertComponent,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './sprint.component.html',
   styleUrl: './sprint.component.scss',
 })

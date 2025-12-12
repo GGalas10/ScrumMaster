@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { BoardService } from '../../Core/Services/Board.service';
 import { LeftMenuComponent } from '../../shared/left-menu/left-menu.component';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -10,7 +10,7 @@ import { QueryParameterService } from '../../shared/query-parameter.service';
 
 @Component({
   selector: 'app-board',
-  imports: [LeftMenuComponent, CommonModule, TranslatePipe, RouterModule],
+  imports: [LeftMenuComponent, TranslatePipe, RouterModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })

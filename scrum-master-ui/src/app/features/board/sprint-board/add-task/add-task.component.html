@@ -1,27 +1,27 @@
-<div class="modal-overlay" *ngIf="isOpen" (click)="onClose()">
-  <div class="modal-container" (click)="$event.stopPropagation()" @slideDown>
-    <div class="modal-header">
-      <h2>{{"Task.AddTask" | translate}}</h2>
-      <button type="button" class="close-btn" (click)="onClose()">✕</button>
+@if (isOpen) {
+  <div class="modal-overlay" (click)="onClose()">
+    <div class="modal-container" (click)="$event.stopPropagation()" @slideDown>
+      <div class="modal-header">
+        <h2>{{"Task.AddTask" | translate}}</h2>
+        <button type="button" class="close-btn" (click)="onClose()">✕</button>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+        <div class="form-row">
+          <label>{{"Task.TaskTitle" | translate}}</label>
+          <input type="text" formControlName="title" />
+        </div>
+        <div class="form-row">
+          <label>{{"Task.TaskDescription" | translate}}</label>
+          <textarea formControlName="description" style="resize: vertical;"></textarea>
+        </div>
+        <input type="hidden" formControlName="status" [value]="status" />
+        <div class="modal-footer">
+          <button type="button" class="secondary" (click)="onClose()">{{"Sprint.Cancel" | translate}}</button>
+          <button type="submit" class="primary" [disabled]="form.invalid" (click)="onSubmit()">
+            {{"Sprint.Save" | translate}}
+          </button>
+        </div>
+      </form>
     </div>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
-      <div class="form-row">
-        <label>{{"Task.TaskTitle" | translate}}</label>
-        <input type="text" formControlName="title" />
-      </div>
-
-      <div class="form-row">
-        <label>{{"Task.TaskDescription" | translate}}</label>
-        <textarea formControlName="description" style="resize: vertical;"></textarea>
-      </div>
-      <input type="hidden" formControlName="status" [value]="status" />
-      <div class="modal-footer">
-        <button type="button" class="secondary" (click)="onClose()">{{"Sprint.Cancel" | translate}}</button>
-        <button type="submit" class="primary" [disabled]="form.invalid" (click)="onSubmit()">
-          {{"Sprint.Save" | translate}}
-        </button>
-      </div>
-    </form>
   </div>
-</div>
+}

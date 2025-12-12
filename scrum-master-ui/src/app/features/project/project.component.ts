@@ -5,7 +5,7 @@ import {
 } from '../../Core/Models/ProjectInterfaces';
 import { ProjectService } from '../../Core/Services/project.service';
 import { TranslatePipe } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { NewProjectModalComponent } from '../../shared/new-project-modal/new-project-modal.component';
 import { Router, RouterLink } from '@angular/router';
@@ -16,11 +16,10 @@ import { ErrorModel } from '../../shared/ErrorClass';
   selector: 'app-project',
   imports: [
     TranslatePipe,
-    CommonModule,
     FormsModule,
     NewProjectModalComponent,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './project.component.html',
   styleUrl: './project.component.scss',
 })

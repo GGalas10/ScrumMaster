@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { SprintService } from '../../Core/Services/sprint.service';
 
 @Component({
   selector: 'app-left-menu',
-  imports: [CommonModule, TranslatePipe],
+  imports: [TranslatePipe],
   templateUrl: './left-menu.component.html',
   styleUrl: './left-menu.component.scss',
 })

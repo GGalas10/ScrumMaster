@@ -1,23 +1,23 @@
 <section class="body">
-    <h1 style="margin: 15px auto;">{{"Board.UserProjects" | translate}}</h1>
-    <ng-container *ngIf="isLoading;else afterLoading">
-        <div class="loader"></div>
-    </ng-container>
-    <ng-template #afterLoading>
-        <ng-container *ngIf="userProjects.length > 0;else emptyProjects">
-            <div *ngFor="let project of userProjects;index as i" class="ProjectBox">
-                <a [routerLink]="['/Board',project.projectId]" class="OneProject"><span>{{i+1}}. </span>{{project.projectName}}</a>
-            </div>
-            <button class="btn-glass-dark" (click)="open=true">
-                <span>{{ "Board.AddProject" | translate}}</span>
-            </button>
-        </ng-container>
-        <ng-template #emptyProjects>
-            <h3 style="text-align: center;">{{ "Board.EmptyUserProjects" | translate}}</h3>
-            <button class="btn-glass-dark" (click)="open=true">
-                <span>{{ "Board.AddProject" | translate}}</span>
-            </button>
-        </ng-template>
-    </ng-template>
+  <h1 style="margin: 15px auto;">{{"Board.UserProjects" | translate}}</h1>
+  @if (isLoading) {
+    <div class="loader"></div>
+  } @else {
+    @if (userProjects.length > 0) {
+      @for (project of userProjects; track project; let i = $index) {
+        <div class="ProjectBox">
+          <a [routerLink]="['/Board',project.projectId]" class="OneProject"><span>{{i+1}}. </span>{{project.projectName}}</a>
+        </div>
+      }
+      <button class="btn-glass-dark" (click)="open=true">
+        <span>{{ "Board.AddProject" | translate}}</span>
+      </button>
+    } @else {
+      <h3 style="text-align: center;">{{ "Board.EmptyUserProjects" | translate}}</h3>
+      <button class="btn-glass-dark" (click)="open=true">
+        <span>{{ "Board.AddProject" | translate}}</span>
+      </button>
+    }
+  }
 </section>
 <app-new-project-modal [(open)]="open" (create)="onCreate($event)"></app-new-project-modal>

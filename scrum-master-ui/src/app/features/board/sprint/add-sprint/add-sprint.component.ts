@@ -6,13 +6,13 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-add-sprint',
-  imports: [ReactiveFormsModule, CommonModule, TranslatePipe],
+  imports: [ReactiveFormsModule, TranslatePipe],
   templateUrl: './add-sprint.component.html',
   styleUrl: './add-sprint.component.scss',
   animations: [

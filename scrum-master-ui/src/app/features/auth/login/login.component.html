@@ -1,18 +1,19 @@
 <section class="MainSection">
-    <h1>{{ 'Auth.LoginHeader' | translate }}</h1>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="SubSection">
-            <label>{{ 'Auth.email' | translate}}:</label>
-            <input type="email" name="email" id="email" formControlName="email" placeholder="{{ 'Auth.email' | translate}}">
-            <label>{{ 'Auth.password' | translate}}:</label>
-            <input type="password" name="password" id="password" formControlName="password" placeholder="{{ 'Auth.password' | translate}}">
-            <ng-container *ngIf="!isLoginClick;else loader">             
-                <button type="submit" class="SubmitButton">{{ 'Auth.login' | translate}}</button>
-            </ng-container>
-            <ng-template #loader>
-                <div class="authLoader"></div>
-            </ng-template>
-            </form>
-        
-        <button [routerLink]="['/Register']" routerLinkActive="router-link-active"  class="SubmitButton" type="menu" style="width: 100%;margin-top:15px">{{ 'Auth.register' | translate}}</button>
+  <h1>{{ 'Auth.LoginHeader' | translate }}</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="SubSection">
+    <label>{{ 'Auth.email' | translate}}:</label>
+    <input type="email" name="email" id="email" formControlName="email" placeholder="{{ 'Auth.email' | translate}}">
+    <label>{{ 'Auth.password' | translate}}:</label>
+    <input type="password" name="password" id="password" formControlName="password" placeholder="{{ 'Auth.password' | translate}}">
+    @if (!isLoginClick) {
+      <button type="submit" class="SubmitButton">{{ 'Auth.login' | translate}}</button>
+    } @else {
+      <div class="authLoader"></div>
+    }
+  </form>
+
+  <button [routerLink]="['/Register']" routerLinkActive="router-link-active"  class="SubmitButton" type="menu" style="width: 100%;margin-top:15px">{{ 'Auth.register' | translate}}</button>
 </section>
-<app-custom-alert [errorModel]="errors" *ngIf="errors.show" (closeEvent)="errors.hide()"></app-custom-alert>
+@if (errors.show) {
+  <app-custom-alert [errorModel]="errors" (closeEvent)="errors.hide()"></app-custom-alert>
+}

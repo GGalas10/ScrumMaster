@@ -1,28 +1,31 @@
 <ng-container>
-        <app-left-menu></app-left-menu>
-        <ng-container *ngIf="taskStatuses;else loader">
-            <section class="body">
-                <div class="board">
-                    <div class="OneColumn" *ngFor="let oneStatus of taskStatuses">
-                        <div class="columnHeader">
-                            {{`Task.${oneStatus.statusName}Status` | translate}}
-                            <app-add-btn tooltip='{{"Task.AddTask"| translate}}' (add)="AddTaskBtnClick(oneStatus.statusOrder)" [size]="20" class="AddBtnTask"></app-add-btn>
-                        </div>
-                        <div class="tasksColumn">
-                            <div *ngFor="let task of getTasksByStatus(oneStatus.statusOrder)" class="OneTask">
-                                <span class="TaskNumberSpan">
-                                    {{task.taskNumber}}
-                                </span>
-                                <p>{{task.title}}</p>
-                                <p style="flex-basis: 100%;">{{'Task.AssignedUser'| translate}} {{ task.assignedUserFullName.trim() ? task.assignedUserFullName : ('Task.Unassigned' | translate) }}</p>
-                            </div>
-                        </div>
-                    </div>
+  <app-left-menu></app-left-menu>
+  @if (taskStatuses) {
+    <section class="body">
+      <div class="board">
+        @for (oneStatus of taskStatuses; track oneStatus) {
+          <div class="OneColumn">
+            <div class="columnHeader">
+              {{`Task.${oneStatus.statusName}Status` | translate}}
+              <app-add-btn tooltip='{{"Task.AddTask"| translate}}' (add)="AddTaskBtnClick(oneStatus.statusOrder)" [size]="20" class="AddBtnTask"></app-add-btn>
+            </div>
+            <div class="tasksColumn">
+              @for (task of getTasksByStatus(oneStatus.statusOrder); track task) {
+                <div class="OneTask">
+                  <span class="TaskNumberSpan">
+                    {{task.taskNumber}}
+                  </span>
+                  <p>{{task.title}}</p>
+                  <p style="flex-basis: 100%;">{{'Task.AssignedUser'| translate}} {{ task.assignedUserFullName.trim() ? task.assignedUserFullName : ('Task.Unassigned' | translate) }}</p>
                 </div>
-            </section>
-        </ng-container>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  } @else {
+    <div class="loader"><div></div></div>
+  }
 </ng-container>
-<ng-template #loader>
-        <div class="loader"><div></div></div>
-</ng-template>
 <app-add-task [isOpen]="openModal" (closed)="openModal = false" [status]="addStatus" (submitted)="AddTask($event)"></app-add-task>

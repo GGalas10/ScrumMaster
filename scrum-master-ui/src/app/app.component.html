@@ -1,16 +1,22 @@
 <section>
-    <a>
-        <img height="50px" src="LogoScrumMaster.png">
-    </a>
-    <div *ngIf="IsLogin() && this.router.url !== '/Project'">
-        <p style="margin-left: 35px;" [routerLink]="['']">{{ 'Main.YourProjects' | translate }}</p>
+  <a>
+    <img height="50px" src="LogoScrumMaster.png">
+  </a>
+  @if (IsLogin() && this.router.url !== '/Project') {
+    <div>
+      <p style="margin-left: 35px;" [routerLink]="['']">{{ 'Main.YourProjects' | translate }}</p>
     </div>
-    <div class="rightMenu">         
-        <p (click)="setTransLanguage()">{{'Main.changeLanguage'|translate}}</p>          
-        <p *ngIf="IsLogin()" (click)="showMenu = !showMenu">{{'Main.hello'|translate}} <b>{{GetUserName()}}</b></p>
-        <div class="dropdownMenu">
-            <app-dropdown *ngIf="showMenu" (closeEvent)="showMenu = false"></app-dropdown>
-        </div>
+  }
+  <div class="rightMenu">
+    <p (click)="setTransLanguage()">{{'Main.changeLanguage'|translate}}</p>
+    @if (IsLogin()) {
+      <p (click)="showMenu = !showMenu">{{'Main.hello'|translate}} <b>{{GetUserName()}}</b></p>
+    }
+    <div class="dropdownMenu">
+      @if (showMenu) {
+        <app-dropdown (closeEvent)="showMenu = false"></app-dropdown>
+      }
     </div>
+  </div>
 </section>
 <router-outlet />

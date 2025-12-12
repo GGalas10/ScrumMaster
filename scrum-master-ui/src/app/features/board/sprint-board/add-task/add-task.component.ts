@@ -1,5 +1,5 @@
 import { trigger, transition, style, animate } from '@angular/animations';
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   EventEmitter,
@@ -19,7 +19,7 @@ import { CreateTaskCommand } from '../../../../Core/Models/TaskInterfaces';
 
 @Component({
   selector: 'app-add-task',
-  imports: [ReactiveFormsModule, TranslatePipe, CommonModule],
+  imports: [ReactiveFormsModule, TranslatePipe],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
   animations: [

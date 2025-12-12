@@ -3,7 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { TokenService } from './Core/Services/token.service';
-import { CommonModule } from '@angular/common';
+
 import { DropdownComponent } from './shared/dropdown/dropdown.component';
 
 @Component({
@@ -12,9 +12,8 @@ import { DropdownComponent } from './shared/dropdown/dropdown.component';
     RouterOutlet,
     TranslatePipe,
     RouterModule,
-    CommonModule,
-    DropdownComponent,
-  ],
+    DropdownComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

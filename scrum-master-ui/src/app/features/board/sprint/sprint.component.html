@@ -1,24 +1,25 @@
 <ng-container>
-        <app-left-menu></app-left-menu>
-        <ng-container *ngIf="spintsDTO;else loader">
-                <section class="body">
-                        <h1>Lista sprintów</h1>
-                        <app-add-btn tooltip='{{"Sprint.AddSprintToolTip" | translate}}' (add)="isModalOpen=true" class="AddBtn" [size]="35"></app-add-btn>
-                        <ng-container *ngIf="spintsDTO.length > 0;else emptySprint"></ng-container>
-                        <ng-container *ngFor="let sprint of spintsDTO;index as i">
-                                <p [routerLink]="['/Sprint',queryParameter.getQueryParam('id'),'Board',sprint.sprintId]" class="OneSprint">{{i+1}}. {{sprint.sprintName}}</p>
-                        </ng-container>
-                </section>
-        </ng-container>
-        
-</ng-container>
-<ng-template #loader>
-        <div class="loader"><div></div></div>
-</ng-template>
-<ng-template #emptySprint>
+  <app-left-menu></app-left-menu>
+  @if (spintsDTO) {
+    <section class="body">
+      <h1>Lista sprintów</h1>
+      <app-add-btn tooltip='{{"Sprint.AddSprintToolTip" | translate}}' (add)="isModalOpen=true" class="AddBtn" [size]="35"></app-add-btn>
+      @if (spintsDTO.length > 0) {
+      } @else {
         <div>
-                <p class="EmptyInfo">{{"Sprint.EmptySprints" | translate}}</p>
+          <p class="EmptyInfo">{{"Sprint.EmptySprints" | translate}}</p>
         </div>
-</ng-template>
+      }
+      @for (sprint of spintsDTO; track sprint; let i = $index) {
+        <p [routerLink]="['/Sprint',queryParameter.getQueryParam('id'),'Board',sprint.sprintId]" class="OneSprint">{{i+1}}. {{sprint.sprintName}}</p>
+      }
+    </section>
+  } @else {
+    <div class="loader"><div></div></div>
+  }
+
+</ng-container>
 <app-add-sprint [isOpen]="isModalOpen" (closed)="isModalOpen = false" (submitted)="CreateSprint($event)"></app-add-sprint>
-<app-custom-alert [errorModel]="errorModel" *ngIf="errorModel.show" (closeEvent)="errorModel.hide()"></app-custom-alert>
+@if (errorModel.show) {
+  <app-custom-alert [errorModel]="errorModel" (closeEvent)="errorModel.hide()"></app-custom-alert>
+}

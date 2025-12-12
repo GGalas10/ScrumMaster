@@ -5,7 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { CustomAlertComponent } from '../../../shared/components/custom-alert/custom-alert.component';
-import { CommonModule } from '@angular/common';
+
 import { ErrorModel, ErrorsNameSwitch } from '../../../shared/ErrorClass';
 
 @Component({
@@ -14,9 +14,8 @@ import { ErrorModel, ErrorsNameSwitch } from '../../../shared/ErrorClass';
     ReactiveFormsModule,
     TranslatePipe,
     RouterModule,
-    CustomAlertComponent,
-    CommonModule,
-  ],
+    CustomAlertComponent
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone: true,

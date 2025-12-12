@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   ElementRef,
@@ -15,7 +15,7 @@ import { CreateProject } from '../../Core/Models/ProjectInterfaces';
 
 @Component({
   selector: 'app-new-project-modal',
-  imports: [CommonModule, FormsModule, TranslatePipe],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './new-project-modal.component.html',
   styleUrl: './new-project-modal.component.scss',
 })

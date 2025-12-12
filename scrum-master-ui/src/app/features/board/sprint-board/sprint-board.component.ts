@@ -7,7 +7,7 @@ import {
   TaskListDTO,
   TaskStatuses,
 } from '../../../Core/Models/TaskInterfaces';
-import { CommonModule } from '../../../../../node_modules/@angular/common';
+
 import { AddBtnComponent } from '../../../shared/add-btn/add-btn.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -16,11 +16,10 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-sprint-board',
   imports: [
     LeftMenuComponent,
-    CommonModule,
     AddBtnComponent,
     AddTaskComponent,
-    TranslatePipe,
-  ],
+    TranslatePipe
+],
   templateUrl: './sprint-board.component.html',
   styleUrl: './sprint-board.component.scss',
 })
