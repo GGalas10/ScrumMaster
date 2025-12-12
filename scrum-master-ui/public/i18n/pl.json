@@ -94,6 +94,8 @@
         "ActiveStatus" : "Aktywne",
         "CompleteStatus" : "Gotowe",
         "ResolvedStatus" : "Rozwiązane",
-        "ClosedStatus" : "Zamknięte"
+        "ClosedStatus" : "Zamknięte",
+        "Unassigned" : "Nieprzypisany",
+        "AssignedUser" : "Przypisany użytkownik:"
     }
 }

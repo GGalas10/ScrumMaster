@@ -19,3 +19,9 @@ export interface TaskDTO {
   assignedUserFullName: string;
   taskNumber: number;
 }
+export interface TaskListDTO {
+  title: string;
+  status: number;
+  assignedUserFullName: string;
+  taskNumber: number;
+}

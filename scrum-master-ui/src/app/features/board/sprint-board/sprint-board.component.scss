@@ -43,7 +43,11 @@ div{
   font-size: 0.9rem;
   cursor: pointer;
   display: flex;
+  flex-wrap: wrap;
   gap:5px;
+  p{
+    margin: 0;
+  }
 }
 .OneTask:hover{
     transform: scale(1.03);

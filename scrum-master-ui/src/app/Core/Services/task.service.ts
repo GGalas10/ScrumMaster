@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {
   CreateTaskCommand,
   TaskDTO,
+  TaskListDTO,
   TaskStatuses,
 } from '../Models/TaskInterfaces';
 
@@ -32,9 +33,18 @@ export class TaskService {
       }
     );
   }
-  GetAllSprintTasks(sprintId: string): Observable<TaskDTO[]> {
-    return this.http.get<TaskDTO[]>(
+  GetAllSprintTasks(sprintId: string): Observable<TaskListDTO[]> {
+    return this.http.get<TaskListDTO[]>(
       `${environment.taskUrl}/GetAllSprintTasks?sprintId=${sprintId}`,
+      {
+        headers: environment.headers,
+        withCredentials: true,
+      }
+    );
+  }
+  GetTaskDetails(taskId: string): Observable<TaskDTO> {
+    return this.http.get<TaskDTO>(
+      `${environment.taskUrl}/GetTaskById?taskId=${taskId}`,
       {
         headers: environment.headers,
         withCredentials: true,

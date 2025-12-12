@@ -94,6 +94,8 @@
         "ActiveStatus" : "Active",
         "CompleteStatus" : "Ready",
         "ResolvedStatus" : "Resolved",
-        "ClosedStatus" : "Closed"
+        "ClosedStatus" : "Closed",
+        "Unassigned" : "Unassigned",
+        "AssignedUser" : "Assigned user:"
     }
 }

@@ -77,14 +77,14 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
             var assignedTo = await _userAPIService.GetUserById(task.CreateById);
             return TaskDTO.GetFromModel(task);
         }
-        public async Task<List<TaskDTO>> GetAllSprintTasks(Guid sprintId, Guid userId)
+        public async Task<List<TaskListDTO>> GetAllSprintTasks(Guid sprintId, Guid userId)
         {
             if (sprintId == Guid.Empty)
                 throw new BadRequestException("SprintId_Cannot_Be_Empty");
             await UserHavePremissions(userId, sprintId, UserPremissionsEnum.CanRead);
             var tasks = await _context.Tasks.Where(x => x.SprintId == sprintId).ToListAsync();
             await UserHavePremissions(userId, sprintId, UserPremissionsEnum.CanRead);
-            return tasks.Select(x => TaskDTO.GetFromModel(x)).ToList();
+            return tasks.Select(x => TaskListDTO.GetFromModel(x)).ToList();
         }
         public List<TaskStatusDTO> GetTaskStatuses()
         {
