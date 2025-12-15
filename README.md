@@ -22,7 +22,7 @@ This project is **a full microservices-based system**, designed for **small to m
 
 ## 🛠️ Technologies
 - **Backend:** ASP.NET Core (Microservices)  
-- **Frontend:** Angular 18+  
+- **Frontend:** Angular 20+  
 - **Database:** SQL Server, Entity Framework Core  
 - **Authentication:** JWT, OAuth2  
 - **Communication:** REST API, gRPC, WebSockets  
@@ -39,6 +39,11 @@ ScrumMaster
 │   ├── ScrumMaster.Identity.Core
 │   ├── ScrumMaster.Identity.Infrastructure
 │   ├── ScrumMaster.Identity.Tests
+│
+├── ScrumMaster.Project
+│   ├── ScrumMaster.Project.Core
+│   ├── ScrumMaster.Project.Infrastructure
+│   ├── ScrumMaster.Project.Tests
 │
 ├── ScrumMaster.Sprints
 │   ├── ScrumMaster.Sprints.Core
