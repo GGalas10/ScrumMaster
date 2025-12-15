@@ -11,7 +11,7 @@
             </div>
             <div class="tasksColumn">
               @for (task of getTasksByStatus(oneStatus.statusOrder); track task) {
-                <div class="OneTask">
+                <div class="OneTask" (click)="ShowDetails(task.id)">
                   <span class="TaskNumberSpan">
                     {{task.taskNumber}}
                   </span>
@@ -29,3 +29,4 @@
   }
 </ng-container>
 <app-add-task [isOpen]="openModal" (closed)="openModal = false" [status]="addStatus" (submitted)="AddTask($event)"></app-add-task>
+<app-task-details [taskId]="taskDetailsId" (closeEvent)="showDetailsModal=false" [isOpen]="showDetailsModal"></app-task-details>

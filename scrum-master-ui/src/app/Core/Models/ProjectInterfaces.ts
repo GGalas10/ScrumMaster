@@ -7,3 +7,8 @@ export interface CreateProject {
   projectName: string;
   projectDescription: string;
 }
+export interface ProjectMember {
+  id: string;
+  firstName: string;
+  lastName: string;
+}

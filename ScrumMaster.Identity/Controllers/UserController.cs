@@ -25,5 +25,18 @@ namespace ScrumMaster.Identity.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> GetUserByIdsList([FromBody] List<Guid> userIds)
+        {
+            try
+            {
+                var result = await _userService.GetUsers(userIds);
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

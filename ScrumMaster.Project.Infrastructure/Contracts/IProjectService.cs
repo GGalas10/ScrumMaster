@@ -9,5 +9,6 @@ namespace ScrumMaster.Project.Infrastructure.Contracts
         Task<Guid> AddNewProject(AddProjectCommand command);
         Task UpdateProject(UpdateProjectCommand command);
         Task<List<UserProjects>> GetUsersProject(Guid userId);
+        Task<List<MemberDTO>> GetAllProjectMembers(Guid projectId);
     }
 }

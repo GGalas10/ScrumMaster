@@ -1,1 +1,32 @@
-<p>task-details works!</p>
+@if(isOpen){
+    <section class="BackgroundSection">
+        <section class="MainSection" [class.open]="isOpen">
+            <p (click)="CloseModal()" class="Exit">X</p>
+            @if(taskDTO){
+                <section class="leftSection">
+                    <div class="Header">
+                        {{taskDTO.taskNumber}} {{taskDTO.title}}
+                    </div>
+                    <div>
+                        <textarea [disabled]="false" class="CustomTextarea">{{taskDTO.description}}</textarea>
+                    </div>
+                    <div>
+                        <button>Edytuj</button>
+                        <button>Wstecz</button>
+                    </div>
+                </section>
+                <section class="rightSection">
+                    <div class="taskComments">
+                        @if(true){
+                            Brak wiadomości
+                        }@else{
+                            Są wiadomości
+                        }
+                    </div>
+                </section>
+            }@else{
+                <div class="loader" style="top:20%"></div>
+            }
+        </section>
+    </section>
+}

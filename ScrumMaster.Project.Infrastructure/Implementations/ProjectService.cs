@@ -86,7 +86,7 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
                 }).ToListAsync();
             return userProjects;
         }
-        private async Task<List<MemberDTO>> GetAllProjectMembers(Guid projectId)
+        public async Task<List<MemberDTO>> GetAllProjectMembers(Guid projectId)
         {
             var projectMembers = await _projectDbContext.ProjectUserAccesses.AsNoTracking().Where(p => p.ProjectId == projectId).ToListAsync();
             var body = JsonSerializer.Serialize(projectMembers.Select(x => x.UserId).ToList());

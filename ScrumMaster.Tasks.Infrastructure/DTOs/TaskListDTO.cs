@@ -5,6 +5,7 @@ namespace ScrumMaster.Tasks.Infrastructure.DTOs
 {
     public class TaskListDTO
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public StatusEnum Status { get; set; }
         public string AssignedUserFullName { get; set; }
@@ -15,6 +16,7 @@ namespace ScrumMaster.Tasks.Infrastructure.DTOs
                 return null;
             return new()
             {
+                Id = model.Id,
                 Title = model.Title,
                 Status = model.Status,
                 AssignedUserFullName = model.AssignedUser,

@@ -11,6 +11,7 @@ import {
 import { AddBtnComponent } from '../../../shared/add-btn/add-btn.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { TaskDetailsComponent } from './task-details/task-details.component';
 
 @Component({
   selector: 'app-sprint-board',
@@ -18,8 +19,9 @@ import { TranslatePipe } from '@ngx-translate/core';
     LeftMenuComponent,
     AddBtnComponent,
     AddTaskComponent,
-    TranslatePipe
-],
+    TranslatePipe,
+    TaskDetailsComponent,
+  ],
   templateUrl: './sprint-board.component.html',
   styleUrl: './sprint-board.component.scss',
 })
@@ -30,6 +32,8 @@ export class SprintBoardComponent implements OnInit {
   addStatus = 0;
   taskStatuses!: TaskStatuses[];
   allTasks!: TaskListDTO[];
+  taskDetailsId = '';
+  showDetailsModal = false;
   constructor(
     private taskService: TaskService,
     private queryParameter: QueryParameterService
@@ -65,5 +69,9 @@ export class SprintBoardComponent implements OnInit {
       next: (result) => console.log(result),
       error: (err) => console.log(err.error),
     });
+  }
+  ShowDetails(taskId: string) {
+    this.showDetailsModal = true;
+    this.taskDetailsId = taskId;
   }
 }

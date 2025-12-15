@@ -71,7 +71,7 @@ namespace ScrumMaster.Tasks.Controllers
             try
             {
                 var result = await _taskService.GetTaskById(taskId, UserId);
-                return Ok(taskId);
+                return Ok(result);
             }
             catch (Exception ex)
             {

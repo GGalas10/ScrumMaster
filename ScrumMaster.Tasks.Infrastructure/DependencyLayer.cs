@@ -14,6 +14,7 @@ namespace ScrumMaster.Tasks.Infrastructure
             services.AddScoped<ISprintAPIService, SprintAPIService>();
             services.AddScoped<IUserAPIService, UserAPIService>();
             services.AddScoped<IProjectAPIService, ProjectAPIService>();
+            services.AddScoped<ICommentService, CommentService>();
             return services;
         }
     }

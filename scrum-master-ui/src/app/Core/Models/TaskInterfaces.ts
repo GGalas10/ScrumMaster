@@ -18,8 +18,11 @@ export interface TaskDTO {
   createBy: string;
   assignedUserFullName: string;
   taskNumber: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 export interface TaskListDTO {
+  id: string;
   title: string;
   status: number;
   assignedUserFullName: string;

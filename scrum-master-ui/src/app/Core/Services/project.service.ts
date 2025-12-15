@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CreateProject, UserProject } from '../Models/ProjectInterfaces';
+import {
+  CreateProject,
+  ProjectMember,
+  UserProject,
+} from '../Models/ProjectInterfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,5 +25,14 @@ export class ProjectService {
       headers: environment.headers,
       withCredentials: true,
     });
+  }
+  GetProjectMembers(projectId: string): Observable<ProjectMember[]> {
+    return this.http.get<ProjectMember[]>(
+      `${this.projectUrl}/GetAllProjectMembers?projectId=${projectId}`,
+      {
+        headers: environment.headers,
+        withCredentials: true,
+      }
+    );
   }
 }

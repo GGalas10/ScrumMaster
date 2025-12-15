@@ -14,6 +14,8 @@ namespace ScrumMaster.Tasks.Infrastructure.DTOs
         public string CreateBy { get; set; }
         public string AssignedUserFullName { get; set; }
         public int TaskNumber { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public static TaskDTO GetFromModel(TaskModel model)
         {
             if (model == null)
@@ -28,7 +30,9 @@ namespace ScrumMaster.Tasks.Infrastructure.DTOs
                 SprintId = model.SprintId,
                 CreateById = model.CreateById,
                 CreateBy = model.CreatedBy,
-                TaskNumber = model.TaskNumber
+                TaskNumber = model.TaskNumber,
+                CreatedAt = model.CreatedAt,
+                UpdatedAt = model.UpdatedAt
             };
         }
     }

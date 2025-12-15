@@ -14,13 +14,13 @@ namespace ScrumMaster.Project.Controllers
         private readonly IProjectService _projectService;
         private readonly IAccessService _accessService;
         public Guid UserId { get; set; } = Guid.Empty;
-        public ProjectController(IProjectService projectService,IAccessService accessService)
+        public ProjectController(IProjectService projectService, IAccessService accessService)
         {
             _projectService = projectService;
             _accessService = accessService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetBoardInfo([FromQuery]Guid projectId)
+        public async Task<IActionResult> GetBoardInfo([FromQuery] Guid projectId)
         {
             try
             {
@@ -164,6 +164,25 @@ namespace ScrumMaster.Project.Controllers
             try
             {
                 var result = await _projectService.GetUsersProject(UserId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return ex switch
+                {
+                    BadRequestException => BadRequest(ex.Message),
+                    NotFoundException => NotFound(ex.Message),
+                    RoleException => Forbid(),
+                    _ => StatusCode(500, "Something_Went_Wrong"),
+                };
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllProjectMembers([FromQuery] Guid projectId)
+        {
+            try
+            {
+                var result = await _projectService.GetAllProjectMembers(projectId);
                 return Ok(result);
             }
             catch (Exception ex)
