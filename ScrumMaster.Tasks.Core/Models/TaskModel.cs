@@ -67,6 +67,12 @@ namespace ScrumMaster.Tasks.Core.Models
             CreateById = userId;
             CreatedBy = createdBy;
         }
+        public void SetStatus(StatusEnum newStatus)
+        {
+            if (newStatus == Status)
+                throw new BadRequestException("NewStatus_Is_The_Same");
+            Status = newStatus;
+        }
         public bool UpdateTask(string newTitle,string newDescription,StatusEnum newStatus,Guid sprintId,Guid assignedUserId, string assignedUser)
         {
             bool anyChanges = false;

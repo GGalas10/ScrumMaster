@@ -9,6 +9,7 @@ namespace ScrumMaster.Project.Infrastructure.Contracts
         Task AddUserAccess(AccessCommand command);
         Task UpdateUserAccess(AccessCommand command);
         Task RemoveUserAccess(DeleteAccessCommand command);
+        Task<bool> CanManageMembers(Guid projectId, Guid userId);
         Task<ProjectRoleEnum> GetUserProjectRole(Guid projectId, Guid userId);
     }
 }

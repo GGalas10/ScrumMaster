@@ -23,6 +23,7 @@
     width: 70%;
 }
 .RightModal{
+    position: relative;
     width: 30%;
     height: auto;
     h3{
@@ -73,4 +74,9 @@
 .OneMember:hover .ToolTipText {
   visibility: visible;
   opacity: 1;
+}
+.AddMemebers{
+    position: absolute;
+    top: 5px;
+    left: 140px;
 }

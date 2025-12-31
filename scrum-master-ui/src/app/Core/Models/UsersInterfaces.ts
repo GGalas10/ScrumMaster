@@ -24,3 +24,9 @@ export interface UserDetails {
   email: string;
   registerAt: Date;
 }
+export interface UserListDTO {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}

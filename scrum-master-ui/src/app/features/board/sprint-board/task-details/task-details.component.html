@@ -10,23 +10,38 @@
                     <div>
                         <textarea [disabled]="false" class="CustomTextarea">{{taskDTO.description}}</textarea>
                     </div>
-                    <div>
-                        <button>Edytuj</button>
-                        <button>Wstecz</button>
+                    <div class="ButtonsDiv">
+                        <button class="EditBtn">{{'Task.Edit' | translate}}</button>
+                        <button class="CloseBtn" (click)="CloseModal()">{{'Task.Back' | translate}}</button>
+                        <button (click)="AskModal()" class="DeleteBtn">{{'Task.DeleteTask' | translate}}</button>
                     </div>
                 </section>
                 <section class="rightSection">
                     <div class="taskComments">
-                        @if(true){
-                            Brak wiadomości
+                        @if(taskComments == null){
+                            {{'Task.SomethingWrong' | translate}} <span (click)="RefreshComments()">{{'Task.Reload' | translate}}</span>
                         }@else{
-                            Są wiadomości
+                            @for(comment of taskComments; track comment.senderId; let i = $index){
+                                <section class="OneComment" [class.UserComment]="comment.fromSender"[style.margin-top.px]="i != 0 && taskComments[i - 1].senderId !== comment.senderId ? 20: 5">
+                                    @if(i === 0 || taskComments[i - 1].senderId !== comment.senderId){
+                                        <p class="SenderInfo">{{GetCommentSender(comment.senderId)}}</p>
+                                    }
+                                    {{comment.content}}
+                                </section>
+                            }@empty {
+                                {{'Task.EmptyComments' | translate}}
+                            }
                         }
                     </div>
+                    <textarea [(ngModel)]="taskContent" [placeholder]="'Task.AddCommentPlaceholder' | translate"></textarea>
+                    <button class="SendBtn" (click)="SendComment()">{{'Task.Send' | translate}}</button>
                 </section>
             }@else{
                 <div class="loader" style="top:20%"></div>
             }
         </section>
     </section>
+    @if(openModal){
+        <app-accept-alert [title]="'CustomAlert.DeleteTitle' | translate" [confirmText]="'CustomAlert.DeleteButton' | translate" [message]="'CustomAlert.DeleteMessage' | translate" (userChoice)="DeleteTask($event)"></app-accept-alert>
+    }
 }

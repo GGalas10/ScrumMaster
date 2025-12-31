@@ -46,7 +46,8 @@
         "ProjectId_Cannot_Be_Empty" : "Coś poszło nie tak",
         "Project_Not_Found" : "Nie udało znaleźć się Twojego projektu w bazie",
         "User_Has_No_Access_To_This_Project" : "Nie masz dostępów do tego projektu. Skontaktuj się z administratorem",
-        "DoesntPremission" : "Nie masz dostępów. Skontaktuj się z administratorem"
+        "DoesntPremission" : "Nie masz dostępów. Skontaktuj się z administratorem",
+        "RoleRequired" : "Wybierz rolę użytkownika!"
     },
     "LeftMenu":
     {
@@ -66,7 +67,9 @@
         "Cancel" : "Anuluj",
         "AddProjectBtn" : "Dodaj projekt",
         "NewProject" : "Nowy projekt",
-        "ShortDescription" : "Opis projektu"
+        "ShortDescription" : "Opis projektu",
+        "Users" : "Użytkownicy",
+        "AddMember" : "Dodaj użytkownika do projektu"
     },
     "User":
     {
@@ -96,6 +99,39 @@
         "ResolvedStatus" : "Rozwiązane",
         "ClosedStatus" : "Zamknięte",
         "Unassigned" : "Nieprzypisany",
-        "AssignedUser" : "Przypisany użytkownik:"
+        "AssignedUser" : "Przypisany użytkownik:",
+        "EmptyComments": "Brak komentarzy do tego zadania.",
+        "Send" : "Wyślij",
+        "AddCommentPlaceholder" : "Dodaj komentarz...",
+        "Edit" : "Edytuj",
+        "Back" : "Wstecz",
+        "DeleteTask" : "Usuń zadanie",
+        "SomethingWrong" : "Coś poszło nie tak",
+        "Reload" : "Przeładuj"
+    },
+    "Project":
+    {
+        "AddMember" : "Dodaj użytkownika",
+        "Search" : "Szukaj...",
+        "NoResults": "Brak wyników"
+    },
+    "PROJECT_ROLE":
+    {
+        "Owner": "Właściciel",
+        "Admin": "Administrator",
+        "Member": "Członek",
+        "Guest": "Gość",
+        "Observer": "Obserwator",
+        "Custom": "Niestandardowa"
+    },
+    "CustomAlert":
+    {
+        "ConfirmTitle" : "Potwierdzenie",
+        "ConfirmMessage" : "Czy na pewno chcesz kontynuować?",
+        "ConfirmButton" : "Potwierdź",
+        "CancelButton" : "Anuluj",
+        "DeleteTitle" : "Potwierdzenie usunięcia",
+        "DeleteMessage" : "Czy na pewno chcesz usunąć to zadanie? Tej operacji nie można cofnąć.",
+        "DeleteButton" : "Usuń"
     }
 }

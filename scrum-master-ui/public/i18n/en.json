@@ -46,7 +46,8 @@
         "ProjectId_Cannot_Be_Empty" : "Something went wrong",
         "Project_Not_Found" : "We were unable to find your project in the database",
         "User_Has_No_Access_To_This_Project" : "You do not have access to this project. Please contact the administrator",
-        "DoesntPremission" : "You do not have access. Please contact the administrator."
+        "DoesntPremission" : "You do not have access. Please contact the administrator.",
+        "RoleRequired" : "Select a user role!"
     },
     "LeftMenu":
     {
@@ -66,7 +67,9 @@
         "Cancel" : "Cancel",
         "AddProjectBtn" : "Add project",
         "NewProject" : "New project",
-        "ShortDescription" : "Description of the project"
+        "ShortDescription" : "Description of the project",
+        "Users" : "Users",
+        "AddMember" : "Add a user to the project"
     },
     "User":
     {
@@ -96,6 +99,39 @@
         "ResolvedStatus" : "Resolved",
         "ClosedStatus" : "Closed",
         "Unassigned" : "Unassigned",
-        "AssignedUser" : "Assigned user:"
+        "AssignedUser" : "Assigned user:",
+        "EmptyComments": "No comments for this task.",
+        "Send" : "Send",
+        "AddCommentPlaceholder" : "Add a comment...",
+        "Edit" : "Edit",
+        "Back" : "Back",
+        "DeleteTask" : "Delete task",
+        "SomethingWrong" : "Something has gone wrong",
+        "Reload" : "Reload"
+    },
+    "Project":
+    {
+        "AddMember" : "Add user",
+        "Search" : "Search...",
+        "NoResults": "No results"
+    },
+    "PROJECT_ROLE": 
+    {
+        "Owner": "Owner",
+        "Admin": "Administrator",
+        "Member": "Member",
+        "Guest": "Guest",
+        "Observer": "Observer",
+        "Custom": "Custom"
+    },
+    "CustomAlert":
+    {
+        "ConfirmTitle" : "Confirmation",
+        "ConfirmMessage" : "Are you sure you want to continue?",
+        "ConfirmButton" : "Confirm",
+        "CancelButton" : "Cancel",
+        "DeleteTitle" : "Delete Confirmation",
+        "DeleteMessage" : "Are you sure you want to delete this task? This operation cannot be undone.",
+        "DeleteButton" : "Delete"
     }
 }

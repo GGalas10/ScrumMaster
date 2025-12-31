@@ -12,6 +12,14 @@ import { AddBtnComponent } from '../../../shared/add-btn/add-btn.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TaskDetailsComponent } from './task-details/task-details.component';
+import {
+  DragDropModule,
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { ErrorModel } from '../../../shared/ErrorClass';
+import { CustomAlertComponent } from '../../../shared/components/custom-alert/custom-alert.component';
 
 @Component({
   selector: 'app-sprint-board',
@@ -21,6 +29,8 @@ import { TaskDetailsComponent } from './task-details/task-details.component';
     AddTaskComponent,
     TranslatePipe,
     TaskDetailsComponent,
+    DragDropModule,
+    CustomAlertComponent,
   ],
   templateUrl: './sprint-board.component.html',
   styleUrl: './sprint-board.component.scss',
@@ -34,6 +44,8 @@ export class SprintBoardComponent implements OnInit {
   allTasks!: TaskListDTO[];
   taskDetailsId = '';
   showDetailsModal = false;
+  isLoading = true;
+  errorModel: ErrorModel = new ErrorModel();
   constructor(
     private taskService: TaskService,
     private queryParameter: QueryParameterService
@@ -49,12 +61,7 @@ export class SprintBoardComponent implements OnInit {
         console.log(err);
       },
     });
-    this.taskService
-      .GetAllSprintTasks(this.queryParameter.getQueryParam('sprintId'))
-      .subscribe({
-        next: (result) => (this.allTasks = result),
-        error: (err) => console.log(err.error),
-      });
+    this.RefreshTasks();
   }
   AddTaskBtnClick(status: number) {
     this.addStatus = status;
@@ -64,14 +71,100 @@ export class SprintBoardComponent implements OnInit {
     return (this.allTasks ?? []).filter((t) => t.status === status);
   }
   AddTask(command: CreateTaskCommand) {
+    console.log(command);
     command.sprintId = this.sprintId;
     this.taskService.CreateTask(command).subscribe({
-      next: (result) => console.log(result),
+      next: () => {
+        this.RefreshTasks();
+      },
       error: (err) => console.log(err.error),
     });
   }
   ShowDetails(taskId: string) {
     this.showDetailsModal = true;
     this.taskDetailsId = taskId;
+  }
+  drop(event: CdkDragDrop<TaskListDTO[]>, targetStatus: number) {
+    if (event.previousContainer === event.container) {
+      const columnTasks = this.getTasksByStatus(targetStatus);
+      moveItemInArray(columnTasks, event.previousIndex, event.currentIndex);
+
+      this.rewriteColumnOrder(targetStatus, columnTasks);
+      return;
+    }
+
+    const fromStatusId = this.parseStatusId(event.previousContainer.id);
+
+    const fromTasks = this.getTasksByStatus(fromStatusId);
+    const toTasks = this.getTasksByStatus(targetStatus);
+
+    transferArrayItem(
+      fromTasks,
+      toTasks,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+    const moved = toTasks[event.currentIndex];
+    moved.status = targetStatus;
+    this.UpdateTaskStatus(moved.id, targetStatus);
+
+    this.rewriteColumnOrder(fromStatusId, fromTasks);
+    this.rewriteColumnOrder(targetStatus, toTasks);
+  }
+  listId(statusId: number) {
+    return `list-${statusId}`;
+  }
+
+  get listIds(): string[] {
+    return this.taskStatuses.map((s) => this.listId(s.statusOrder));
+  }
+  connectedTo(statusId: number): string[] {
+    const mine = this.listId(statusId);
+    return this.listIds.filter((id) => id !== mine);
+  }
+  private rewriteColumnOrder(
+    statusId: number,
+    orderedColumnTasks: TaskListDTO[]
+  ) {
+    const others = this.allTasks.filter((t) => t.status !== statusId);
+    this.allTasks = [...others, ...orderedColumnTasks];
+  }
+  private parseStatusId(dropListId: string): number {
+    return Number(dropListId.replace('list-', ''));
+  }
+  UpdateTaskStatus(taskId: string, newStatus: number) {
+    this.isLoading = true;
+    this.taskService.UpdateTaskStatus(taskId, newStatus).subscribe({
+      next: () => {
+        const task = this.allTasks.find((t) => t.id === taskId);
+        if (task) {
+          task.status = newStatus;
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorModel.showOneInternal();
+        this.isLoading = false;
+      },
+    });
+  }
+  RefreshTasks() {
+    this.taskService
+      .GetAllSprintTasks(this.queryParameter.getQueryParam('sprintId'))
+      .subscribe({
+        next: (result) => {
+          this.allTasks = result;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.log(err.error);
+          this.isLoading = false;
+        },
+      });
+  }
+  DeleteTask() {
+    this.RefreshTasks();
+    this.showDetailsModal = false;
   }
 }

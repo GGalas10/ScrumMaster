@@ -12,7 +12,10 @@
             <p>{{this.boardDTO.projectDescription}}</p>
           </div>
           <div class="RightModal">
-            <h3>Użytkownicy</h3>
+            <h3>{{"Board.Users" | translate}}</h3>
+            @if(CanManageMembers()) {
+              <app-add-btn class="AddMemebers" [tooltip]='"Board.AddMember"|translate' (add)="openNewMember = true"></app-add-btn>
+            }
             <section class="MembersSection">
               @for (item of this.boardDTO.members; track item) {
                 <p class="OneMember" [routerLink]="['/User/Details',item.id]">{{item.shortcut}}
@@ -28,3 +31,4 @@
 } @else {
   <div class="loader"><div></div></div>
 }
+<app-mange-members [isOpen]="openNewMember" (closeModal)="openNewMember = false"></app-mange-members>

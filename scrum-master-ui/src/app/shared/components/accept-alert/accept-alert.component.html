@@ -1,0 +1,16 @@
+<section class="fullScreen">
+    <section class="content">
+        <h2>{{ title }}</h2>
+        <div class="message">
+        {{ message }}
+        </div>
+        <div class="buttons">
+        <button (click)="close(false)" class="cancel">
+            {{ cancelText }}
+        </button>
+        <button (click)="close(true)" class="confirm">
+            {{ confirmText }}
+        </button>
+        </div>
+    </section>
+</section>

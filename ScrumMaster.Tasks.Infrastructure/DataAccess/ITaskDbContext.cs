@@ -8,6 +8,7 @@ namespace ScrumMaster.Tasks.Infrastructure.DataAccess
     public interface ITaskDbContext
     {
         DbSet<TaskModel> Tasks { get; set; }
+        DbSet<Comment> Comments { get; set; }
         ChangeTracker ChangeTracker { get; }
         DatabaseFacade Database { get; }
         EntityEntry Entry(object entity);

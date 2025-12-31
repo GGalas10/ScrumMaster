@@ -10,5 +10,6 @@ namespace ScrumMaster.Identity.Infrastructure.Contracts
         Task<string> GetUserInfo(Guid userId);
         Task<List<UserDTO>> GetUsers(List<Guid> userIds);
         Task<UserDTO> GetUserById(Guid userId);
+        Task<List<UserListDTO>> FindUsers(string filter, Guid userId);
     }
 }

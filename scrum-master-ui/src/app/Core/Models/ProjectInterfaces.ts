@@ -12,3 +12,16 @@ export interface ProjectMember {
   firstName: string;
   lastName: string;
 }
+export interface AddMemeberCommand {
+  projectId: string;
+  userId: string;
+  userRole: number;
+}
+export enum ProjectRoleEnum {
+  Owner = 1,
+  Admin = 2,
+  Member = 3,
+  Guest = 4,
+  Observer = 5,
+  Custom = 6,
+}

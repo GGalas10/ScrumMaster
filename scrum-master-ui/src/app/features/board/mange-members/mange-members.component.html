@@ -1,0 +1,46 @@
+@if (isOpen) {
+  <div class="overlay" (click)="onOverlayClick()">
+    <div class="modal" (click)="onModalClick($event)" role="dialog" aria-modal="true">
+      <div class="header">
+        <h2>{{"Project.AddMember"| translate}}</h2>
+        <button class="x" type="button" (click)="onOverlayClick()" aria-label="Zamknij">✕</button>
+      </div>
+
+      <input
+        #searchInput
+        class="search"
+        type="text"
+        [placeholder]="'Project.Search'| translate"
+        [value]="query"
+        [formControl] = "query"
+      />
+
+      <div class="list">
+        @if(isLoading)
+        {
+            <div class="loader"></div>
+        }
+        @if (userList.length === 0) {
+          <div class="empty">{{"Project.NoResults" | translate}}</div>
+        } @else {
+          @for (user of userList; track user) {
+            <button type="button" class="row" (click)="SelectOne(user)" [class.selected]="user == selectedUser">
+              {{ user.firstName }} {{user.lastName}} {{user.email}}
+            </button>
+          }
+        }
+      </div>
+        @if(selectedUser){
+            <select class="roleSelect" [formControl]="selectedRole">
+              @for (role of roleOptions; track role) {
+                <option [value]="role">{{ `PROJECT_ROLE.${ProjectRoleEnum[role]}` | translate}}</option>
+              }
+            </select>
+            <button class="btn" (click)="Submit()">Zatwierdź</button>
+        }
+    </div>
+  </div>
+}
+@if(errorModel.show) {
+  <app-custom-alert [errorModel]="errorModel" (closeEvent)="errorModel.hide()" style="z-index: 999;"></app-custom-alert>
+}

@@ -50,6 +50,21 @@ namespace ScrumMaster.Tasks.Controllers
                 return StatusCode(500, "Something_Wrong");
             }
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateTaskStatus([FromBody] UpdateTaskStatusCommand command)
+        {
+            try
+            {
+                await _taskService.UpdateTaskStatus(command);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                if (ex is BadRequestException)
+                    return BadRequest(ex.Message);
+                return StatusCode(500, "Something_Wrong");
+            }
+        }
         [HttpDelete]
         public async Task<IActionResult> DeleteTask([FromQuery] Guid taskId)
         {

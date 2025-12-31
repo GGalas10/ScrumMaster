@@ -196,5 +196,18 @@ namespace ScrumMaster.Project.Controllers
                 };
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> CanManageMembers([FromQuery]Guid projectId)
+        {
+            try
+            {
+                var result = await _accessService.CanManageMembers(projectId, UserId);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return Ok(false);
+            }
+        }
     }
 }

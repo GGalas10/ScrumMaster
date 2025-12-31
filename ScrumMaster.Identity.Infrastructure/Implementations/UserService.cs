@@ -90,7 +90,6 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
                 userName = user.UserName
             };
         }
-
         public async Task<AuthDTO> LoginUser(LoginUserCommand command)
         {
             if (command == null)
@@ -154,6 +153,20 @@ namespace ScrumMaster.Identity.Infrastructure.Implementations
                 registerAt = user.RegisterAt,
                 lastLoginAt = user.LastLoginAt
             };
+        }
+        public async Task<List<UserListDTO>> FindUsers(string filter,Guid userId)
+        {
+            var users = await _userManager.Users.Where(x => (x.FirstName.Contains(filter) || x.LastName.Contains(filter) || x.Email.Contains(filter)) && x.Id != userId.ToString()).ToListAsync();
+            return users.Select(x =>
+            {
+                return new UserListDTO()
+                {
+                    id = Guid.Parse(x.Id),
+                    firstName = x.FirstName,
+                    lastName = x.LastName,
+                    email = x.Email,
+                };
+            }).ToList();
         }
     }
 }

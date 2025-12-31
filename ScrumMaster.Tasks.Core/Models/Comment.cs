@@ -8,12 +8,14 @@ namespace ScrumMaster.Tasks.Core.Models
         public Guid SenderId { get; private set; }
         public string Content { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public Comment(Guid senderId, string content)
+        public Guid taskId { get; private set; }
+        public Comment(Guid senderId, string content, Guid taskId)
         {
             Id = Guid.NewGuid();
             SetSenderId(senderId);
             SetContent(content);
             CreatedAt = DateTime.UtcNow;
+            this.taskId = taskId;
         }
         public void SetContent(string content)
         {

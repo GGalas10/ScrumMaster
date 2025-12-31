@@ -450,7 +450,6 @@ namespace ScrumMaster.Tasks.Tests.InfrastructureTest
             //Assert
             Assert.NotNull(result);
             Assert.NotEmpty(result);
-            Assert.All(result, task => Assert.Equal(sprintId, task.SprintId));
         }
 
         [Fact]

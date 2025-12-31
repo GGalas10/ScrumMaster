@@ -69,7 +69,13 @@ namespace ScrumMaster.Project.Infrastructure.Implementations
             _projectDbContext.ProjectUserAccesses.Remove(access);
             await _projectDbContext.SaveChangesAsync();
         }
-
+        public async Task<bool> CanManageMembers(Guid projectId, Guid userId)
+        {
+            var result = await GetUserProjectRole(projectId, userId);
+            if (result == ProjectRoleEnum.Owner || result == ProjectRoleEnum.Admin)
+                return true;
+            return false;
+        }
         public async Task<ProjectRoleEnum> GetUserProjectRole(Guid projectId, Guid userId)
         {
             if(projectId == Guid.Empty)

@@ -11,5 +11,6 @@ namespace ScrumMaster.Tasks.Infrastructure.Contracts
         Task<TaskDTO> GetTaskById(Guid taskId, Guid userId);
         Task<List<TaskListDTO>> GetAllSprintTasks(Guid sprintId, Guid userId);
         List<TaskStatusDTO> GetTaskStatuses();
+        Task UpdateTaskStatus(UpdateTaskStatusCommand command);
     }
 }

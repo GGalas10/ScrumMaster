@@ -30,7 +30,7 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
             await _sprintAPIService.CheckSprintExist(command.sprintId);
             await UserHavePremissions(command.createdById, command.sprintId, UserPremissionsEnum.CanSave);
             var user = await _userAPIService.GetUserById(command.createdById);
-            var newTask = new TaskModel(command.title, command.description, command.sprintId, command.createdById, $"{user.firstName} {user.lastName}");
+            var newTask = new TaskModel(command.title, command.description, command.sprintId, command.createdById, $"{user.firstName} {user.lastName}", command.status);
             _context.Tasks.Add(newTask);
             await _context.SaveChangesAsync();
             return newTask.Id;
@@ -97,6 +97,17 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
                             statusName = x.ToString(),
                         })
                         .ToList();
+        }
+        public async Task UpdateTaskStatus(UpdateTaskStatusCommand command)
+        {
+            if(command == null)
+                throw new BadRequestException("Command_Cannot_Be_Null");
+            var task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == command.taskId);
+            if (task == null)
+                throw new BadRequestException("Cannot_Find_Task");
+            task.SetStatus(command.status);
+            _context.Update(task);
+            await _context.SaveChangesAsync();
         }
         private async Task UserHavePremissions(Guid userId, Guid sprintId, UserPremissionsEnum premission)
         {

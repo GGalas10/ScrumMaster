@@ -35,4 +35,16 @@ export class ProjectService {
       }
     );
   }
+  CanManageMembers(projectId: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.projectUrl}/CanManageMembers?projectId=${projectId}`,
+      {
+        headers: environment.headers,
+        withCredentials: true,
+      }
+    );
+  }
+  AddMemeberToProject() {
+    return;
+  }
 }

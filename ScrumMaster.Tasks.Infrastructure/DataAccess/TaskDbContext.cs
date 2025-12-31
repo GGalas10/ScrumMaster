@@ -7,5 +7,6 @@ namespace ScrumMaster.Tasks.Infrastructure.DataAccess
     {
         public TaskDbContext(DbContextOptions options):base(options){}
         public DbSet<TaskModel> Tasks { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

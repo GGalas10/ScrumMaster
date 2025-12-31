@@ -64,11 +64,24 @@
 .rightSection{
     width: 30%;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    textarea{
+        resize: none;
+        padding: 5px;
+        border-radius: 9px;
+        background-color: #07070724;
+        font-size: 0.8rem;
+    }
 }
 .taskComments{
     background-color: #07070724;
     height: 90%;
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
 }
 .CustomTextarea{
     height: 500px;
@@ -77,4 +90,67 @@
     overflow-x: auto;
     background-color: #07070724;
     border: none;
+}
+.SendBtn{
+    width: 30%;
+    margin: auto;
+    padding: 5px 10px;
+    background-color: #07070724;
+    border-radius: 15px;
+    animation-duration: 0.5s;
+}
+.SendBtn:hover{
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+.OneComment{
+    font-size: 0.8rem;
+    display: flex;
+    position: relative;
+    background-color: rgba(194, 185, 185, 0.14);
+    border-radius: 14px;
+    padding: 3px 4px;
+    width: 75%;
+}
+.UserComment{
+    margin-left: auto;
+    background-color: #112957;
+}
+.SenderInfo{
+    position: absolute;
+    top: -25px;
+    left: 10px;
+    font-size: 0.7rem;
+}
+.ButtonsDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    button{
+        padding: 5px 10px;
+        border-radius: 10px;
+        user-select: none;
+        width: 30%;
+        cursor: pointer;
+    }
+    button:hover{
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+.EditBtn{
+    background-color: #3a86ff;
+    font-size:0.9rem;
+    font-weight: bold;
+}
+.CloseBtn{
+    background-color: #ffbe0b;
+    font-size:0.9rem;
+    font-weight: bold;
+}
+.DeleteBtn{
+    background-color: #ff006e;
+    font-size:0.9rem;
+    font-weight: bold;
 }
