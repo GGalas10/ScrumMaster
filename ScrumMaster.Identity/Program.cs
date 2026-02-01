@@ -7,6 +7,7 @@ using ScrumMaster.Identity.Core.Models;
 using ScrumMaster.Identity.Infrastructure;
 using ScrumMaster.Identity.Infrastructure.DataAccesses;
 using ScrumMaster.Identity.Infrastructure.DTO;
+using ScrumMaster.Identity.Infrastructure.Middleware;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -95,7 +96,7 @@ builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
           .WithHeaders("ScrumMaster", "Content-Type", "Authorization");
 }));
 var app = builder.Build();
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -1,6 +1,6 @@
 @if(isOpen){
-    <section class="BackgroundSection">
-        <section class="MainSection" [class.open]="isOpen">
+    <section class="BackgroundSection" (click)="CloseModal()">
+        <section class="MainSection" [class.open]="isOpen" (click)="$event.stopPropagation()">
             <p (click)="CloseModal()" class="Exit">X</p>
             @if(taskDTO){
                 <section class="leftSection">

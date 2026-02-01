@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
+  AddMemeberCommand,
   CreateProject,
   ProjectMember,
   UserProject,
@@ -44,7 +45,10 @@ export class ProjectService {
       }
     );
   }
-  AddMemeberToProject() {
-    return;
+  AddMemeberToProject(command: AddMemeberCommand): Observable<void> {
+    return this.http.post<void>(`${this.projectUrl}/AddUserAccess`, command, {
+      headers: environment.headers,
+      withCredentials: true,
+    });
   }
 }

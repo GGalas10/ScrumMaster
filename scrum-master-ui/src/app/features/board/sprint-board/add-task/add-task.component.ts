@@ -1,8 +1,7 @@
-import { trigger, transition, style, animate } from '@angular/animations';
-
 import {
   Component,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   Output,
@@ -22,23 +21,6 @@ import { CreateTaskCommand } from '../../../../Core/Models/TaskInterfaces';
   imports: [ReactiveFormsModule, TranslatePipe],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
-  animations: [
-    trigger('slideDown', [
-      transition(':enter', [
-        style({ transform: 'translateY(-100%)', opacity: 0 }),
-        animate(
-          '300ms ease-out',
-          style({ transform: 'translateY(0)', opacity: 1 })
-        ),
-      ]),
-      transition(':leave', [
-        animate(
-          '250ms ease-in',
-          style({ transform: 'translateY(-100%)', opacity: 0 })
-        ),
-      ]),
-    ]),
-  ],
 })
 export class AddTaskComponent implements OnChanges {
   @Input() isOpen = false;
@@ -60,6 +42,7 @@ export class AddTaskComponent implements OnChanges {
     }
   }
 
+  @HostListener('document:keydown.escape')
   onClose(): void {
     this.isOpen = false;
     this.closed.emit();

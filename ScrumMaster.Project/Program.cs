@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -6,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using ScrumMaster.Project.Handlers;
 using ScrumMaster.Project.Infrastructure;
 using ScrumMaster.Project.Infrastructure.DataAccesses;
+using ScrumMaster.Project.Middlewares;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -92,7 +92,7 @@ builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -10,48 +10,31 @@ namespace ScrumMaster.Identity.Controllers
     {
         private readonly IUserService _userService;
         public Guid UserId => Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value);
+
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
+
         [HttpGet("api/User/GetById")]
         public async Task<IActionResult> GetUserById([FromQuery] Guid userId)
         {
-            try
-            {
-                var result = await _userService.GetUserById(userId);
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = await _userService.GetUserById(userId);
+            return Json(result);
         }
+
         [HttpPost]
         public async Task<IActionResult> GetUserByIdsList([FromBody] List<Guid> userIds)
         {
-            try
-            {
-                var result = await _userService.GetUsers(userIds);
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = await _userService.GetUsers(userIds);
+            return Json(result);
         }
+
         [HttpGet("api/User/FindUsers")]
-        public async Task<IActionResult> FindUsers([FromQuery]string filter)
+        public async Task<IActionResult> FindUsers([FromQuery] string filter)
         {
-            try
-            {
-                var result = await _userService.FindUsers(filter.Trim(),UserId);
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = await _userService.FindUsers(filter.Trim(), UserId);
+            return Ok(result);
         }
     }
 }

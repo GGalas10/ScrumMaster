@@ -1,6 +1,6 @@
 @if (isOpen) {
-  <div class="modal-overlay" (click)="onClose()">
-    <div class="modal-container" (click)="$event.stopPropagation()" @slideDown>
+  <div class="modal-overlay" (click)="onClose()" >
+    <div class="modal-container" (click)="$event.stopPropagation()" animate.enter="slideDownEnter" animate.leave="slideDownLeave">
       <div class="modal-header">
         <h2>{{"Task.AddTask" | translate}}</h2>
         <button type="button" class="close-btn" (click)="onClose()">✕</button>

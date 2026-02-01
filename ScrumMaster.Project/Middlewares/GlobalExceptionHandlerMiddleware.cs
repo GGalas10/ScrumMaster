@@ -1,17 +1,23 @@
-﻿using ScrumMaster.Tasks.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using ScrumMaster.Project.Infrastructure.CustomExceptions;
+using System;
+using System.Threading.Tasks;
 
-namespace ScrumMaster.Tasks.Middleware
+namespace ScrumMaster.Project.Middlewares
 {
-    public class ExceptionMiddleware
+    public class GlobalExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        private readonly ILogger<GlobalExceptionHandlerMiddleware> _logger;
+
+        public GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
-        public async Task Invoke(HttpContext context)
+
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
@@ -19,12 +25,12 @@ namespace ScrumMaster.Tasks.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception in Sprints API");
+                _logger.LogError(ex, "Unhandled exception in Project API");
                 await HandleExceptionAsync(context, ex);
             }
         }
 
-        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
 
@@ -33,12 +39,14 @@ namespace ScrumMaster.Tasks.Middleware
             {
                 BadRequestException => StatusCodes.Status400BadRequest,
                 NotFoundException => StatusCodes.Status404NotFound,
-                UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
+                RoleException => StatusCodes.Status403Forbidden,
+                UnauthorizedAccessException => StatusCodes.Status403Forbidden,
                 _ => StatusCodes.Status500InternalServerError
             };
 
             if (statusCode == StatusCodes.Status500InternalServerError)
             {
+                // Hide internal details for 500 responses
                 message = "Something_Went_Wrong";
             }
 

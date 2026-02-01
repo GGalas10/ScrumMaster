@@ -1,17 +1,19 @@
-﻿using ScrumMaster.Tasks.Infrastructure.Exceptions;
+﻿using ScrumMaster.Sprints.Infrastructure.Exceptions;
 
-namespace ScrumMaster.Tasks.Middleware
+namespace ScrumMaster.Sprints.Infrastructure.Middleware
 {
-    public class ExceptionMiddleware
+    public class GlobalExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        private readonly ILogger<GlobalExceptionHandlerMiddleware> _logger;
+
+        public GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
-        public async Task Invoke(HttpContext context)
+
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
@@ -24,7 +26,7 @@ namespace ScrumMaster.Tasks.Middleware
             }
         }
 
-        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
 
@@ -32,13 +34,13 @@ namespace ScrumMaster.Tasks.Middleware
             var statusCode = exception switch
             {
                 BadRequestException => StatusCodes.Status400BadRequest,
-                NotFoundException => StatusCodes.Status404NotFound,
                 UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
                 _ => StatusCodes.Status500InternalServerError
             };
 
             if (statusCode == StatusCodes.Status500InternalServerError)
             {
+                // Nie ujawniaj szczegółów wewnętrznych
                 message = "Something_Went_Wrong";
             }
 

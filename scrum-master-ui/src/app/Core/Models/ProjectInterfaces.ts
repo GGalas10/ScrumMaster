@@ -15,7 +15,7 @@ export interface ProjectMember {
 export interface AddMemeberCommand {
   projectId: string;
   userId: string;
-  userRole: number;
+  roleEnum: number;
 }
 export enum ProjectRoleEnum {
   Owner = 1,

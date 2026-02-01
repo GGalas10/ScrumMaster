@@ -4,7 +4,6 @@ import {
   EventEmitter,
   inject,
   Input,
-  input,
   Output,
 } from '@angular/core';
 import { UserService } from '../../../Core/Services/user.service';
@@ -30,6 +29,7 @@ import {
 import { QueryParameterService } from '../../../shared/query-parameter.service';
 import { CustomAlertComponent } from '../../../shared/components/custom-alert/custom-alert.component';
 import { ErrorModel } from '../../../shared/ErrorClass';
+import { ProjectService } from '../../../Core/Services/project.service';
 
 @Component({
   selector: 'app-mange-members',
@@ -58,6 +58,7 @@ export class MangeMembersComponent {
   ProjectRoleEnum = ProjectRoleEnum;
   constructor(
     private userService: UserService,
+    private projectService: ProjectService,
     private queryParameter: QueryParameterService
   ) {
     this.errorModel.hide();
@@ -115,8 +116,18 @@ export class MangeMembersComponent {
     var command: AddMemeberCommand = {
       projectId: this.queryParameter.getQueryParam('id'),
       userId: this.selectedUser?.id ?? '',
-      userRole: this.selectedRole.value,
+      roleEnum: Number(this.selectedRole.value),
     };
-    console.log(command);
+    this.projectService.AddMemeberToProject(command).subscribe({
+      next: () => {
+        this.onOverlayClick();
+      },
+      error: (err) => {
+        this.errorModel.showOneBadRequest(
+          'Errors.SomethingWrong',
+          'Errors.GeneralTitle'
+        );
+      },
+    });
   }
 }

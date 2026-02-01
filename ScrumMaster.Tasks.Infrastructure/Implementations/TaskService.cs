@@ -63,6 +63,9 @@ namespace ScrumMaster.Tasks.Infrastructure.Implementations
 
             await UserHavePremissions(userId, taskToDelete.SprintId, UserPremissionsEnum.CanDelete);
             _context.Tasks.Remove(taskToDelete);
+            var comments = await _context.Comments.Where(x => x.taskId == taskId).ToListAsync();
+            if(comments != null && comments.Count() > 0)
+                _context.Comments.RemoveRange(comments);
             await _context.SaveChangesAsync();
         }
         public async Task<TaskDTO> GetTaskById(Guid taskId, Guid userId)

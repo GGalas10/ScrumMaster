@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ScrumMaster.Tasks.Infrastructure.Commands;
 using ScrumMaster.Tasks.Infrastructure.Contracts;
-using ScrumMaster.Tasks.Infrastructure.Exceptions;
 using System.Security.Claims;
 
 namespace ScrumMaster.Tasks.Controllers
@@ -13,6 +12,7 @@ namespace ScrumMaster.Tasks.Controllers
     {
         private readonly ITaskService _taskService;
         protected Guid UserId => Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value);
+
         public TaskController(ITaskService taskService)
         {
             _taskService = taskService;
@@ -21,109 +21,51 @@ namespace ScrumMaster.Tasks.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskCommand command)
         {
-            try
-            {
-                command.createdById = UserId;
-                var result = await _taskService.CreateTask(command);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                if (ex is BadRequestException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, "Something_Wrong");
-            }
+            command.createdById = UserId;
+            var result = await _taskService.CreateTask(command);
+            return Ok(result);
         }
+
         [HttpPatch]
         public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskCommand command)
         {
-            try
-            {
-                await _taskService.UpdateTask(command, UserId);
-                return Ok();
-
-            }
-            catch (Exception ex)
-            {
-                if (ex is BadRequestException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, "Something_Wrong");
-            }
+            await _taskService.UpdateTask(command, UserId);
+            return Ok();
         }
+
         [HttpPut]
         public async Task<IActionResult> UpdateTaskStatus([FromBody] UpdateTaskStatusCommand command)
         {
-            try
-            {
-                await _taskService.UpdateTaskStatus(command);
-                return Ok();
-            }
-            catch(Exception ex)
-            {
-                if (ex is BadRequestException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, "Something_Wrong");
-            }
+            await _taskService.UpdateTaskStatus(command);
+            return Ok();
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteTask([FromQuery] Guid taskId)
         {
-            try
-            {
-                await _taskService.DeleteTask(taskId, UserId);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                if (ex is BadRequestException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, "Something_Wrong");
-            }
+            await _taskService.DeleteTask(taskId, UserId);
+            return Ok();
         }
+
         [HttpGet]
         public async Task<IActionResult> GetTaskById([FromQuery] Guid taskId)
         {
-            try
-            {
-                var result = await _taskService.GetTaskById(taskId, UserId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                if (ex is BadRequestException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, "Something_Wrong");
-            }
+            var result = await _taskService.GetTaskById(taskId, UserId);
+            return Ok(result);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllSprintTasks([FromQuery] Guid sprintId)
         {
-            try
-            {
-                var result = await _taskService.GetAllSprintTasks(sprintId, UserId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                if (ex is BadRequestException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, "Something_Wrong");
-            }
+            var result = await _taskService.GetAllSprintTasks(sprintId, UserId);
+            return Ok(result);
         }
+
         [HttpGet]
         public IActionResult GetTasksStatuses()
         {
-            try
-            {
-                var result = _taskService.GetTaskStatuses();
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                if (ex is BadRequestException)
-                    return BadRequest(ex.Message);
-                return StatusCode(500, "Something_Wrong");
-            }
+            var result = _taskService.GetTaskStatuses();
+            return Ok(result);
         }
     }
 }

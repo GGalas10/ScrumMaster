@@ -1,0 +1,17 @@
+.slideDownEnter {
+  animation: slideDownIn var(--anim-fast) ease-out;
+}
+
+.slideDownLeave {
+  animation: slideDownOut var(--anim-normal) ease-in;
+}
+
+@keyframes slideDownIn {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDownOut {
+  from { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(-100%); opacity: 0; }
+}

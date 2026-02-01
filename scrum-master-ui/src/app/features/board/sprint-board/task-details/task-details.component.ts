@@ -112,7 +112,10 @@ export class TaskDetailsComponent implements OnChanges {
       content: this.taskContent,
     };
     this.commentService.SendComment(command).subscribe({
-      next: () => this.RefreshComments(),
+      next: () => {
+        this.RefreshComments();
+        this.taskContent = '';
+      },
       error: (err) => {
         console.log(err.error);
       },

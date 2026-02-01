@@ -2,3 +2,8 @@ $font-color:#212121;
 $background-color:#E3F2FD;
 $light-font-color: #fff4f4;
 $font-Noto : "Noto Sans", sans-serif;
+:root {
+  --anim-fast: 200ms;
+  --anim-normal: 300ms;
+  --anim-slow: 450ms;
+}

@@ -89,7 +89,7 @@ builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 }));
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -105,7 +105,6 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
-app.UseMiddleware<ExceptionMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {

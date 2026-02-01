@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ScrumMaster.Project.CustomAttributes;
 using ScrumMaster.Project.Infrastructure.Contracts;
-using ScrumMaster.Project.Infrastructure.CustomExceptions;
 using ScrumMaster.Project.Infrastructure.DTOs.Commands;
 
 namespace ScrumMaster.Project.Controllers
@@ -19,195 +18,80 @@ namespace ScrumMaster.Project.Controllers
             _projectService = projectService;
             _accessService = accessService;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetBoardInfo([FromQuery] Guid projectId)
         {
-            try
-            {
-                var boardInfo = await _projectService.GetBoardInfo(projectId, UserId);
-                return Ok(boardInfo);
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            var boardInfo = await _projectService.GetBoardInfo(projectId, UserId);
+            return Ok(boardInfo);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddUserAccess([FromBody] AccessCommand command)
         {
-            try
-            {
-                command.adminId = UserId;
-                await _accessService.AddUserAccess(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            command.adminId = UserId;
+            await _accessService.AddUserAccess(command);
+            return Ok();
         }
+
         [HttpPatch]
         public async Task<IActionResult> UpdateUserAccessRole([FromBody] AccessCommand command)
         {
-            try
-            {
-                command.adminId = UserId;
-                await _accessService.UpdateUserAccess(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            command.adminId = UserId;
+            await _accessService.UpdateUserAccess(command);
             return Ok();
         }
+
         [HttpDelete]
         public async Task<IActionResult> RemoveUserAccess([FromBody] DeleteAccessCommand command)
         {
-            try
-            {
-                command.adminId = UserId;
-                await _accessService.RemoveUserAccess(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            command.adminId = UserId;
+            await _accessService.RemoveUserAccess(command);
+            return Ok();
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateProject([FromBody] AddProjectCommand command)
         {
-            try
-            {
-                command.userId = UserId;
-                var result = await _projectService.AddNewProject(command);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            command.userId = UserId;
+            var result = await _projectService.AddNewProject(command);
+            return Ok(result);
         }
+
         [HttpPut]
         public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectCommand command)
         {
-            try
-            {
-                command.userId = UserId;
-                await _projectService.UpdateProject(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            command.userId = UserId;
+            await _projectService.UpdateProject(command);
+            return Ok();
         }
+
         [HttpGet]
         public async Task<IActionResult> GetUserProjectRole([FromQuery] Guid projectId, [FromQuery] Guid? userId = null)
         {
-            try
-            {
-                var role = await _accessService.GetUserProjectRole(projectId, userId == null ? UserId : userId.Value);
-                return Ok(role);
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            var role = await _accessService.GetUserProjectRole(projectId, userId == null ? UserId : userId.Value);
+            return Ok(role);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetUserProjects()
         {
-            try
-            {
-                var result = await _projectService.GetUsersProject(UserId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            var result = await _projectService.GetUsersProject(UserId);
+            return Ok(result);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllProjectMembers([FromQuery] Guid projectId)
         {
-            try
-            {
-                var result = await _projectService.GetAllProjectMembers(projectId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return ex switch
-                {
-                    BadRequestException => BadRequest(ex.Message),
-                    NotFoundException => NotFound(ex.Message),
-                    RoleException => Forbid(),
-                    _ => StatusCode(500, "Something_Went_Wrong"),
-                };
-            }
+            var result = await _projectService.GetAllProjectMembers(projectId);
+            return Ok(result);
         }
+
         [HttpGet]
-        public async Task<IActionResult> CanManageMembers([FromQuery]Guid projectId)
+        public async Task<IActionResult> CanManageMembers([FromQuery] Guid projectId)
         {
-            try
-            {
-                var result = await _accessService.CanManageMembers(projectId, UserId);
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-                return Ok(false);
-            }
+            var result = await _accessService.CanManageMembers(projectId, UserId);
+            return Ok(result);
         }
     }
 }

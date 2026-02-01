@@ -3,7 +3,7 @@ import { BoardService } from '../../Core/Services/Board.service';
 import { LeftMenuComponent } from '../../shared/left-menu/left-menu.component';
 
 import { TranslatePipe } from '@ngx-translate/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { finalize } from 'rxjs';
 import { BoardDto } from '../../Core/Models/BoardInterfaces';
 import { QueryParameterService } from '../../shared/query-parameter.service';
@@ -35,6 +35,13 @@ export class BoardComponent implements OnInit {
     private projectService: ProjectService
   ) {}
   ngOnInit(): void {
+    this.Refresh();
+  }
+  OnClose() {
+    this.openNewMember = false;
+    this.Refresh();
+  }
+  private Refresh() {
     this.boardService
       .GetBoardInfo(this.queryParameter.getQueryParam('id'))
       .pipe(

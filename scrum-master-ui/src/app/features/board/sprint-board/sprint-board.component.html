@@ -1,26 +1,27 @@
 <ng-container>
   <app-left-menu></app-left-menu>
-  @if (taskStatuses) {
-    <section class="body">
+  @if (boardState.taskStatuses) {
+    <section class="body">  
+      <div class="SprintsSection  "></div>
       <div class="board">
-        @for (oneStatus of taskStatuses; track oneStatus) {
+        @for (oneStatus of boardState.taskStatuses; track oneStatus) {
           <div class="OneColumn">
             <div class="columnHeader">
               {{`Task.${oneStatus.statusName}Status` | translate}}
-              <app-add-btn tooltip='{{"Task.AddTask"| translate}}' (add)="AddTaskBtnClick(oneStatus.statusOrder)" [size]="20" class="AddBtnTask"></app-add-btn>
+              <app-add-btn tooltip='{{"Task.AddTask"| translate}}' (add)="boardState.AddTaskBtnClick(oneStatus.statusOrder)" [size]="20" class="AddBtnTask"></app-add-btn>
             </div>
             <div class="tasksColumn" 
               cdkDropList 
-              [id]="listId(oneStatus.statusOrder)" 
-              [cdkDropListConnectedTo]="connectedTo(oneStatus.statusOrder)" 
-              [cdkDropListData]="getTasksByStatus(oneStatus.statusOrder)" 
+              [id]="boardState.listId(oneStatus.statusOrder)" 
+              [cdkDropListConnectedTo]="boardState.connectedTo(oneStatus.statusOrder)" 
+              [cdkDropListData]="boardState.getTasksByStatus(oneStatus.statusOrder)" 
               (cdkDropListDropped)="drop($event, oneStatus.statusOrder)"
             >
-              @if(isLoading){
+              @if(boardState.isLoading()){
                 <div class="loader"></div>
               }@else{
-                @for (task of getTasksByStatus(oneStatus.statusOrder); track task) {
-                  <div class="OneTask" (click)="ShowDetails(task.id)" cdkDrag [cdkDragData]="task">
+                @for (task of boardState.getTasksByStatus(oneStatus.statusOrder); track task) {
+                  <div class="OneTask" (click)="boardState.ShowDetails(task.id)" cdkDrag [cdkDragData]="task">
                     <span class="TaskNumberSpan">
                       {{task.taskNumber}}
                     </span>
@@ -38,9 +39,9 @@
     <div class="loader"><div></div></div>
   }
 </ng-container>
-<app-add-task [isOpen]="openModal" (closed)="openModal = false" [status]="addStatus" (submitted)="AddTask($event)"></app-add-task>
-<app-task-details [taskId]="taskDetailsId" (closeEvent)="showDetailsModal=false" [isOpen]="showDetailsModal" (deleteEvent)="DeleteTask()"></app-task-details>
-@if(errorModel.show)
+<app-add-task [isOpen]="boardState.openModal()" (closed)="boardState.openModal.set(false)" [status]="boardState.addStatus" (submitted)="boardState.AddTask($event)" animate.enter="slideDownEnter" animate.leave="slideDownLeave"></app-add-task>
+<app-task-details [taskId]="boardState.taskDetailsId" (closeEvent)="boardState.showDetailsModal.set(false)" [isOpen]="boardState.showDetailsModal()" (deleteEvent)="boardState.DeleteTask()"></app-task-details>
+@if(boardState.errorModel.show)
 {
-  <app-custom-alert [errorModel]="errorModel" (closeEvent)="errorModel.hide()"></app-custom-alert>
+  <app-custom-alert [errorModel]="boardState.errorModel" (closeEvent)="boardState.errorModel.hide()"></app-custom-alert>
 }

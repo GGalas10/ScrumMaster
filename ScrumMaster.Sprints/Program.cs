@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using ScrumMaster.Sprints.Handlers;
 using ScrumMaster.Sprints.Infrastructure;
 using ScrumMaster.Sprints.Infrastructure.DataAccess;
+using ScrumMaster.Sprints.Infrastructure.Middleware;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -92,6 +93,8 @@ builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 }));
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
